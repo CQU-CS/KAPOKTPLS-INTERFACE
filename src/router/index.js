@@ -64,7 +64,7 @@ export const constantRoutes = [{
     name: 'basic',
     meta: {
       title: '基本信息管理',
-      icon: 'el-icon-s-help'
+      icon: 'el-icon-document'
     },
     children: [{
         path: 'staff',
@@ -72,7 +72,7 @@ export const constantRoutes = [{
         component: () => import('@/views/basic/staff'),
         meta: {
           title: '人员信息',
-          icon: 'table'
+          icon: 'el-icon-user'
         }
       },
       {
@@ -81,7 +81,70 @@ export const constantRoutes = [{
         component: () => import('@/views/basic/vehicle'),
         meta: {
           title: '车辆信息',
-          icon: 'tree'
+          icon: 'el-icon-truck'
+        }
+      },
+      {
+        path: 'address',
+        name: 'address',
+        component: () => import('@/views/basic/address'),
+        meta: {
+          title: '地址基本信息',
+          icon: 'el-icon-location-information'
+        }
+      },
+      {
+        path: 'company',
+        name: 'company',
+        component: () => import('@/views/basic/company'),
+        meta: {
+          title: '公司信息',
+          icon: 'el-icon-suitcase'
+        }
+      },
+      {
+        path: 'supplies',
+        name: 'supplies',
+        component: () => import('@/views/basic/supplies'),
+        meta: {
+          title: '物资信息',
+          icon: 'el-icon-coin'
+        }
+      },
+      {
+        path: 'certificate',
+        name: 'certificate',
+        component: () => import('@/views/basic/certificate'),
+        meta: {
+          title: '证件基本信息',
+          icon: 'el-icon-bank-card'
+        }
+      },
+      {
+        path: 'cargo',
+        name: 'cargo',
+        component: () => import('@/views/basic/cargo'),
+        meta: {
+          title: '货物基本信息',
+          icon: 'el-icon-box'
+        }
+      },
+      {
+        path: 'building',
+        name: 'building',
+        component: () => import('@/views/basic/building'),
+        meta: {
+          title: '建筑构物信息',
+          icon: 'el-icon-office-building'
+        }
+      },
+      {
+        path: 'facility',
+        name: 'facility',
+        component: () => import('@/views/basic/facility'),
+        meta: {
+          title: '机电设备基本信息',
+          icon: 'el-icon-cpu'
         }
       }
     ]
