@@ -31,238 +31,238 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [{
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+  path: '/login',
+  component: () => import('@/views/login/index'),
+  hidden: true
+},
 
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
+{
+  path: '/404',
+  component: () => import('@/views/404'),
+  hidden: true
+},
 
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: {
-        title: '主页',
-        icon: 'dashboard'
-      }
-    }]
-  },
-
-  {
-    path: '/basic',
-    component: Layout,
-    redirect: '/basic/staff',
-    name: 'basic',
+{
+  path: '/',
+  component: Layout,
+  redirect: '/dashboard',
+  children: [{
+    path: 'dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/dashboard/index'),
     meta: {
-      title: '基本信息管理',
-      icon: 'el-icon-s-help'
-    },
-    children: [{
-        path: 'staff',
-        name: 'staff',
-        component: () => import('@/views/basic/staff'),
-        meta: {
-          title: '人员信息',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'vehicle',
-        name: 'vehicle',
-        component: () => import('@/views/basic/vehicle'),
-        meta: {
-          title: '车辆信息',
-          icon: 'tree'
-        }
-      }
-    ]
-  },
+      title: '主页',
+      icon: 'dashboard'
+    }
+  }]
+},
 
-  {
-    path: '/sale',
-    component: Layout,
-    redirect: '/sale/index',
-    name: 'sale',
+{
+  path: '/basic',
+  component: Layout,
+  redirect: '/basic/staff',
+  name: 'basic',
+  meta: {
+    title: '基本信息管理',
+    icon: 'el-icon-s-help'
+  },
+  children: [{
+    path: 'staff',
+    name: 'staff',
+    component: () => import('@/views/basic/staff'),
     meta: {
-      title: '购销存管理',
-      icon: 'el-icon-s-help'
-    },
-    children: [{
-      path: 'index',
-      name: 'Form',
-      component: () => import('@/views/form/index'),
-      meta: {
-        title: 'Form',
-        icon: 'form'
-      }
-    }, {
-      path: 'index',
-      name: 'Form',
-      component: () => import('@/views/form/index'),
-      meta: {
-        title: 'Form',
-        icon: 'form'
-      }
-    }]
+      title: '人员信息',
+      icon: 'table'
+    }
   },
-
   {
-    path: '/vehicle-fix',
-    component: Layout,
-    redirect: '/vehicle-fix/menu1',
-    name: 'vehicle-fix',
+    path: 'vehicle',
+    name: 'vehicle',
+    component: () => import('@/views/basic/vehicle'),
     meta: {
-      title: '汽车修检管理',
-      icon: 'nested'
-    },
-    children: [{
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: {
-          title: 'Menu1'
-        },
-        children: [{
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: {
-              title: 'Menu1-1'
-            }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: {
-              title: 'Menu1-2'
-            },
-            children: [{
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: {
-                  title: 'Menu1-2-1'
-                }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: {
-                  title: 'Menu1-2-2'
-                }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: {
-              title: 'Menu1-3'
-            }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: {
-          title: 'menu2'
-        }
-      }
-    ]
-  },
-
-  {
-    path: 'transport',
-    component: Layout,
-    redirect: '/transport/menu1',
-    name: 'transport',
-    meta: {
-      title: '运输调度管理',
-      icon: 'nested'
-    },
-    children: [{
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: {
-        title: 'External Link',
-        icon: 'link'
-      }
-    }, {
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: {
-        title: 'External Link',
-        icon: 'link'
-      }
-    }]
-  },
-
-  {
-    path: 'coop',
-    component: Layout,
-    redirect: '/coop/menu1',
-    name: 'coop',
-    meta: {
-      title: '对外合作管理',
-      icon: 'nested'
-    },
-    children: [{
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: {
-        title: 'External Link',
-        icon: 'link'
-      }
-    }, {
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: {
-        title: 'External Link',
-        icon: 'link'
-      }
-    }]
-  },
-
-  {
-    path: 'statistic',
-    component: Layout,
-    children: [{
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: {
-        title: '数据统计分析',
-        icon: 'link'
-      }
-    }]
-  },
-
-  {
-    path: 'permission',
-    component: Layout,
-    children: [{
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: {
-        title: '权限管理',
-        icon: 'link'
-      }
-    }]
-  },
-
-  // 404 page must be placed at the end !!!
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
+      title: '车辆信息',
+      icon: 'tree'
+    }
   }
+  ]
+},
+
+{
+  path: '/sale',
+  component: Layout,
+  redirect: '/sale/index',
+  name: 'sale',
+  meta: {
+    title: '购销存管理',
+    icon: 'el-icon-s-help'
+  },
+  children: [{
+    path: 'index',
+    name: 'Form',
+    component: () => import('@/views/form/index'),
+    meta: {
+      title: 'Form',
+      icon: 'form'
+    }
+  }, {
+    path: 'index',
+    name: 'Form',
+    component: () => import('@/views/form/index'),
+    meta: {
+      title: 'Form',
+      icon: 'form'
+    }
+  }]
+},
+
+{
+  path: '/vehicle-fix',
+  component: Layout,
+  redirect: '/vehicle-fix/menu1',
+  name: 'vehicle-fix',
+  meta: {
+    title: '汽车修检管理',
+    icon: 'nested'
+  },
+  children: [{
+    path: 'menu1',
+    component: () => import('@/views/nested/menu1/index'), // Parent router-view
+    name: 'Menu1',
+    meta: {
+      title: 'Menu1'
+    },
+    children: [{
+      path: 'menu1-1',
+      component: () => import('@/views/nested/menu1/menu1-1'),
+      name: 'Menu1-1',
+      meta: {
+        title: 'Menu1-1'
+      }
+    },
+    {
+      path: 'menu1-2',
+      component: () => import('@/views/nested/menu1/menu1-2'),
+      name: 'Menu1-2',
+      meta: {
+        title: 'Menu1-2'
+      },
+      children: [{
+        path: 'menu1-2-1',
+        component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+        name: 'Menu1-2-1',
+        meta: {
+          title: 'Menu1-2-1'
+        }
+      },
+      {
+        path: 'menu1-2-2',
+        component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+        name: 'Menu1-2-2',
+        meta: {
+          title: 'Menu1-2-2'
+        }
+      }
+      ]
+    },
+    {
+      path: 'menu1-3',
+      component: () => import('@/views/nested/menu1/menu1-3'),
+      name: 'Menu1-3',
+      meta: {
+        title: 'Menu1-3'
+      }
+    }
+    ]
+  },
+  {
+    path: 'menu2',
+    component: () => import('@/views/nested/menu2/index'),
+    name: 'Menu2',
+    meta: {
+      title: 'menu2'
+    }
+  }
+  ]
+},
+
+{
+  path: 'transport',
+  component: Layout,
+  redirect: '/transport/menu1',
+  name: 'transport',
+  meta: {
+    title: '运输调度管理',
+    icon: 'nested'
+  },
+  children: [{
+    path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+    meta: {
+      title: 'External Link',
+      icon: 'link'
+    }
+  }, {
+    path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+    meta: {
+      title: 'External Link',
+      icon: 'link'
+    }
+  }]
+},
+
+{
+  path: 'coop',
+  component: Layout,
+  redirect: '/coop/menu1',
+  name: 'coop',
+  meta: {
+    title: '对外合作管理',
+    icon: 'nested'
+  },
+  children: [{
+    path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+    meta: {
+      title: 'External Link',
+      icon: 'link'
+    }
+  }, {
+    path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+    meta: {
+      title: 'External Link',
+      icon: 'link'
+    }
+  }]
+},
+
+{
+  path: 'statistic',
+  component: Layout,
+  children: [{
+    path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+    meta: {
+      title: '数据统计分析',
+      icon: 'link'
+    }
+  }]
+},
+
+{
+  path: 'permission',
+  component: Layout,
+  children: [{
+    path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+    meta: {
+      title: '权限管理',
+      icon: 'link'
+    }
+  }]
+},
+
+// 404 page must be placed at the end !!!
+{
+  path: '*',
+  redirect: '/404',
+  hidden: true
+}
 ]
 
 const createRouter = () => new Router({
