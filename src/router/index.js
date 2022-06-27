@@ -48,7 +48,7 @@ export const constantRoutes = [{
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: '主页',
+      name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: {
         title: '主页',
@@ -60,27 +60,27 @@ export const constantRoutes = [{
   {
     path: '/basic',
     component: Layout,
-    redirect: '/basic/table',
-    name: '基本信息管理',
+    redirect: '/basic/staff',
+    name: 'basic',
     meta: {
       title: '基本信息管理',
       icon: 'el-icon-s-help'
     },
     children: [{
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
+        path: 'staff',
+        name: 'staff',
+        component: () => import('@/views/basic/staff'),
         meta: {
-          title: 'Table',
+          title: '人员信息',
           icon: 'table'
         }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        path: 'vehicle',
+        name: 'vehicle',
+        component: () => import('@/views/basic/vehicle'),
         meta: {
-          title: 'Tree',
+          title: '车辆信息',
           icon: 'tree'
         }
       }
@@ -91,7 +91,7 @@ export const constantRoutes = [{
     path: '/sale',
     component: Layout,
     redirect: '/sale/index',
-    name: '购销存管理',
+    name: 'sale',
     meta: {
       title: '购销存管理',
       icon: 'el-icon-s-help'
@@ -105,8 +105,10 @@ export const constantRoutes = [{
         icon: 'form'
       }
     }, {
-      path: 'index',        name: 'Form',
-      component: () => import('@/views/form/index'),       meta: {
+      path: 'index',
+      name: 'Form',
+      component: () => import('@/views/form/index'),
+      meta: {
         title: 'Form',
         icon: 'form'
       }
@@ -114,12 +116,12 @@ export const constantRoutes = [{
   },
 
   {
-    path: '/nested',
+    path: '/vehicle-fix',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/vehicle-fix/menu1',
+    name: 'vehicle-fix',
     meta: {
-      title: 'Nested',
+      title: '汽车修检管理',
       icon: 'nested'
     },
     children: [{
@@ -184,12 +186,72 @@ export const constantRoutes = [{
   },
 
   {
-    path: 'external-link',
+    path: 'transport',
     component: Layout,
+    redirect: '/transport/menu1',
+    name: 'transport',
+    meta: {
+      title: '运输调度管理',
+      icon: 'nested'
+    },
     children: [{
       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
       meta: {
         title: 'External Link',
+        icon: 'link'
+      }
+    }, {
+      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+      meta: {
+        title: 'External Link',
+        icon: 'link'
+      }
+    }]
+  },
+
+  {
+    path: 'coop',
+    component: Layout,
+    redirect: '/coop/menu1',
+    name: 'coop',
+    meta: {
+      title: '对外合作管理',
+      icon: 'nested'
+    },
+    children: [{
+      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+      meta: {
+        title: 'External Link',
+        icon: 'link'
+      }
+    }, {
+      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+      meta: {
+        title: 'External Link',
+        icon: 'link'
+      }
+    }]
+  },
+
+  {
+    path: 'statistic',
+    component: Layout,
+    children: [{
+      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+      meta: {
+        title: '数据统计分析',
+        icon: 'link'
+      }
+    }]
+  },
+
+  {
+    path: 'permission',
+    component: Layout,
+    children: [{
+      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+      meta: {
+        title: '权限管理',
         icon: 'link'
       }
     }]
