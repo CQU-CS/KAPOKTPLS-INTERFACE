@@ -6,13 +6,13 @@
         <h3 class="title">Login Form</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="account_account">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
+          ref="account_account"
+          v-model="loginForm.account_account"
           placeholder="Username"
           name="username"
           type="text"
@@ -21,14 +21,14 @@
         />
       </el-form-item>
 
-      <el-form-item prop="password">
+      <el-form-item prop="account_password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
           :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
+          ref="account_password"
+          v-model="loginForm.account_password"
           :type="passwordType"
           placeholder="Password"
           name="password"
@@ -44,8 +44,8 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+        <span style="margin-right:20px;">account_account: admin</span>
+        <span> account_password: any</span>
       </div>
 
     </el-form>
@@ -74,12 +74,12 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        account_account: 'admin',
+        account_password: '111111'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        account_account: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        account_password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -102,17 +102,23 @@ export default {
         this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
+        this.$refs.account_password.focus()
       })
     },
     handleLogin() {
+      console.log(1)
       this.$refs.loginForm.validate(valid => {
+        console.log(2)
         if (valid) {
+          console.log(3)
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            console.log(4)
             this.$router.push({ path: this.redirect || '/' })
+            console.log(5)
             this.loading = false
           }).catch(() => {
+            console.log(6)
             this.loading = false
           })
         } else {
