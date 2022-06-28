@@ -288,68 +288,34 @@ export const constantRoutes = [{
 {
 	path: '/vehicle-fix',
 	component: Layout,
-	redirect: '/vehicle-fix/menu1',
+	redirect: '/vehicle-fix/materials_used',
 	name: 'vehicle-fix',
 	meta: {
 		title: '汽车修检管理',
 		icon: 'el-icon-truck'
 	},
 	children: [{
-		path: 'menu1',
-		component: () => import('@/views/nested/menu1/index'), // Parent router-view
-		name: 'Menu1',
+		path: 'materials-used',
+		component: () => import('@/views/vehicle_fix/materials_used'),
+		name: 'materials-used',
 		meta: {
-			title: 'Menu1'
-		},
-		children: [{
-			path: 'menu1-1',
-			component: () => import('@/views/nested/menu1/menu1-1'),
-			name: 'Menu1-1',
-			meta: {
-				title: 'Menu1-1'
-			}
-		},
-		{
-			path: 'menu1-2',
-			component: () => import('@/views/nested/menu1/menu1-2'),
-			name: 'Menu1-2',
-			meta: {
-				title: 'Menu1-2'
-			},
-			children: [{
-				path: 'menu1-2-1',
-				component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-				name: 'Menu1-2-1',
-				meta: {
-					title: 'Menu1-2-1'
-				}
-			},
-			{
-				path: 'menu1-2-2',
-				component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-				name: 'Menu1-2-2',
-				meta: {
-					title: 'Menu1-2-2'
-				}
-			}
-			]
-		},
-		{
-			path: 'menu1-3',
-			component: () => import('@/views/nested/menu1/menu1-3'),
-			name: 'Menu1-3',
-			meta: {
-				title: 'Menu1-3'
-			}
+			title: '物资使用记录'
 		}
-		]
 	},
 	{
-		path: 'menu2',
-		component: () => import('@/views/nested/menu2/index'),
-		name: 'Menu2',
+		path: 'repairman-maintenance',
+		component: () => import('@/views/vehicle_fix/repairman_maintenance'),
+		name: 'repairman-maintenance',
 		meta: {
-			title: 'menu2'
+			title: '修理工维修记录'
+		}
+	},
+	{
+		path: 'vehicle-maintenance',
+		component: () => import('@/views/vehicle_fix/vehicle_maintenance'),
+		name: 'vehicle-maintenance',
+		meta: {
+			title: '修理工维修记录'
 		}
 	}
 	]
