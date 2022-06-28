@@ -288,7 +288,7 @@ export const constantRoutes = [{
 {
 	path: '/vehicle-fix',
 	component: Layout,
-	redirect: '/vehicle-fix/materials_used',
+	redirect: '/vehicle-fix/materials-used',
 	name: 'vehicle-fix',
 	meta: {
 		title: '汽车修检管理',
@@ -315,65 +315,74 @@ export const constantRoutes = [{
 		component: () => import('@/views/vehicle_fix/vehicle_maintenance'),
 		name: 'vehicle-maintenance',
 		meta: {
-			title: '修理工维修记录'
+			title: '车辆维修记录'
 		}
 	}
 	]
 },
 
 {
-	path: 'transport',
+	path: '/scheduler',
 	component: Layout,
-	redirect: '/transport/menu1',
-	name: 'transport',
+	redirect: '/scheduler/transportation-task',
+	name: 'scheduler',
 	meta: {
 		title: '运输调度管理',
 		icon: 'el-icon-guide'
 	},
 	children: [{
-		path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+		path: 'transportation-task',
+		component: () => import('@/views/scheduler/transportation_task'),
+		name: 'transportation-task',
 		meta: {
-			title: 'External Link',
-			icon: 'link'
+			title: '运输任务'
 		}
-	}, {
-		path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+	},
+	{
+		path: 'carrier-business',
+		component: () => import('@/views/scheduler/carrier_business'),
+		name: 'carrier-business',
 		meta: {
-			title: 'External Link',
-			icon: 'link'
+			title: '承运商业务记录'
 		}
 	}]
 },
 
 {
-	path: 'coop',
+	path: '/exhibition',
 	component: Layout,
-	redirect: '/coop/menu1',
-	name: 'coop',
+	redirect: '/exhibition/introduction',
+	name: 'exhibition',
 	meta: {
-		title: '对外合作管理',
+		title: '对外展示管理',
 		icon: 'el-icon-connection'
 	},
 	children: [{
-		path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+		path: 'introduction',
+		component: () => import('@/views/exhibition/introduction'),
+		name: 'introduction',
 		meta: {
-			title: 'External Link',
+			title: '公司简介公告',
 			icon: 'link'
 		}
 	}, {
-		path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+		path: 'advertisement',
+		component: () => import('@/views/exhibition/advertisement'),
+		name: 'advertisement',
 		meta: {
-			title: 'External Link',
+			title: '销售广告',
 			icon: 'link'
 		}
 	}]
 },
 
 {
-	path: 'statistic',
+	path: '/statistic',
 	component: Layout,
 	children: [{
-		path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+		path: 'chart',
+		component: () => import('@/views/statistic/statistic'),
+		name: 'statistic',
 		meta: {
 			title: '数据统计分析',
 			icon: 'el-icon-data-analysis'
@@ -382,10 +391,12 @@ export const constantRoutes = [{
 },
 
 {
-	path: 'permission',
+	path: '/permission',
 	component: Layout,
 	children: [{
-		path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+		path: 'permission',
+		component: () => import('@/views/permission/permission'),
+		name: 'permission',
 		meta: {
 			title: '权限管理',
 			icon: 'el-icon-lock'
