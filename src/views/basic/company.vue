@@ -15,11 +15,6 @@
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
       </div>
-      <!-- <el-card class="box-card2" shadow="always" :body-style="{padding: '0px'}">
-        <el-input placeholder="请输入内容" class="inputDeep" v-model="queryData">
-          <el-button slot="append" type="primary" icon="el-icon-search" @click="initList">查询</el-button>
-        </el-input>
-      </el-card> -->
       <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
         <div style="margin-left: 15px;margin-right: 15px;">
           <el-table v-loading="loading" element-loading-text="拼命加载中"
