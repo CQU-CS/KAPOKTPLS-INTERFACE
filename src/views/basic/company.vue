@@ -1,11 +1,24 @@
 <template>
   <div>
-    <div>
-      <el-card class="box-card2" shadow="always" :body-style="{padding: '0px'}">
-        <el-input placeholder="请输入内容" class="inputDeep " v-model="queryData">
+    <div class="main-box">
+      <div class="search-box">
+        <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
+          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
+            <el-option v-for="item in categoryList" :label="item.categoryName" :value="item.categoryId"></el-option>
+          </el-select>
+        </el-card>
+        <el-card class="box-card" shadow="always" style="width: 100%;" :body-style="{padding: '0px'}">
+          <el-input placeholder="请输入内容" class="inputDeep" v-model="queryData"> </el-input>
+        </el-card>
+        <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+          <el-button type="primary" icon="el-icon-search" @click="initList" style="width: 100%;">查询</el-button>
+        </el-card>
+      </div>
+      <!-- <el-card class="box-card2" shadow="always" :body-style="{padding: '0px'}">
+        <el-input placeholder="请输入内容" class="inputDeep" v-model="queryData">
           <el-button slot="append" type="primary" icon="el-icon-search" @click="initList">查询</el-button>
         </el-input>
-      </el-card>
+      </el-card> -->
       <el-card class="box-card" shadow="always">
         <el-table v-loading="loading" element-loading-text="拼命加载中" element-loading-background="rgba(255, 255, 255, 0.5)"
           :height="fullHeight" :data="companyList" stripe style="width: 100%">
@@ -174,32 +187,14 @@
     width: 130px;
   }
 
-  .inputDeep {
-    :deep(.el-input__wrapper) {
-      box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
-      cursor: default;
-
-      .el-input__inner {
-        cursor: default !important;
-      }
-    }
-
-    /deep/.el-input__inner {
-      border: none;
-    }
+  .inputDeep .el-input__inner {
+    border: 0 !important;
+    outline: none;
   }
 
   .box-card {
-    margin-left: 15px;
-    margin-right: 15px;
-    margin-top: 15px;
-    border-radius: 15px;
-    border: none;
-  }
-
-  .box-card2 {
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
     margin-top: 15px;
     border-radius: 15px;
     border: none;
@@ -209,5 +204,15 @@
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
+  }
+
+  .search-box {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .main-box {
+    margin-left: 8px;
+    margin-right: 8px;
   }
 </style>
