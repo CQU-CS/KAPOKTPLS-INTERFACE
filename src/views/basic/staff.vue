@@ -1,28 +1,34 @@
 <template>
   <div>
-    <div style="margin-top: 15px;">
-      <el-input placeholder="请输入内容" v-model="queryData" class="input-with-select">
-        <el-button slot="append" icon="el-icon-search" @click="selectDoc">查询</el-button>
-      </el-input>
-      <el-table v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(255, 255, 255, 0.2)" :data="personList" stripe style="width: 100%">
-        <el-table-column width="100px;" align="center" prop="personId" label="编号">
-        </el-table-column>
-        <el-table-column width="150px;" align="center" prop="personName" label="姓名">
-        </el-table-column>
-        <el-table-column align="center" prop="personGender" label="性别">
-        </el-table-column>
-        <el-table-column align="center" show-overflow-tooltip prop="personNumber" label="联系方式">
-        </el-table-column>
-        <el-table-column align="center" prop="personQq" label="QQ号">
-        </el-table-column>
-        <el-table-column align="center" show-overflow-tooltip prop="personAddress" label="地址">
-        </el-table-column>
-        <el-table-column align="center" prop="companyId" label="公司编号">
-        </el-table-column>
-        <el-table-column align="center" prop="personBankAccount" label="银行账户">
-        </el-table-column>
-      </el-table>
+    <div>
+      <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
+        <el-input placeholder="请输入内容" v-model="queryData" class="input-with-select">
+          <el-button slot="append" icon="el-icon-search" @click="initList">查询</el-button>
+        </el-input>
+      </el-card>
+      <el-card class="box-card" shadow="always">
+        <el-table v-loading="loading" element-loading-text="拼命加载中" element-loading-background="rgba(255, 255, 255, 0.4)"
+          :data="personList" stripe style="width: 100%">
+          <el-table-column width="50px;" align="center" prop="personId" label="编号">
+          </el-table-column>
+          <el-table-column width="100px;" align="center" prop="personName" label="姓名">
+          </el-table-column>
+          <el-table-column width="50px;" align="center" prop="personGender" label="性别">
+          </el-table-column>
+          <el-table-column align="center" prop="personBirth" label="生日">
+          </el-table-column>
+          <el-table-column align="center" show-overflow-tooltip prop="personNumber" label="联系方式">
+          </el-table-column>
+          <el-table-column align="center" prop="personQq" label="QQ号">
+          </el-table-column>
+          <el-table-column align="center" show-overflow-tooltip prop="personAddress" label="地址">
+          </el-table-column>
+          <el-table-column align="center" prop="companyId" label="所在公司">
+          </el-table-column>
+          <el-table-column align="center" prop="personBankAccount" label="银行账户">
+          </el-table-column>
+        </el-table>
+      </el-card>
     </div>
     <!-- 弹出框 -->
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
@@ -36,7 +42,9 @@
 </template>
 
 <script>
-  import { getDocByCondition,getCategoryByCondition,docSelectOne } from '../api/getData.js';
+  import {
+    getPerson
+  } from '../../api/getData.js';
   export default {
     data() {
       return {
@@ -74,15 +82,16 @@
         this.loading = true;
         //获取用户输入/选择的查询条件
         let data = {
-          categoryId: this.selectData,
-          docTitle: this.queryData
+          // categoryId: this.selectData,
+          // docTitle: this.queryData
         }
-        getDocByCondition(data).then((res) => {
-          res.forEach((item, index) => {
-            item.test = "测试属性添加";
-            //console.log(item)
+        getPerson(data).then((res) => {
+          res.datas.forEach((item, index) => {
+            // item.test = "测试属性添加";
+            // console.log(item)
           })
-          this.personList = res;
+          // console.log(res.datas);
+          this.personList = res.datas;
           this.loading = false;
           //条件筛选遍历
           /* let filterArr = this.personList.filter((item, index) => {
@@ -106,11 +115,11 @@
       console.log("mounted被调用");
 
       this.$nextTick(() => {
-      	//页面初始化的时候执行
-      	this.initList();
-      	//this.testMap();
-      	//初始化获取类型数据
-      	// this.initCategoryList();
+        //页面初始化的时候执行
+        this.initList();
+        //this.testMap();
+        //初始化获取类型数据
+        // this.initCategoryList();
       })
     },
     beforeCreate() {
@@ -151,7 +160,15 @@
     width: 130px;
   }
 
-  .input-with-select .el-input-group__prepend {
+  .input-with-select .el-input-group__prepend>>>.el-input__inner {
     background-color: #fff;
+    border: none;
+  }
+
+  .box-card {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    border-radius: 15px;
   }
 </style>

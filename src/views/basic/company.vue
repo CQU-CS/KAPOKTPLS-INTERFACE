@@ -1,8 +1,213 @@
 <template>
+  <div>
+    <div>
+      <el-card class="box-card2" shadow="always" :body-style="{padding: '0px'}">
+        <el-input placeholder="请输入内容" class="inputDeep " v-model="queryData">
+          <el-button slot="append" type="primary" icon="el-icon-search" @click="initList">查询</el-button>
+        </el-input>
+      </el-card>
+      <el-card class="box-card" shadow="always">
+        <el-table v-loading="loading" element-loading-text="拼命加载中" element-loading-background="rgba(255, 255, 255, 0.5)"
+          :height="fullHeight" :data="companyList" stripe style="width: 100%">
+          <el-table-column width="80px;" align="center" prop="companyId" label="编号" sortable>
+          </el-table-column>
+          <el-table-column align="center" show-overflow-tooltip prop="companyName" label="公司名称">
+          </el-table-column>
+          <el-table-column width="200px;" align="center" prop="companyEstablishmentTime" label="创立日期" sortable>
+          </el-table-column>
+          <el-table-column width="150px;" align="center" show-overflow-tooltip prop="companyPhone" label="电话">
+          </el-table-column>
+          <el-table-column width="120px;" align="center" prop="companyInstruction" label="行业">
+          </el-table-column>
+          <el-table-column align="center" show-overflow-tooltip prop="addressId" label="地址">
+          </el-table-column>
+          <el-table-column width="160px;" align="right">
+            <template slot="header" slot-scope="scope">
+              <el-button size="mini" type="primary" @click="handleAdd">添加</el-button>
+            </template>
+            <template slot-scope="scope">
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
+    </div>
+    <!-- 弹出框 -->
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <div class="block">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="true"
+        layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
+  </div>
 </template>
 
 <script>
+  import {
+    getCompany
+  } from '../../api/getData.js';
+  export default {
+    data() {
+      return {
+        showButton: true, //是否渲染按钮
+        showElseIf: 2, //展示else-if
+        dialogVisible: false, //表示弹出框是否显示
+        inputData: "危", //双向绑定测试,
+        companyList: [], //用于存放doc数据
+        showButton2: false,
+        inputData: "",
+        selectData: "", //被选择的下拉
+        queryData: "", //用于条件查询
+        categoryList: [], //用于接收类型数据
+        loading: true, //查询时加载遮罩
+        page: 1,
+        limit: 50,
+        total: 0,
+        fullHeight: document.documentElement.clientHeight - 230
+      }
+    },
+    watch: {
+      fullHeight(val) { //监控浏览器高度变化
+        if (!this.timer) {
+          this.fullHeight = val
+          this.timer = true
+          let that = this
+          setTimeout(function() {
+            that.timer = false
+          }, 400)
+        }
+      }
+    },
+    methods: {
+      testVon() {
+        this.showButton2 = !this.showButton2;
+        //this.dialogVisible = true;
+      },
+      handleSizeChange(val) {
+        this.limit = val;
+        console.log(`每页 ${val} 条`);
+        this.initList();
+      },
+      handleCurrentChange(val) {
+        this.page = val;
+        console.log(`当前页: ${val}`);
+        this.initList();
+      },
+      //获取类型数据
+      // initCategoryList() {
+      //   getCategoryByCondition().then(res => {
+      //     //新增一个全部,放到数组最前面
+      //     res.unshift({
+      //       categoryId: "",
+      //       categoryName: "全部"
+      //     });
+      //     this.categoryList = res;
+      //   });
+      // },
+      //获取文档数据
+      initList() {
+        this.loading = true;
+        //获取用户输入/选择的查询条件
+        let data = {
+          limit: this.limit,
+          page: this.page
+          // categoryId: this.selectData,
+          // docTitle: this.queryData
+        }
+        getCompany(data).then((res) => {
+          res.datas.forEach((item, index) => {
+            // item.test = "测试属性添加";
+            // console.log(item)
+          })
+          // console.log(res.datas);
+          this.companyList = res.datas;
+          this.total = res.total;
+          this.loading = false;
+          //条件筛选遍历
+          /* let filterArr = this.companyList.filter((item, index) => {
+          	return item.docId % 5 == 0;
+          }); */
+        })
+      },
+      get_bodyHeight() { //动态获取浏览器高度
+        const that = this
+        window.onresize = () => {
+          return (() => {
+            window.fullHeight = document.documentElement.clientHeight
+            that.fullHeight = window.fullHeight - 230
+          })()
+        }
+      }
+    },
+    mounted() {
+      console.log("mounted被调用");
+      this.get_bodyHeight();
+      this.$nextTick(() => {
+        //页面初始化的时候执行
+        this.initList();
+        //this.testMap();
+        //初始化获取类型数据
+        // this.initCategoryList();
+      })
+    },
+  }
 </script>
 
 <style>
+  .table-style-thead {
+    width: 100%;
+  }
+
+  .table-style-thead-th {
+    width: 250px;
+  }
+
+  .el-select .el-input {
+    width: 130px;
+  }
+
+  .inputDeep {
+    :deep(.el-input__wrapper) {
+      box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
+      cursor: default;
+
+      .el-input__inner {
+        cursor: default !important;
+      }
+    }
+
+    /deep/.el-input__inner {
+      border: none;
+    }
+  }
+
+  .box-card {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    border-radius: 15px;
+    border: none;
+  }
+
+  .box-card2 {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    border-radius: 15px;
+    border: none;
+  }
+
+  .block {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
 </style>
