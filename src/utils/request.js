@@ -8,7 +8,6 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   baseURL: 'http://localhost:8080', // url = base url + request url
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
   baseURL: URL, // url = base url + request url
   timeout: 5000 ,// request timeout
   withCredentials: true,
