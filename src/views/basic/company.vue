@@ -4,7 +4,8 @@
       <div class="search-box">
         <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
           <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
-            <el-option v-for="item in propertyList" :label="item.label" :value="item.value"></el-option>
+            <el-option v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
           </el-select>
         </el-card>
         <el-card class="box-card" shadow="always" style="width: 100%;" :body-style="{padding: '0px'}">
@@ -19,43 +20,67 @@
           <el-button slot="append" type="primary" icon="el-icon-search" @click="initList">查询</el-button>
         </el-input>
       </el-card> -->
-      <el-card class="box-card" shadow="always">
-        <el-table v-loading="loading" element-loading-text="拼命加载中" element-loading-background="rgba(255, 255, 255, 0.5)"
-          :height="fullHeight" :data="companyList" stripe style="width: 100%">
-          <el-table-column width="80px;" align="center" prop="companyId" label="编号" sortable>
-          </el-table-column>
-          <el-table-column align="center" show-overflow-tooltip prop="companyName" label="公司名称">
-          </el-table-column>
-          <el-table-column width="200px;" prop="companyEstablishmentTime" label="创立日期" sortable>
-          </el-table-column>
-          <el-table-column width="150px;" show-overflow-tooltip prop="companyPhone" label="电话">
-          </el-table-column>
-          <el-table-column width="120px;" prop="companyInstruction" label="行业">
-          </el-table-column>
-          <el-table-column show-overflow-tooltip prop="addressContent" label="地址">
-          </el-table-column>
-          <el-table-column width="160px;" align="right">
-            <template slot="header" slot-scope="scope">
-              <el-button size="mini" type="primary" @click="handleAdd">添加</el-button>
-            </template>
-            <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-popconfirm title="确定删除该公司吗？" style="margin-left: 8px;"
-                @onConfirm="handleDelete(scope.$index, scope.row)">
-                <el-button size="mini" type="danger" slot="reference">删除</el-button>
-              </el-popconfirm>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
+        <div style="margin-left: 15px;margin-right: 15px;">
+          <el-table v-loading="loading" element-loading-text="拼命加载中"
+            element-loading-background="rgba(255, 255, 255, 0.5)" :height="fullHeight" :data="companyList" stripe
+            style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
+            <el-table-column width="80px;" align="center" prop="companyId" label="编号" sortable>
+            </el-table-column>
+            <el-table-column align="center" show-overflow-tooltip prop="companyName" label="公司名称">
+            </el-table-column>
+            <el-table-column width="200px;" prop="companyEstablishmentTime" label="创立日期" sortable>
+            </el-table-column>
+            <el-table-column width="150px;" show-overflow-tooltip prop="companyPhone" label="电话">
+            </el-table-column>
+            <el-table-column width="120px;" prop="companyInstruction" label="行业">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="addressContent" label="地址">
+            </el-table-column>
+            <el-table-column width="160px;" align="right">
+              <template slot="header" slot-scope="scope">
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加公司'">
+                  添加
+                </el-button>
+              </template>
+              <template slot-scope="scope">
+                <el-button size="mini"
+                  @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公司'">编辑
+                </el-button>
+                <el-popconfirm title="确定删除该公司吗？" style="margin-left: 8px;"
+                  @onConfirm="handleDelete(scope.$index, scope.row)">
+                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
+                </el-popconfirm>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+
       </el-card>
     </div>
-    <!-- 弹出框 -->
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
+    <el-dialog :title="dialogName" :visible.sync="dialogFormVisible" center width="40%">
+      <el-form :model="form" :rules="rules" ref="form" style="text-align: center;">
+        <el-form-item label="公司名称" :label-width="formLabelWidth" prop="name">
+          <el-input v-model="form.name" style="width: 90%;"></el-input>
+        </el-form-item>
+        <el-form-item label="电话" :label-width="formLabelWidth" prop="tel">
+          <el-input v-model="form.tel" style="width: 90%;"></el-input>
+        </el-form-item>
+        <el-form-item label="行业" :label-width="formLabelWidth" prop="ins">
+          <el-input v-model="form.ins" style="width: 90%;"></el-input>
+        </el-form-item>
+        <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
+          <el-input v-model="form.address" style="width: 90%;" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item label="创立时间" :label-width="formLabelWidth" prop="date">
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 90%;"
+            format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+      </div>
     </el-dialog>
     <div class="block">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
@@ -69,7 +94,9 @@
 <script>
   import {
     getCompany,
-    deleteCompany
+    deleteCompany,
+    addCompany,
+    editCompany
   } from '../../api/getData.js';
   export default {
     data() {
@@ -82,6 +109,7 @@
         selectData: "companyId", //被选择的下拉
         inputData: "",
         queryData: "", //用于条件查询
+        dialogFormVisible: false,
         propertyList: [{
           value: 'companyId',
           label: '编号'
@@ -102,7 +130,44 @@
         page: 1,
         limit: 50,
         total: 0,
-        fullHeight: document.documentElement.clientHeight - 230
+        fullHeight: document.documentElement.clientHeight - 185,
+        dialogName: '',
+        form: {
+          name: '',
+          tel: '',
+          ins: '',
+          address: '',
+          date: ''
+        },
+        formLabelWidth: '120px',
+        rules: {
+          name: [{
+            required: true,
+            message: '请输入公司名称',
+            trigger: 'blur'
+          }],
+          tel: [{
+            required: true,
+            message: '请输入电话号码',
+            trigger: 'blur'
+          }],
+          ins: [{
+            required: true,
+            message: '请输入行业',
+            trigger: 'blur'
+          }],
+          address: [{
+            required: true,
+            message: '请输入地址',
+            trigger: 'blur'
+          }],
+          date: [{
+            required: true,
+            message: '请选择日期',
+            trigger: 'change'
+          }]
+        },
+        editId: -1
       }
     },
     watch: {
@@ -166,7 +231,7 @@
         window.onresize = () => {
           return (() => {
             window.fullHeight = document.documentElement.clientHeight
-            that.fullHeight = window.fullHeight - 230
+            that.fullHeight = window.fullHeight - 185
           })()
         }
       },
@@ -182,7 +247,7 @@
               title: '删除' + row.companyName + '成功！',
               message: h('i', {
                 style: 'color: teal'
-              }, '编号为'+row.companyId+'的公司已被删除')
+              }, '编号为' + row.companyId + '的公司已被删除')
             });
             this.initList();
           } else {
@@ -194,6 +259,71 @@
             });
           }
         })
+      },
+      handleEdit(index, row) {
+        this.editId = row.companyId;
+        this.form.name = row.companyName;
+        this.form.tel = row.companyPhone;
+        this.form.ins = row.companyInstruction;
+        this.form.address = row.addressContent;
+        this.form.date = row.companyEstablishmentTime;
+      },
+      handleAdd() {
+        this.editId = -1;
+        this.form.name = '';
+        this.form.tel = '';
+        this.form.ins = '';
+        this.form.address = '';
+        this.form.date = '';
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (this.editId == -1) {
+              let data = {
+                companyName: this.form.name,
+                companyPhone: this.form.tel,
+                companyInstruction: this.form.ins,
+                addressContent: this.form.address,
+                companyEstablishmentTime: this.form.date
+              }
+              addCompany(data).then((res) => {
+                const h = this.$createElement;
+                this.$notify({
+                  title: '添加成功！',
+                  message: h('i', {
+                    style: 'color: teal'
+                  }, '名称为' + this.form.name + '的公司已被添加')
+                });
+                this.dialogFormVisible = false;
+                this.initList();
+              });
+            } else {
+              let data = {
+                companyName: this.form.name,
+                companyPhone: this.form.tel,
+                companyInstruction: this.form.ins,
+                addressContent: this.form.address,
+                companyEstablishmentTime: this.form.date,
+                companyId: this.editId
+              }
+              editCompany(data).then((res) => {
+                const h = this.$createElement;
+                this.$notify({
+                  title: '编辑完成！',
+                  message: h('i', {
+                    style: 'color: teal'
+                  }, '名称为' + this.form.name + '的公司信息编辑完成')
+                });
+                this.dialogFormVisible = false;
+                this.initList();
+              });
+            }
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       }
     },
     mounted() {
