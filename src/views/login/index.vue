@@ -112,7 +112,9 @@ export default {
         if (valid) {
           console.log(3)
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then(res => {
+            // localStorage.setItem('user', JSON.stringify({ 'user': 'Jack' }))// 存储用户信息到浏览器
+            console.log(res)
             console.log(4)
             this.$router.push({ path: this.redirect || '/' })
             console.log(5)

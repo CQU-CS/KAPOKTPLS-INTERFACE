@@ -37,6 +37,10 @@ const actions = {
       login({ accountAccount: account_account.trim(), accountPassword: account_password }).then((response) => {
         console.log(9)
         const { datas } = response
+        // sessionStorage.setItem('user', JSON.stringify({ 'user': datas.nickname }))// 存储用户信息到浏览器
+        console.log(123)
+        console.log(datas)
+        sessionStorage.setItem('user', JSON.stringify(datas))
         console.log(10)
         commit('SET_TOKEN', datas.token)
         console.log(11)

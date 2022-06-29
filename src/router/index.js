@@ -401,12 +401,28 @@ export const constantRoutes = [{
   }]
 },
 
+{
+  path: '/im',
+  component: Layout,
+  children: [{
+    path: 'chatroom',
+    name: 'chatroom',
+    component: () => import('@/views/im/Im'),
+    meta: {
+      title: '聊天室',
+      icon: 'el-icon-chat-dot-square'
+    }
+  }]
+},
+
 // 404 page must be placed at the end !!!
 {
   path: '*',
   redirect: '/404',
   hidden: true
 }
+
+
 ]
 
 const createRouter = () => new Router({
