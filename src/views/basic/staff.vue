@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import { getDocByCondition,getCategoryByCondition,docSelectOne } from '../api/getData.js';
+  import { getDocByCondition,getCategoryByCondition,docSelectOne } from '@/api/getData.js';
   export default {
     data() {
       return {
