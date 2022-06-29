@@ -193,6 +193,7 @@
         this.initList();
       },
       search() {
+        this.page = 1;
         this.queryData = this.inputData;
         this.initList();
       },
