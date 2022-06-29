@@ -237,7 +237,7 @@
         }
         deleteCompany(data).then((res) => {
           const h = this.$createElement;
-          if (res.stat) {
+          if (res.code=20000) {
             this.$notify({
               title: '删除' + row.companyName + '成功！',
               message: h('i', {
