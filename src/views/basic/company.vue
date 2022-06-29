@@ -4,14 +4,14 @@
       <div class="search-box">
         <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
           <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
-            <el-option v-for="item in categoryList" :label="item.categoryName" :value="item.categoryId"></el-option>
+            <el-option v-for="item in propertyList" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-card>
         <el-card class="box-card" shadow="always" style="width: 100%;" :body-style="{padding: '0px'}">
-          <el-input placeholder="请输入内容" class="inputDeep" v-model="queryData"> </el-input>
+          <el-input placeholder="请输入搜索内容" class="inputDeep" v-model="inputData"> </el-input>
         </el-card>
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
-          <el-button type="primary" icon="el-icon-search" @click="initList" style="width: 100%;">查询</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
       </div>
       <!-- <el-card class="box-card2" shadow="always" :body-style="{padding: '0px'}">
@@ -26,13 +26,13 @@
           </el-table-column>
           <el-table-column align="center" show-overflow-tooltip prop="companyName" label="公司名称">
           </el-table-column>
-          <el-table-column width="200px;" align="center" prop="companyEstablishmentTime" label="创立日期" sortable>
+          <el-table-column width="200px;" prop="companyEstablishmentTime" label="创立日期" sortable>
           </el-table-column>
-          <el-table-column width="150px;" align="center" show-overflow-tooltip prop="companyPhone" label="电话">
+          <el-table-column width="150px;" show-overflow-tooltip prop="companyPhone" label="电话">
           </el-table-column>
-          <el-table-column width="120px;" align="center" prop="companyInstruction" label="行业">
+          <el-table-column width="120px;" prop="companyInstruction" label="行业">
           </el-table-column>
-          <el-table-column align="center" show-overflow-tooltip prop="addressId" label="地址">
+          <el-table-column show-overflow-tooltip prop="addressContent" label="地址">
           </el-table-column>
           <el-table-column width="160px;" align="right">
             <template slot="header" slot-scope="scope">
@@ -40,7 +40,10 @@
             </template>
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              <el-popconfirm title="确定删除该公司吗？" style="margin-left: 8px;"
+                @onConfirm="handleDelete(scope.$index, scope.row)">
+                <el-button size="mini" type="danger" slot="reference">删除</el-button>
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -65,7 +68,8 @@
 
 <script>
   import {
-    getCompany
+    getCompany,
+    deleteCompany
   } from '../../api/getData.js';
   export default {
     data() {
@@ -73,13 +77,27 @@
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
-        inputData: "危", //双向绑定测试,
         companyList: [], //用于存放doc数据
         showButton2: false,
+        selectData: "companyId", //被选择的下拉
         inputData: "",
-        selectData: "", //被选择的下拉
         queryData: "", //用于条件查询
-        categoryList: [], //用于接收类型数据
+        propertyList: [{
+          value: 'companyId',
+          label: '编号'
+        }, {
+          value: 'companyName',
+          label: '公司名称'
+        }, {
+          value: 'companyEstablishmentTime',
+          label: '创立日期'
+        }, {
+          value: 'companyPhone',
+          label: '电话'
+        }, {
+          value: 'companyInstruction',
+          label: '行业'
+        }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,
         limit: 50,
@@ -114,24 +132,17 @@
         console.log(`当前页: ${val}`);
         this.initList();
       },
-      //获取类型数据
-      // initCategoryList() {
-      //   getCategoryByCondition().then(res => {
-      //     //新增一个全部,放到数组最前面
-      //     res.unshift({
-      //       categoryId: "",
-      //       categoryName: "全部"
-      //     });
-      //     this.categoryList = res;
-      //   });
-      // },
-      //获取文档数据
+      search() {
+        this.queryData = this.inputData;
+        this.initList();
+      },
       initList() {
         this.loading = true;
         //获取用户输入/选择的查询条件
         let data = {
           limit: this.limit,
-          page: this.page
+          page: this.page,
+          [this.selectData]: this.queryData
           // categoryId: this.selectData,
           // docTitle: this.queryData
         }
@@ -158,6 +169,31 @@
             that.fullHeight = window.fullHeight - 230
           })()
         }
+      },
+      handleDelete(index, row) {
+        console.log(row.companyId);
+        let data = {
+          id: row.companyId
+        }
+        deleteCompany(data).then((res) => {
+          const h = this.$createElement;
+          if (res.stat) {
+            this.$notify({
+              title: '删除' + row.companyName + '成功！',
+              message: h('i', {
+                style: 'color: teal'
+              }, '编号为'+row.companyId+'的公司已被删除')
+            });
+            this.initList();
+          } else {
+            this.$notify({
+              title: '删除' + row.companyName + '失败！',
+              message: h('i', {
+                style: 'color: teal'
+              }, '')
+            });
+          }
+        })
       }
     },
     mounted() {

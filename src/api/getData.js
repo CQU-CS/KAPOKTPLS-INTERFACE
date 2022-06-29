@@ -45,3 +45,11 @@ export function getCompany(data) {
 		data//请求参数
 	})
 }
+
+export function deleteCompany(params) {
+	return request({
+		url: '/company/deleteByCompanyId',//请求接口
+		method: 'post',//请求方式
+		params//请求参数
+	})
+}
