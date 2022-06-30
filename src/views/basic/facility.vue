@@ -94,7 +94,7 @@
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
-        companyList: [], //用于存放doc数据
+        ecdList: [], //用于存放doc数据
         showButton2: false,
         selectData: "ecdId", //被选择的下拉
         inputData: "",
