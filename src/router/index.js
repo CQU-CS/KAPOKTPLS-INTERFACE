@@ -105,7 +105,7 @@ export const constantRoutes = [{
   {
     path: 'supplies',
     name: 'supplies',
-    component: () => import('@/views/basic/supplies'),
+    component: () => import('@/views/basic/material'),
     meta: {
       title: '物资信息',
       icon: 'el-icon-coin'

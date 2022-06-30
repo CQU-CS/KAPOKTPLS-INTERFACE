@@ -260,7 +260,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             if (this.editId == -1) {
-				
+
               let data = {
                 personName: this.form.name,
                 certificateType: this.form.type,
