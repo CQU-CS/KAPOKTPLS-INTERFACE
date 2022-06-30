@@ -25,7 +25,7 @@ export function addCarrierManage(data) {
 
 export function editCarrierManage(data) {
   return request({
-    url: '/carrierManage/editByCarrierMange', //请求接口
+    url: '/carrierManage/editByCarrierManage', //请求接口
     method: 'post', //请求方式
     data //请求参数
   })

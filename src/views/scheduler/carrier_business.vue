@@ -79,7 +79,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="true"
+        :current-page="page" :page-sizes="[15, 30, 50, 100, 200]" :page-size="limit" :hide-on-single-page="true"
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -101,7 +101,7 @@
         dialogVisible: false, //表示弹出框是否显示
         carrierManageList: [], //用于存放doc数据
         showButton2: false,
-        selectData: "ecdId", //被选择的下拉
+        selectData: "carrierManageId", //被选择的下拉
         inputData: "",
         queryData: "", //用于条件查询
         dialogFormVisible: false,
@@ -110,23 +110,23 @@
           label: '编号'
         }, {
           value: 'carrierName',
-          label: '机电设备名称'
+          label: '承运商名称'
         },{
           value: 'companyName',
-          label: '规格参数'
+          label: '公司名称'
         }, {
           value: 'goodsName',
-          label: '规格参数'
+          label: '货物名称'
         }, {
           value: 'carrierManagePrice',
-          label: '规格参数'
+          label: '价格'
         }, {
           value: 'taskTime',
-          label: '购买日期'
+          label: '完成日期'
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,
-        limit: 50,
+        limit: 15,
         total: 0,
         fullHeight: document.documentElement.clientHeight - 185,
         dialogName: '',
@@ -284,7 +284,7 @@
                 companyName: this.form.cname,
                 goodsName:this.form.gname,
 				carrierManagePrice:this.form.price,
-				taskTime:this.from.date
+				taskTime:this.form.date
               }
               addCarrierManage(data).then((res) => {
                 const h = this.$createElement;
@@ -303,7 +303,7 @@
                companyName: this.form.cname,
                goodsName:this.form.gname,
                carrierManagePrice:this.form.price,
-               taskTime:this.from.date,
+               taskTime:this.form.date,
                carrierManageId: this.editId
               }
               editCarrierManage(data).then((res) => {
