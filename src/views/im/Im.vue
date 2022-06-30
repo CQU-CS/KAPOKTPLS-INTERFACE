@@ -9,7 +9,7 @@
             <i
               class="el-icon-chat-dot-round"
               style="margin-left: 10px; font-size: 16px; cursor: pointer"
-              @click="chatUser = user.nickname"
+              @click="chatUser = user.nickname;handlePicture()"
             />
             <span v-if="user.nickname === chatUser" style="font-size: 12px;color: limegreen; margin-left: 5px">chatting...</span>
           </div>
@@ -43,7 +43,9 @@
 
 <script>
 
-import request from '@/utils/request'
+import {
+  getPicture
+} from '../../api/getPicture.js'
 
 let socket
 
@@ -58,13 +60,27 @@ export default {
       chatUser: '',
       text: '',
       messages: [],
-      content: ''
+      content: '',
+      userPicture: '',
+      chatUserPicture: ''
     }
   },
   created() {
     this.init()
   },
   methods: {
+    handlePicture() {
+      let data = {
+        accountNickname: this.chatUser
+      }
+      console.log(88888)
+      console.log(this.chatUser)
+      getPicture(data).then((res) => {
+        // console.log(res.infor)
+        // console.log(res.infor.accountPicture)
+        this.chatUserPicture = res.datas.infor[0].accountPicture
+      })
+    },
     send() {
       if (!this.chatUser) {
         this.$message({ type: 'warning', message: '请选择聊天对象' })
@@ -98,15 +114,16 @@ export default {
           '  </div>\n' +
           '  <div class="el-col el-col-2">\n' +
           '  <span class="el-avatar el-avatar--circle" style="height: 40px; width: 40px; line-height: 40px;">\n' +
-          '    <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="object-fit: cover;">\n' +
+          '    <img src=' + this.userPicture + ' style="object-fit: cover;">\n' +
           '  </span>\n' +
           '  </div>\n' +
           '</div>'
       } else if (remoteUser) { // remoteUser表示远程用户聊天消息，蓝色的气泡
-        html = '<div class="el-row" style="padding: 5px 0">\n' +
+        html = '<meta name="referrer" content="no-referrer">' +
+          '<div class="el-row" style="padding: 5px 0">\n' +
           '  <div class="el-col el-col-2" style="text-align: right">\n' +
           '  <span class="el-avatar el-avatar--circle" style="height: 40px; width: 40px; line-height: 40px;">\n' +
-          '    <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="object-fit: cover;">\n' +
+          '    <img src=' + this.chatUserPicture + ' style="object-fit: cover;">\n' +
           '  </span>\n' +
           '  </div>\n' +
           '  <div class="el-col el-col-22" style="text-align: left; padding-left: 10px">\n' +
@@ -120,6 +137,8 @@ export default {
     init() {
       this.user = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : {}
       const nickname = this.user.nickname
+      this.userPicture = this.user.picture
+      console.log(this.userPicture)
       const _this = this
       console.log(111)
       console.log(nickname)
