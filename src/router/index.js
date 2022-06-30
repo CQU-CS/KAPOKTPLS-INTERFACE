@@ -168,6 +168,7 @@ export const constantRoutes = [{
     }
   }, {
     path: 'supplies',
+    component: ()=>import('@/layout/components/SubView'),
     redirect: '/trade/supplies',
     name: 'suppliesM',
     meta: {
@@ -200,6 +201,7 @@ export const constantRoutes = [{
     ]
   }, {
     path: 'vehicle',
+    component: ()=>import('@/layout/components/SubView'),
     redirect: '/trade/vehicle',
     name: 'vehicleM',
     meta: {
@@ -224,6 +226,7 @@ export const constantRoutes = [{
     ]
   }, {
     path: 'cargo',
+    component: ()=>import('@/layout/components/SubView'),
     redirect: '/trade/cargo',
     name: 'cargoM',
     meta: {
@@ -256,6 +259,7 @@ export const constantRoutes = [{
     ]
   }, {
     path: 'building',
+    component: ()=>import('@/layout/components/SubView'),
     redirect: '/trade/building',
     name: 'buildingM',
     meta: {
