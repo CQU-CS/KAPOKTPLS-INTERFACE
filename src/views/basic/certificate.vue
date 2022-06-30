@@ -104,9 +104,6 @@
           value: 'certificateId',
           label: '编号'
         }, {
-          value: 'personName',
-          label: '人员姓名'
-        }, {
           value: 'certificateType',
           label: '证件类型'
         }, {
