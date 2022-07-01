@@ -2,9 +2,9 @@
   <div>
     <div class="main-box">
       <div class="search-box">
-        <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
-          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
-            <el-option v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
+        <el-card class="box-card" shadow="always" style="width: 180px;" :body-style="{padding: '0px'}">
+          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeepMessage" style="width: 100%;">
+            <el-option style="text-align: center;" v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-card>
@@ -14,6 +14,9 @@
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
+		<el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+		  <el-button type="primary" icon="el-icon-circle-plus"@click="handleAdd(); dialogFormVisible = true; dialogName='添加机电设备'" style="width: 100%;">添加</el-button>
+		</el-card>
       </div>
       <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
         <div style="margin-left: 15px;margin-right: 15px;">
@@ -22,20 +25,20 @@
             style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
             <el-table-column width="80px;" align="center" prop="ecdId" label="编号" sortable>
             </el-table-column>
-            <el-table-column align="center" show-overflow-tooltip prop="ecdName" label="机电设备名称">
+            <el-table-column align="center" show-overflow-tooltip prop="ecdName" label="机电设备名称" >
             </el-table-column>
             <el-table-column align="center" prop="buildingName" label="存放建筑构物名称" >
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="ecdSpecification" label="规格参数">
             </el-table-column>
-            <el-table-column align="center" prop="ecdDate" label="购买日期">
+            <el-table-column align="center" prop="ecdDate" label="购买日期" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="right">
-              <template slot="header" slot-scope="scope">
+            <el-table-column width="160px;" align="center" label="操作">
+              <!-- <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加机电设备'">
                   添加
                 </el-button>
-              </template>
+              </template> -->
               <template slot-scope="scope">
                 <el-button size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公司'">编辑
@@ -56,10 +59,10 @@
         <el-form-item label="机电设备名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="存放建筑构物" :label-width="formLabelWidth" prop="tel">
+        <el-form-item label="存放建筑构物" :label-width="formLabelWidth" prop="bname">
           <el-input v-model="form.bname" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="规格参数" :label-width="formLabelWidth" prop="ins">
+        <el-form-item label="规格参数" :label-width="formLabelWidth" prop="unit">
           <el-input v-model="form.unit" style="width: 90%;"></el-input>
         </el-form-item>
         <el-form-item label="购买日期" :label-width="formLabelWidth" prop="date">
@@ -74,7 +77,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="true"
+        :current-page="page" :page-sizes="[20, 30, 50, 100, 300]" :page-size="limit" :hide-on-single-page="true"
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -115,7 +118,7 @@
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,
-        limit: 50,
+        limit: 20,
         total: 0,
         fullHeight: document.documentElement.clientHeight - 185,
         dialogName: '',
@@ -129,24 +132,24 @@
         rules: {
           name: [{
             required: true,
-            message: '请输入公司名称',
+            message: '请输入机电设备名称',
             trigger: 'blur'
           }],
           bname: [{
             required: true,
-            message: '请输入电话号码',
+            message: '请输入存放建筑构物名称',
             trigger: 'blur'
           }],
           unit: [{
             required: true,
-            message: '请输入行业',
+            message: '请输入规格参数',
             trigger: 'blur'
           }],
          
           date: [{
             required: true,
-            message: '请选择日期',
-            trigger: 'change'
+            message: '请选择购买日期',
+            trigger: 'blur'
           }]
         },
         editId: -1
