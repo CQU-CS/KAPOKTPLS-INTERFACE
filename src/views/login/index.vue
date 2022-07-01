@@ -31,13 +31,14 @@
       </el-form-item>
 
       <el-form-item>
-<!--        <span class="svg-container">-->
-<!--          <svg-icon icon-class="el-icon-key" />-->
-<!--        </span>-->
+        <!--        <span class="svg-container">-->
+        <!--          <svg-icon icon-class="el-icon-key" />-->
+        <!--        </span>-->
         <span class="svg-container">
           <i class="el-icon-key" style="font-size: 15px;font-weight: bold;"></i>
         </span>
-        <el-input v-model="loginForm.validCode" style="width: 50%;" placeholder="请输入验证码">
+        <el-input v-model="loginForm.validCode" style="width: 50%;" placeholder="请输入验证码"
+          @keyup.enter.native="handleLogin">
         </el-input>
         <ValidCode style="padding-top: 5px; float: right;margin-right: 0px" @input="createValidCode" />
       </el-form-item>
