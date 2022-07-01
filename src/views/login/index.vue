@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <star-background />
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
       label-position="left">
 
@@ -29,13 +30,27 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin">Login</el-button>
+      <el-form-item>
+        <!--        <span class="svg-container">-->
+        <!--          <svg-icon icon-class="el-icon-key" />-->
+        <!--        </span>-->
+        <span class="svg-container">
+          <i class="el-icon-key" style="font-size: 15px;font-weight: bold;"></i>
+        </span>
+        <el-input v-model="loginForm.validCode" style="width: 50%;" placeholder="请输入验证码"
+          @keyup.enter.native="handleLogin">
+        </el-input>
+        <ValidCode style="padding-top: 5px; float: right;margin-right: 0px" @input="createValidCode" />
+      </el-form-item>
 
-      <div class="tips">
+      <el-button :loading="loading" type="primary"
+        style="width:100%;margin-bottom:50px;margin-top: 20px; border-radius: 15px;"
+        @click.native.prevent="handleLogin">登 录</el-button>
+
+      <!-- <div class="tips">
         <span style="margin-right:20px;">account_account: admin</span>
         <span> account_password: any</span>
-      </div>
+      </div> -->
 
     </el-form>
   </div>
@@ -45,7 +60,8 @@
   import {
     validUsername
   } from '@/utils/validate'
-
+  import StarBackground from '../../components/StarBackground'
+  import ValidCode from '@/components/ValidCode'
   export default {
     name: 'Login',
     data() {
@@ -61,7 +77,8 @@
       return {
         loginForm: {
           account_account: 'admin',
-          account_password: '111111'
+          account_password: '111111',
+          validCode: ''
         },
         loginRules: {
           account_account: [{
@@ -76,8 +93,16 @@
         },
         loading: false,
         passwordType: 'password',
+        validCode: '',
         redirect: undefined
       }
+    },
+    beforeCreate: function() {
+      document.getElementsByTagName('body')[0].className = 'body-bg'
+    },
+    components: {
+      StarBackground,
+      ValidCode
     },
     watch: {
       $route: {
@@ -88,6 +113,9 @@
       }
     },
     methods: {
+      createValidCode(data) {
+        this.validCode = data
+      },
       showPwd() {
         if (this.passwordType === 'password') {
           this.passwordType = ''
@@ -103,6 +131,14 @@
         this.$refs.loginForm.validate(valid => {
           console.log(2)
           if (valid) {
+            if (!this.loginForm.validCode) {
+              this.$message.error('请填写验证码')
+              return
+            }
+            if (this.loginForm.validCode.toLowerCase() !== this.validCode.toLowerCase()) {
+              this.$message.error('验证码错误')
+              return
+            }
             console.log(3)
             this.loading = true
             this.$store.dispatch('user/login', this.loginForm).then(res => {
@@ -144,6 +180,13 @@
 
   /* reset element-ui css */
   .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden !important;
+    position: relative;
+    z-index: 1;
+
     .el-input {
       display: inline-block;
       height: 47px;
@@ -167,9 +210,9 @@
     }
 
     .el-form-item {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
+      border: 0px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
       color: #454545;
     }
   }
@@ -181,19 +224,22 @@
   $light_gray:#eee;
 
   .login-container {
-    min-height: 100%;
+    height: 100%;
     width: 100%;
     background-image: -webkit-radial-gradient(ellipse farthest-corner at center top, #000d4d 0%, #000105 100%);
     background-image: radial-gradient(ellipse farthest-corner at center top, #000d4d 0%, #000105 100%);
-    overflow: hidden;
+    overflow: hidden !important;
 
     .login-form {
       position: relative;
-      width: 520px;
+      width: 500px;
       max-width: 100%;
-      padding: 120px 35px 0;
+      padding: 0px 50px 0;
       margin: 0 auto;
       overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding-top: 50px;
     }
 
     .tips {
@@ -222,7 +268,7 @@
       .title {
         font-size: 48px;
         color: $light_gray;
-        margin: 0px auto 40px auto;
+        margin: 0px auto 20px auto;
         text-align: center;
         font-weight: bold;
       }
@@ -230,7 +276,7 @@
       .title2 {
         font-size: 26px;
         color: $light_gray;
-        margin: 0px auto 30px auto;
+        margin: 0px auto 60px auto;
         text-align: center;
       }
     }
@@ -243,6 +289,11 @@
       color: $dark_gray;
       cursor: pointer;
       user-select: none;
+    }
+
+    .body-bg {
+      background-attachment: fixed;
+      overflow: hidden !important;
     }
   }
 </style>

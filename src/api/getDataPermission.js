@@ -1,32 +1,32 @@
 import request from '../utils/request.js'
 
-export function getAddress(data) {
+export function getAccount(data) {
   return request({
-    url: '/address/queryByAddressDTO', //请求接口
+    url: '/account/queryByAccountDTO', //请求接口
     method: 'post', //请求方式
     data //请求参数
   })
 }
 
-export function deleteAddress(params) {
+export function deleteAccount(params) {
   return request({
-    url: '/address/deleteById', //请求接口
+    url: '/account/deleteById', //请求接口
     method: 'post', //请求方式
     params //请求参数
   })
 }
 
-export function addAddress(data) {
+export function addAccount(data) {
   return request({
-    url: '/address/addByAddress', //请求接口
+    url: '/account/addByAccount', //请求接口
     method: 'post', //请求方式
     data //请求参数
   })
 }
 
-export function editAddress(data) {
+export function editAccount(data) {
   return request({
-    url: '/address/editByAddress', //请求接口
+    url: '/account/editByAccount', //请求接口
     method: 'post', //请求方式
     data //请求参数
   })

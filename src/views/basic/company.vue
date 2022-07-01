@@ -2,9 +2,9 @@
   <div>
     <div class="main-box">
       <div class="search-box">
-        <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
-          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
-            <el-option v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
+        <el-card class="box-card" shadow="always" style="width: 180px;" :body-style="{padding: '0px'}">
+          <el-select v-model="selectData"  placeholder="搜索方式" class="inputDeepMessage" style="width: 100%;">
+            <el-option style="text-align: center;" v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-card>
@@ -14,6 +14,9 @@
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
+		<!-- <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+		  <el-button type="primary" icon="el-icon-circle-plus"@click="handleAdd(); dialogFormVisible = true; dialogName='添加公司'" style="width: 100%;">添加</el-button>
+		</el-card> -->
       </div>
       <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
         <div style="margin-left: 15px;margin-right: 15px;">
@@ -24,27 +27,27 @@
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="companyName" label="公司名称">
             </el-table-column>
-            <el-table-column width="200px;" prop="companyEstablishmentTime" label="创立日期" sortable>
+            <el-table-column align="center" width="200px;" prop="companyEstablishmentTime" label="创立日期" sortable>
             </el-table-column>
-            <el-table-column width="150px;" show-overflow-tooltip prop="companyPhone" label="电话">
+            <el-table-column align="center" width="150px;" show-overflow-tooltip prop="companyPhone" label="电话">
             </el-table-column>
-            <el-table-column width="120px;" prop="companyInstruction" label="行业">
+            <el-table-column align="center" width="120px;" prop="companyInstruction" label="行业">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="addressContent" label="地址">
+            <el-table-column align="center" show-overflow-tooltip prop="addressContent" label="地址">
             </el-table-column>
-            <el-table-column width="160px;" align="right">
-              <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加公司'">
+            <el-table-column width="160px;" align="center" >
+             <template slot="header" slot-scope="scope">
+                <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加公司'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
-                <el-button size="mini"
+                <el-button size="mini" v-show="basicAs"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公司'">编辑
                 </el-button>
                 <el-popconfirm title="确定删除该公司吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
-                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
+                  <el-button v-show="basicAs" size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
@@ -79,7 +82,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="true"
+        :current-page="page" :page-sizes="[20, 30, 50, 100, 300]" :page-size="limit" :hide-on-single-page="true"
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -96,6 +99,7 @@
   export default {
     data() {
       return {
+		basicAs: this.$store.getters.basicAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
@@ -123,7 +127,7 @@
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,
-        limit: 50,
+        limit: 20,
         total: 0,
         fullHeight: document.documentElement.clientHeight - 185,
         dialogName: '',
@@ -153,13 +157,13 @@
           }],
           address: [{
             required: true,
-            message: '请输入地址',
+            message: '请输入公司地址',
             trigger: 'blur'
           }],
           date: [{
             required: true,
-            message: '请选择日期',
-            trigger: 'change'
+            message: '请选择创立日期',
+            trigger: 'blur'
           }]
         },
         editId: -1
@@ -348,7 +352,12 @@
   .el-select .el-input {
     width: 130px;
   }
-
+.inputDeepMessage .el-input__inner {
+    border: 0 !important;
+    outline: none;
+	text-align: center;
+	
+  }
   .inputDeep .el-input__inner {
     border: 0 !important;
     outline: none;

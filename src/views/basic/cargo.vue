@@ -2,9 +2,9 @@
   <div>
     <div class="main-box">
       <div class="search-box">
-        <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
-          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
-            <el-option v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
+        <el-card class="box-card" shadow="always" style="width: 180px;" :body-style="{padding: '0px'}">
+          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeepMessage" style="width: 100%;">
+            <el-option  style="text-align: center;" v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-card>
@@ -14,6 +14,9 @@
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
+		<!-- <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+		  <el-button  type="primary" icon="el-icon-circle-plus"@click="handleAdd(); dialogFormVisible = true; dialogName='添加货物'" style="width: 100%;">添加</el-button>
+		</el-card> -->
       </div>
       <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
         <div style="margin-left: 15px;margin-right: 15px;">
@@ -30,21 +33,21 @@
             </el-table-column>
             <el-table-column align="center" prop="goodsUnit" label="单位">
             </el-table-column>
-			<el-table-column align="center" prop="goodsUnitPrice" label="单位价格">
+			<el-table-column align="center" prop="goodsUnitPrice" label="单位价格"  sortable>
 			</el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="center" >
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加货物'">
+                <el-button size="mini" v-show="basicAs" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加货物'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
-                <el-button size="mini"
+                <el-button size="mini" v-show="basicAs"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公司'">编辑
                 </el-button>
                 <el-popconfirm title="确定删除该货物信息吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
-                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
+                  <el-button v-show="basicAs" size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
@@ -58,16 +61,16 @@
         <el-form-item label="货物名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="货物类型" :label-width="formLabelWidth" prop="tel">
+        <el-form-item label="货物类型" :label-width="formLabelWidth" prop="type">
           <el-input v-model="form.type" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="参数规格" :label-width="formLabelWidth" prop="ins">
+        <el-form-item label="参数规格" :label-width="formLabelWidth" prop="num">
           <el-input v-model="form.num" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="单位" :label-width="formLabelWidth" prop="ins">
+        <el-form-item label="单位" :label-width="formLabelWidth" prop="unit">
           <el-input v-model="form.unit" style="width: 90%;"></el-input>
         </el-form-item>
-		<el-form-item label="单位价格" :label-width="formLabelWidth" prop="ins">
+		<el-form-item label="单位价格" :label-width="formLabelWidth" prop="price">
 		  <el-input v-model="form.price" style="width: 90%;"></el-input>
 		</el-form-item>
       </el-form>
@@ -78,7 +81,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="true"
+        :current-page="page" :page-sizes="[20, 30, 50, 100, 300]" :page-size="limit" :hide-on-single-page="true"
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -95,6 +98,7 @@
   export default {
     data() {
       return {
+		basicAs: this.$store.getters.basicAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
@@ -125,7 +129,7 @@
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,
-        limit: 50,
+        limit: 20,
         total: 0,
         fullHeight: document.documentElement.clientHeight - 185,
         dialogName: '',
@@ -140,29 +144,29 @@
         rules: {
           name: [{
             required: true,
-            message: '请输入公司名称',
+            message: '请输入货物名称',
             trigger: 'blur'
           }],
           type: [{
             required: true,
-            message: '请输入电话号码',
+            message: '请输入货物类型',
             trigger: 'blur'
           }],
 		  num: [{
 		    required: true,
-		    message: '请输入电话号码',
+		    message: '请输入规格参数',
 		    trigger: 'blur'
 		  }],
           unit: [{
             required: true,
-            message: '请输入行业',
+            message: '请输入货物单位',
             trigger: 'blur'
           }],
          
           price: [{
             required: true,
-            message: '请选择日期',
-            trigger: 'change'
+            message: '请输入价格',
+            trigger: 'blur'
           }]
         },
         editId: -1
@@ -356,7 +360,12 @@
     border: 0 !important;
     outline: none;
   }
-
+.inputDeepMessage .el-input__inner {
+      border: 0 !important;
+      outline: none;
+  	text-align: center;
+  	
+    }
   .box-card {
     margin-left: 8px;
     margin-right: 8px;
