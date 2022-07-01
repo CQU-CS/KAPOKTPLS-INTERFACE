@@ -30,6 +30,18 @@
         </span>
       </el-form-item>
 
+      <el-form-item>
+<!--        <span class="svg-container">-->
+<!--          <svg-icon icon-class="el-icon-key" />-->
+<!--        </span>-->
+        <span class="svg-container">
+          <i class="el-icon-key" style="font-size: 15px;font-weight: bold;"></i>
+        </span>
+        <el-input v-model="loginForm.validCode" style="width: 50%;" placeholder="请输入验证码">
+        </el-input>
+        <ValidCode style="padding-top: 5px; float: right;margin-right: 0px" @input="createValidCode" />
+      </el-form-item>
+
       <el-button :loading="loading" type="primary"
         style="width:100%;margin-bottom:50px;margin-top: 20px; border-radius: 15px;"
         @click.native.prevent="handleLogin">登 录</el-button>
@@ -48,6 +60,7 @@
     validUsername
   } from '@/utils/validate'
   import StarBackground from '../../components/StarBackground'
+  import ValidCode from '@/components/ValidCode'
   export default {
     name: 'Login',
     data() {
@@ -63,7 +76,8 @@
       return {
         loginForm: {
           account_account: 'admin',
-          account_password: '111111'
+          account_password: '111111',
+          validCode: ''
         },
         loginRules: {
           account_account: [{
@@ -78,6 +92,7 @@
         },
         loading: false,
         passwordType: 'password',
+        validCode: '',
         redirect: undefined
       }
     },
@@ -85,7 +100,8 @@
       document.getElementsByTagName('body')[0].className = 'body-bg'
     },
     components: {
-      StarBackground
+      StarBackground,
+      ValidCode
     },
     watch: {
       $route: {
@@ -96,6 +112,9 @@
       }
     },
     methods: {
+      createValidCode(data) {
+        this.validCode = data
+      },
       showPwd() {
         if (this.passwordType === 'password') {
           this.passwordType = ''
@@ -111,6 +130,14 @@
         this.$refs.loginForm.validate(valid => {
           console.log(2)
           if (valid) {
+            if (!this.loginForm.validCode) {
+              this.$message.error('请填写验证码')
+              return
+            }
+            if (this.loginForm.validCode.toLowerCase() !== this.validCode.toLowerCase()) {
+              this.$message.error('验证码错误')
+              return
+            }
             console.log(3)
             this.loading = true
             this.$store.dispatch('user/login', this.loginForm).then(res => {
