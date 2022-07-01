@@ -276,7 +276,7 @@ export default {
                 title: '添加成功！',
                 message: h('i', {
                   style: 'color: teal'
-                }, '名字为' + this.form.goodsName + '的物资信息已被添加')
+                }, '名字为' + this.form.goodsName + '的商品信息已被添加')
               })
               this.dialogFormVisible = false
               this.initList()
