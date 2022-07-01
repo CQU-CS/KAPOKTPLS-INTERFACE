@@ -15,8 +15,8 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
-import * as echarts from 'echarts'
-Vue.prototype.$echarts = echarts //挂载到Vue实例上面
+// import * as echarts from 'echarts'
+// Vue.prototype.$echarts = echarts //挂载到Vue实例上面
 
 /**
  * If you don't want to use mock-server
