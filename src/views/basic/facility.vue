@@ -14,9 +14,9 @@
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
-		<el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+		<!-- <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
 		  <el-button type="primary" icon="el-icon-circle-plus"@click="handleAdd(); dialogFormVisible = true; dialogName='添加机电设备'" style="width: 100%;">添加</el-button>
-		</el-card>
+		</el-card> -->
       </div>
       <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
         <div style="margin-left: 15px;margin-right: 15px;">
@@ -33,7 +33,12 @@
             </el-table-column>
             <el-table-column align="center" prop="ecdDate" label="购买日期" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="center" label="操作">
+            <el-table-column width="160px;" align="center" >
+				<template slot="header" slot-scope="scope">
+				   <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加机电设备'">
+				     添加
+				   </el-button>
+				 </template>
               <template slot-scope="scope">
                 <el-button v-show="basicAs" size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公司'">编辑
