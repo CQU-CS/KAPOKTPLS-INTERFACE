@@ -394,10 +394,10 @@ export const constantRoutes = [{
 {
   path: '/permission',
   component: Layout,
+  name: 'permission',
   children: [{
     path: 'permission',
     component: () => import('@/views/permission/permission'),
-    name: 'permission',
     meta: {
       title: '权限管理',
       icon: 'el-icon-lock'

@@ -28,10 +28,14 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters([
-      'sidebar'
+      'sidebar',
+      'map'
     ]),
     routes() {
-      return this.$router.options.routes
+      const list = this.map
+      return this.$router.options.routes.filter(function(item){
+        return list.indexOf(item.name) == -1
+      })
     },
     activeMenu() {
       const route = this.$route

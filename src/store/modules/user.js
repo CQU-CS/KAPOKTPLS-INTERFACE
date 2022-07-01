@@ -6,7 +6,10 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    role: '',
+    map: [],
+    basicAs: false,
   }
 }
 
@@ -15,6 +18,7 @@ const state = getDefaultState()
 const mutations = {
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState())
+    state.basicAs = false
   },
   SET_TOKEN: (state, token) => {
     state.token = token
@@ -24,6 +28,13 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role
+    state.basicAs = (role=='root'||role=='基本信息管理员')?true:false
+  },
+  SET_MAP: (state, map) => {
+    state.map = map
   }
 }
 
@@ -67,10 +78,12 @@ const actions = {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = datas
+        const { name, avatar, role, map } = datas
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
+        commit('SET_ROLE', role)
+        commit('SET_MAP', map)
         resolve(datas)
       }).catch(error => {
         reject(error)
@@ -106,5 +119,5 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }
