@@ -26,9 +26,10 @@
             </el-table-column>
             <el-table-column width="200px;" prop="addressLevel" label="地域等级" align="center">
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="basicAs">
               <template slot="header" slot-scope="scope">
-                <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加地址'">
+                <el-button v-show="basicAs" size="mini" type="primary"
+                  @click="handleAdd(); dialogFormVisible = true; dialogName='添加地址'">
                   添加
                 </el-button>
               </template>
@@ -54,13 +55,9 @@
         </el-form-item>
         <el-form-item label="地域等级" :label-width="formLabelWidth" prop="addressLevel">
           <el-select v-model="form.addressLevel" placeholder="请选择" style="width: 90%;">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -147,15 +144,15 @@
         },
         editId: -1,
         options: [{
-                  value: 0,
-                  label: '0'
-                }, {
-                  value: 1,
-                  label: '1'
-                }, {
-                  value: 2,
-                  label: '2'
-                }]
+          value: 0,
+          label: '0'
+        }, {
+          value: 1,
+          label: '1'
+        }, {
+          value: 2,
+          label: '2'
+        }]
       }
     },
     watch: {
@@ -232,7 +229,7 @@
         }
         deleteAddress(data).then((res) => {
           const h = this.$createElement;
-          if (res.code=20000) {
+          if (res.code = 20000) {
             this.$notify({
               title: '删除' + row.addressContent + '成功！',
               message: h('i', {
