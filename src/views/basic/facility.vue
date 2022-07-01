@@ -34,18 +34,13 @@
             <el-table-column align="center" prop="ecdDate" label="购买日期" sortable>
             </el-table-column>
             <el-table-column width="160px;" align="center" label="操作">
-              <!-- <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加机电设备'">
-                  添加
-                </el-button>
-              </template> -->
               <template slot-scope="scope">
-                <el-button size="mini"
+                <el-button v-show="basicAs" size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公司'">编辑
                 </el-button>
                 <el-popconfirm title="确定删除该机电设备信息吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
-                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
+                  <el-button v-show="basicAs" size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
@@ -94,6 +89,7 @@
   export default {
     data() {
       return {
+        basicAs: this.$store.getters.basicAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
@@ -145,7 +141,7 @@
             message: '请输入规格参数',
             trigger: 'blur'
           }],
-         
+
           date: [{
             required: true,
             message: '请选择购买日期',
@@ -258,7 +254,7 @@
         this.form.name = '';
         this.form.bname = '';
         this.form.unit = '';
-        
+
         this.form.date = '';
       },
       submitForm(formName) {

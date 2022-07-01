@@ -27,15 +27,21 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       const hasGetUserInfo = store.getters.name
+      const role = store.getters.role
       if (hasGetUserInfo) {
-        next()
+        if (to.path === '/permission/permission' && role !== 'root') {
+          next({path: '/'})
+        }
+        else next()
       } else {
         console.log(114)
         try {
           // get user info
           await store.dispatch('user/getInfo')
-
-          next()
+          if (to.path === '/permission/permission' && store.getters.role !== 'root') {
+            next({path: '/'})
+          }
+          else next()
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

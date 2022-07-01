@@ -37,13 +37,13 @@
                 <el-button size="mini" type="primary" @click="handleExport();">
                   导出
                 </el-button>
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
+                <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
                 <el-button
-                  size="mini"
+                  v-show="basicAs" size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑物资信息'"
                 >编辑
                 </el-button>
@@ -52,7 +52,7 @@
                   style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)"
                 >
-                  <el-button slot="reference" size="mini" type="danger">删除</el-button>
+                  <el-button v-show="basicAs" slot="reference" size="mini" type="danger">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
@@ -108,6 +108,7 @@ import {
 export default {
   data() {
     return {
+      basicAs: this.$store.getters.basicAs,
       showButton: true, // 是否渲染按钮
       showElseIf: 2, // 展示else-if
       dialogVisible: false, // 表示弹出框是否显示
