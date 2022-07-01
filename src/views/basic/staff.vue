@@ -38,9 +38,10 @@
             </el-table-column>
             <el-table-column align="center" prop="personBankAccount" show-overflow-tooltip label="账户">
             </el-table-column>
-            <el-table-column width="140px;" align="right">
+            <el-table-column width="140px;" align="right" v-if="basicAs">
               <template slot="header" slot-scope="scope">
-                <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加员工'">
+                <el-button v-show="basicAs" size="mini" type="primary"
+                  @click="handleAdd(); dialogFormVisible = true; dialogName='添加员工'">
                   添加
                 </el-button>
               </template>

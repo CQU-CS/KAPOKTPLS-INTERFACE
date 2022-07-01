@@ -29,7 +29,7 @@ router.beforeEach(async(to, from, next) => {
       const hasGetUserInfo = store.getters.name
       const role = store.getters.role
       if (hasGetUserInfo) {
-        if (to.path === '/permission/permission' && role !== 'root') {
+        if (to.path === '/permission' && role !== 'root') {
           next({path: '/'})
         }
         else next()
@@ -38,7 +38,7 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
-          if (to.path === '/permission/permission' && store.getters.role !== 'root') {
+          if (to.path === '/permission' && store.getters.role !== 'root') {
             next({path: '/'})
           }
           else next()
