@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: 'K A P O K T P L S',
+      logo: 'https://s1.ax1x.com/2022/07/01/jMXP54.png'
     }
   }
 }
