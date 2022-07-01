@@ -30,7 +30,7 @@
             </el-table-column>
             <el-table-column width="200px;" prop="buildingBuyTime" label="购买时间" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="basicAs">
               <template slot="header" slot-scope="scope">
                 <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加地址'">
                   添加
