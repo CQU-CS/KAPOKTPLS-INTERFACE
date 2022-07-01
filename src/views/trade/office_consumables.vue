@@ -34,17 +34,17 @@
             </el-table-column>
             <el-table-column width="160px;" align="right">
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加采购记录'">
+                <el-button v-show="tradeAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加采购记录'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
-                <el-button size="mini"
+                <el-button v-show="tradeAs" size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑采购记录'">编辑
                 </el-button>
                 <el-popconfirm title="确定删除该记录吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
-                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
+                  <el-button v-show="tradeAs" size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
@@ -93,6 +93,7 @@
   export default {
     data() {
       return {
+        tradeAs: this.$store.getters.tradeAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示

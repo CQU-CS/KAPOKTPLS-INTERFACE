@@ -35,18 +35,7 @@
             </el-table-column>
 			<el-table-column align="center" prop="goodsUnitPrice" label="单位价格"  sortable>
 			</el-table-column>
-<<<<<<< HEAD
-            <el-table-column width="160px;" align="right">
-              <template slot="header" slot-scope="scope">
-                <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加货物'">
-=======
             <el-table-column width="160px;" align="center" label="操作">
-              <!-- <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加货物'">
->>>>>>> 963d944f60d3cd2c71afe4a9c8f181947b643e83
-                  添加
-                </el-button>
-              </template> -->
               <template slot-scope="scope">
                 <el-button v-show="basicAs" size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公司'">编辑

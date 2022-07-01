@@ -10,6 +10,10 @@ const getDefaultState = () => {
     role: '',
     map: [],
     basicAs: false,
+    tradeAs: false,
+    vehicleFixAs: false,
+    schedulerAs: false,
+    exhibitionAs: false
   }
 }
 
@@ -32,6 +36,10 @@ const mutations = {
   SET_ROLE: (state, role) => {
     state.role = role
     state.basicAs = (role=='root'||role=='基本信息管理员')?true:false
+    state.tradeAs = (role=='root'||role=='购销存管理员')?true:false
+    state.vehicleFixAs = (role=='root'||role=='汽车检修管理员')?true:false
+    state.schedulerAs = (role=='root'||role=='运输调度管理员')?true:false
+    state.exhibitionAs = (role=='root'||role=='对外展示管理员')?true:false
   },
   SET_MAP: (state, map) => {
     state.map = map

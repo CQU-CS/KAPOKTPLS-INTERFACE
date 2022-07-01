@@ -33,18 +33,7 @@
             </el-table-column>
             <el-table-column align="center" prop="certificateHandlingTime" label="办理时间" sortable>
             </el-table-column>
-<<<<<<< HEAD
-            <el-table-column width="160px;" align="right">
-              <template slot="header" slot-scope="scope">
-                <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加证件信息'">
-=======
             <el-table-column width="160px;" align="center" label="操作">
-              <!-- <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加证件信息'">
->>>>>>> 963d944f60d3cd2c71afe4a9c8f181947b643e83
-                  添加
-                </el-button>
-              </template> -->
               <template slot-scope="scope">
                 <el-button v-show="basicAs" size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑证件信息'">编辑
