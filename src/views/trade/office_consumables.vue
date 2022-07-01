@@ -32,19 +32,19 @@
             </el-table-column>
             <el-table-column align="center" prop="payState" label="交易状态">
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
-                <el-button v-show="tradeAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加采购记录'">
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加采购记录'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
-                <el-button v-show="tradeAs" size="mini"
+                <el-button size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑采购记录'">编辑
                 </el-button>
                 <el-popconfirm title="确定删除该记录吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
-                  <el-button v-show="tradeAs" size="mini" type="danger" slot="reference">删除</el-button>
+                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
