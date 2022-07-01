@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: 'KAPOKTPLS 攀枝花物流系统',
 
   /**
    * @type {boolean} true | false
