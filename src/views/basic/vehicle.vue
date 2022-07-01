@@ -22,7 +22,7 @@
             style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
             <el-table-column width="100px;" align="center" prop="truckId" label="编号" sortable>
             </el-table-column>
-            <el-table-column align="center"  prop="truckPlate" label="汽车车牌">
+            <el-table-column  align="center"  prop="truckPlate" label="汽车车牌">
             </el-table-column>
             <el-table-column  align="center" prop="truckLoad" label="最大载重" sortable>
             </el-table-column>
@@ -30,7 +30,7 @@
             </el-table-column>
             <el-table-column  align="center" prop="personName" label="驾驶人">
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="basicAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加汽车'">
                   添加
@@ -90,6 +90,7 @@
   export default {
     data() {
       return {
+        basicAs: this.$store.getters.basicAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示

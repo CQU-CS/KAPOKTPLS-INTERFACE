@@ -28,7 +28,7 @@
             </el-table-column>
             <el-table-column  align="center" show-overflow-tooltip prop="truckRepairRecordEndTime" label="维修结束时间">
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="vehicleFixAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加汽车维修信息'">
                   添加
@@ -85,6 +85,7 @@
   export default {
     data() {
       return {
+        vehicleFixAs: this.$store.getters.vehicleFixAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
