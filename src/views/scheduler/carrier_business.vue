@@ -2,9 +2,9 @@
   <div>
     <div class="main-box">
       <div class="search-box">
-        <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
-          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
-            <el-option v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
+        <el-card class="box-card" shadow="always" style="width: 180px;" :body-style="{padding: '0px'}">
+          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeepMessage" style="width: 100%;">
+            <el-option style="text-align: center;" v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-card>
@@ -14,6 +14,9 @@
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
+		<el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+		  <el-button type="primary" icon="el-icon-circle-plus"@click="handleAdd(); dialogFormVisible = true; dialogName='添加承运商'" style="width: 100%;">添加</el-button>
+		</el-card>
       </div>
       <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
         <div style="margin-left: 15px;margin-right: 15px;">
@@ -28,16 +31,16 @@
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="goodsName" label="货物名称">
 			</el-table-column>
-			<el-table-column align="center" prop="carrierManagePrice" label="价格">
+			<el-table-column align="center" prop="carrierManagePrice" label="价格" sortable>
             </el-table-column>
-            <el-table-column align="center" prop="taskTime" label="完成日期">
+            <el-table-column align="center" prop="taskTime" label="完成日期" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="right">
-              <template slot="header" slot-scope="scope">
+            <el-table-column width="160px;" align="center" label="操作" >
+              <!-- <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加承运商业务'">
                   添加
                 </el-button>
-              </template>
+              </template> -->
               <template slot-scope="scope">
                 <el-button size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑承运商业务'">编辑
@@ -58,13 +61,13 @@
         <el-form-item label="承运商名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="公司名称" :label-width="formLabelWidth" prop="tel">
+        <el-form-item label="公司名称" :label-width="formLabelWidth" prop="cname">
           <el-input v-model="form.cname" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="货物名称" :label-width="formLabelWidth" prop="ins">
+        <el-form-item label="货物名称" :label-width="formLabelWidth" prop="gname">
           <el-input v-model="form.gname" style="width: 90%;"></el-input>
         </el-form-item>
-		<el-form-item label="价格" :label-width="formLabelWidth" prop="ins">
+		<el-form-item label="价格" :label-width="formLabelWidth" prop="price">
 		  <el-input v-model="form.price" style="width: 90%;"></el-input>
 		</el-form-item>
         <el-form-item label="完成日期" :label-width="formLabelWidth" prop="date">
@@ -109,15 +112,6 @@
           value: 'carrierManageId',
           label: '编号'
         }, {
-          value: 'carrierName',
-          label: '承运商名称'
-        },{
-          value: 'companyName',
-          label: '公司名称'
-        }, {
-          value: 'goodsName',
-          label: '货物名称'
-        }, {
           value: 'carrierManagePrice',
           label: '价格'
         }, {
@@ -141,28 +135,28 @@
         rules: {
           name: [{
             required: true,
-            message: '请输入公司名称',
+            message: '请输入承运商名称',
             trigger: 'blur'
           }],
           cname: [{
             required: true,
-            message: '请输入电话号码',
+            message: '请输入公司名称',
             trigger: 'blur'
           }],
           gname: [{
             required: true,
-            message: '请输入行业',
+            message: '请输入货物名称',
             trigger: 'blur'
           }],
 		  price: [{
 		    required: true,
-		    message: '请输入行业',
+		    message: '请输入价格',
 		    trigger: 'blur'
 		 }],
           date: [{
             required: true,
-            message: '请选择日期',
-            trigger: 'change'
+            message: '请选择完成日期',
+            trigger: 'blur'
           }]
         },
         editId: -1
@@ -375,7 +369,13 @@
     display: flex;
     flex-direction: row;
   }
-
+.inputDeepMessage .el-input__inner {
+    border: 0 !important;
+    outline: none;
+	text-align: center;
+	background-color:gray;
+	color: white;
+  }
   .main-box {
     margin-left: 8px;
     margin-right: 8px;

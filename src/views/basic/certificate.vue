@@ -2,9 +2,9 @@
   <div>
     <div class="main-box">
       <div class="search-box">
-        <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
-          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
-            <el-option v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
+        <el-card class="box-card" shadow="always" style="width: 180px;" :body-style="{padding: '0px'}">
+          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeepMessage" style="width: 100%;">
+            <el-option style="text-align: center;" v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-card>
@@ -14,6 +14,9 @@
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
+		<el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+		  <el-button type="primary" icon="el-icon-circle-plus"@click="handleAdd(); dialogFormVisible = true; dialogName='添加证件'" style="width: 100%;">添加</el-button>
+		</el-card>
       </div>
       <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
         <div style="margin-left: 15px;margin-right: 15px;">
@@ -24,18 +27,24 @@
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="personName" label="人员姓名">
             </el-table-column>
-            <el-table-column align="center" prop="certificateType" label="证件类型" sortable>
+            <el-table-column align="center" prop="certificateType" label="证件类型" >
             </el-table-column>
             <el-table-column align="center" prop="certificateHandlingUnit" label="办理单位">
             </el-table-column>
-            <el-table-column align="center" prop="certificateHandlingTime" label="办理时间">
+            <el-table-column align="center" prop="certificateHandlingTime" label="办理时间" sortable>
             </el-table-column>
+<<<<<<< HEAD
             <el-table-column width="160px;" align="right">
               <template slot="header" slot-scope="scope">
                 <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加证件信息'">
+=======
+            <el-table-column width="160px;" align="center" label="操作">
+              <!-- <template slot="header" slot-scope="scope">
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加证件信息'">
+>>>>>>> 963d944f60d3cd2c71afe4a9c8f181947b643e83
                   添加
                 </el-button>
-              </template>
+              </template> -->
               <template slot-scope="scope">
                 <el-button v-show="basicAs" size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑证件信息'">编辑
@@ -56,10 +65,10 @@
         <el-form-item label="人员姓名" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="证件类型" :label-width="formLabelWidth" prop="tel">
+        <el-form-item label="证件类型" :label-width="formLabelWidth" prop="type">
           <el-input v-model="form.type" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="办理单位" :label-width="formLabelWidth" prop="ins">
+        <el-form-item label="办理单位" :label-width="formLabelWidth" prop="unit">
           <el-input v-model="form.unit" style="width: 90%;"></el-input>
         </el-form-item>
         <el-form-item label="办理时间" :label-width="formLabelWidth" prop="date">
@@ -74,7 +83,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="true"
+        :current-page="page" :page-sizes="[20, 30, 50, 100, 300]" :page-size="limit" :hide-on-single-page="true"
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -116,7 +125,7 @@
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,
-        limit: 50,
+        limit: 20,
         total: 0,
         fullHeight: document.documentElement.clientHeight - 185,
         dialogName: '',
@@ -130,23 +139,23 @@
         rules: {
           name: [{
             required: true,
-            message: '请输入公司名称',
+            message: '请输入人员姓名',
             trigger: 'blur'
           }],
           type: [{
             required: true,
-            message: '请输入电话号码',
+            message: '请输入证件类型',
             trigger: 'blur'
           }],
           unit: [{
             required: true,
-            message: '请输入行业',
+            message: '请输入办理单位',
             trigger: 'blur'
           }],
           date: [{
             required: true,
-            message: '请选择日期',
-            trigger: 'change'
+            message: '请选择办理日期',
+            trigger: 'blur'
           }]
         },
         editId: -1
@@ -337,6 +346,13 @@
     border: 0 !important;
     outline: none;
   }
+  .inputDeepMessage .el-input__inner {
+      border: 0 !important;
+      outline: none;
+  	text-align: center;
+  	background-color:gray;
+  	color: white;
+    }
 
   .box-card {
     margin-left: 8px;

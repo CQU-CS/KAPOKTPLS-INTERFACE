@@ -38,3 +38,11 @@ export function editMaterial(data) {
     data //请求参数
   })
 }
+
+export function exportMaterial() {
+  return request({
+    url: '/material/exportMaterial', //请求接口
+    method: 'get' //请求方式
+  })
+}
+

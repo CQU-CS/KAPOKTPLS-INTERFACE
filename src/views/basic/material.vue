@@ -34,7 +34,14 @@
             <el-table-column align="center" prop="materialSize" label="物资尺寸" />
             <el-table-column width="160px;" align="right">
               <template slot="header" slot-scope="scope">
+<<<<<<< HEAD
                 <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
+=======
+                <el-button size="mini" type="primary" @click="handleExport();">
+                  导出
+                </el-button>
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
+>>>>>>> 963d944f60d3cd2c71afe4a9c8f181947b643e83
                   添加
                 </el-button>
               </template>
@@ -99,7 +106,8 @@ import {
   getMaterial,
   deleteMaterial,
   addMaterial,
-  editMaterial
+  editMaterial,
+  exportMaterial
 } from '../../api/material.js'
 export default {
   data() {
@@ -219,6 +227,7 @@ export default {
       getMaterial(data).then((res) => {
         this.materialList = res.datas
         this.total = res.total
+        this.total = res.total
         this.loading = false
       })
     },
@@ -270,6 +279,9 @@ export default {
       this.form.type = ''
       this.form.price = ''
       this.form.size = ''
+    },
+    handleExport() {
+      location.href = "http://localhost:8080/material/exportMaterial";
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
