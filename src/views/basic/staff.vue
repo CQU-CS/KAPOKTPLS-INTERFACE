@@ -22,23 +22,23 @@
             style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
             <el-table-column width="80px;" align="center" prop="personId" label="编号" sortable>
             </el-table-column>
-            <el-table-column align="center" width="150px;" show-overflow-tooltip prop="personName" label="姓名">
+            <el-table-column align="center" width="90px;" show-overflow-tooltip prop="personName" label="姓名">
             </el-table-column>
             <el-table-column align="center" width="50px;" prop="personGenderString" label="性别">
             </el-table-column>
             <el-table-column align="center" width="150px;" show-overflow-tooltip prop="personBirth" label="出生日期">
             </el-table-column>
-            <el-table-column align="center" width="100px;" prop="personNumber" label="电话">
+            <el-table-column align="center" width="110px;" prop="personNumber" label="电话">
             </el-table-column>
-            <el-table-column align="center" width="100px;" prop="personQq" label="QQ">
+            <el-table-column align="center" width="110px;" prop="personQq" label="QQ">
             </el-table-column>
-            <el-table-column align="center" width="150px;" prop="personAddress" label="地址">
+            <el-table-column align="center" prop="personAddress" show-overflow-tooltip label="地址">
             </el-table-column>
-            <el-table-column align="center" width="150px;" prop="companyName" label="公司">
+            <el-table-column align="center" prop="companyName" show-overflow-tooltip label="公司">
             </el-table-column>
-            <el-table-column align="center" prop="personBankAccount" label="账户">
+            <el-table-column align="center" prop="personBankAccount" show-overflow-tooltip label="账户">
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="140px;" align="right">
               <template slot="header" slot-scope="scope">
                 <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加员工'">
                   添加
@@ -103,7 +103,10 @@
 
 <script>
   import {
-    getPage,deleteById,add,edit
+    getPage,
+    deleteById,
+    add,
+    edit
   } from '@/api/staff';
   export default {
     data() {
@@ -277,7 +280,7 @@
         }
         deleteById(data).then((res) => {
           const h = this.$createElement;
-          if (res.code=20000) {
+          if (res.code = 20000) {
             this.$notify({
               title: '删除成功！',
               message: h('i', {

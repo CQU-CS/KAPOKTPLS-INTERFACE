@@ -335,6 +335,7 @@ export const constantRoutes = [{
     component: () => import('@/views/scheduler/transportation_task'),
     name: 'transportation-task',
     meta: {
+      icon: 'el-icon-discover',
       title: '运输任务'
     }
   },
@@ -343,7 +344,8 @@ export const constantRoutes = [{
     component: () => import('@/views/scheduler/carrier_business'),
     name: 'carrier-business',
     meta: {
-      title: '承运商业务记录'
+      title: '承运商业务记录',
+      icon: 'el-icon-position'
     }
   }
   ]
@@ -364,7 +366,7 @@ export const constantRoutes = [{
     name: 'introduction',
     meta: {
       title: '公司简介公告',
-      icon: 'link'
+      icon: 'el-icon-notebook-2'
     }
   }, {
     path: 'advertisement',
@@ -372,7 +374,7 @@ export const constantRoutes = [{
     name: 'advertisement',
     meta: {
       title: '销售广告',
-      icon: 'link'
+      icon: 'el-icon-data-board'
     }
   }]
 },
