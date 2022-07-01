@@ -32,19 +32,19 @@
             </el-table-column>
             <el-table-column align="center" prop="materialUseEndTime" label="结束时间">
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="vehicleFixAs">
               <template slot="header" slot-scope="scope">
-                <el-button v-show="vehicleFixAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加使用记录'">
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加使用记录'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
-                <el-button v-show="vehicleFixAs" size="mini"
+                <el-button size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑使用记录'">编辑
                 </el-button>
                 <el-popconfirm title="确定删除该记录吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
-                  <el-button v-show="vehicleFixAs" size="mini" type="danger" slot="reference">删除</el-button>
+                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>
