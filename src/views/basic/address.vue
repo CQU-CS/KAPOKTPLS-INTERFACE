@@ -24,7 +24,7 @@
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="addressContent" label="地址内容">
             </el-table-column>
-            <el-table-column width="200px;" prop="addressLevel" label="地域等级" sortable>
+            <el-table-column width="200px;" prop="addressLevel" label="地域等级" align="center">
             </el-table-column>
             <el-table-column width="160px;" align="right">
               <template slot="header" slot-scope="scope">
