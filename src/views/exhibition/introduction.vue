@@ -1,8 +1,358 @@
 <template>
+  <div>
+    <div class="main-box">
+      <div class="search-box">
+        <el-card class="box-card" shadow="always" style="width: 160px;" :body-style="{padding: '0px'}">
+          <el-select v-model="selectData" placeholder="搜索方式" class="inputDeep" style="width: 100%;">
+            <el-option v-for="(item,index) in propertyList" :key="index" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-card>
+        <el-card class="box-card" shadow="always" style="width: 100%;" :body-style="{padding: '0px'}">
+          <el-input placeholder="请输入搜索内容" class="inputDeep" v-model="inputData"> </el-input>
+        </el-card>
+        <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+          <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
+        </el-card>
+      </div>
+      <el-card class="box-card" shadow="always" :body-style="{padding: '0px'}">
+        <div style="margin-left: 15px;margin-right: 15px;">
+          <el-table v-loading="loading" element-loading-text="拼命加载中"
+            element-loading-background="rgba(255, 255, 255, 0.5)" :height="fullHeight" :data="noticeList" stripe
+            style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
+            <el-table-column width="80px;" align="center" prop="noticeId" label="编号" sortable>
+            </el-table-column>
+            <el-table-column align="center" width="150px;" show-overflow-tooltip prop="personName" label="发布人">
+            </el-table-column>
+            <el-table-column align="center" width="350px;" prop="noticeTitle" label="标题">
+            </el-table-column>
+            <el-table-column align="center" width="200px;" show-overflow-tooltip prop="noticeContent" label="内容">
+            </el-table-column>
+            <el-table-column align="center" prop="noticeStartTime" label="发布时间">
+            </el-table-column>
+            <el-table-column width="160px;" align="right">
+              <template slot="header" slot-scope="scope">
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加公告'">
+                  添加
+                </el-button>
+              </template>
+              <template slot-scope="scope">
+                <el-button size="mini"
+                  @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑公告'">编辑
+                </el-button>
+                <el-popconfirm title="确定删除该公告吗？" style="margin-left: 8px;"
+                  @onConfirm="handleDelete(scope.$index, scope.row)">
+                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
+                </el-popconfirm>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+
+      </el-card>
+    </div>
+    <el-dialog :title="dialogName" :visible.sync="dialogFormVisible" center width="40%">
+      <el-form :model="form" :rules="rules" ref="form" style="text-align: center;">
+        <el-form-item label="发布人编号" :label-width="formLabelWidth" prop="personId">
+          <el-input v-model="form.personId" style="width: 90%;"></el-input>
+        </el-form-item>
+        <el-form-item label="标题" :label-width="formLabelWidth" prop="noticeTitle">
+          <el-input v-model="form.noticeTitle" style="width: 90%;"></el-input>
+        </el-form-item>
+        <el-form-item label="内容" :label-width="formLabelWidth" prop="noticeContent">
+          <el-input v-model="form.noticeContent" style="width: 90%;"></el-input>
+        </el-form-item>
+        <el-form-item label="发布时间" :label-width="formLabelWidth" prop="noticeStartTime">
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.noticeStartTime" style="width: 90%;"
+            format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+      </div>
+    </el-dialog>
+    <div class="block">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="false"
+        layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
+  </div>
 </template>
 
 <script>
+  import {
+    getPage,deleteById,add,edit
+  } from '@/api/notice';
+  export default {
+    data() {
+      return {
+        showButton: true, //是否渲染按钮
+        showElseIf: 2, //展示else-if
+        dialogVisible: false, //表示弹出框是否显示
+        noticeList: [], //用于存放doc数据
+        showButton2: false,
+        selectData: "noticeId", //被选择的下拉
+        inputData: "",
+        queryData: "", //用于条件查询
+        dialogFormVisible: false,
+        propertyList: [{
+          value: 'noticeId',
+          label: '编号'
+        }, {
+          value: 'personId',
+          label: '发布人编号'
+        }, {
+          value: 'noticeTitle',
+          label: '标题'
+        }, {
+          value: 'noticeContent',
+          label: '内容'
+        }, {
+          value: 'noticeStartTime',
+          label: '发布时间'
+        }], //用于接收类型数据
+        loading: true, //查询时加载遮罩
+        page: 1,
+        limit: 50,
+        total: 0,
+        fullHeight: document.documentElement.clientHeight - 185,
+        dialogName: '',
+        form: {
+          personId: '',
+          noticeTitle: '',
+          noticeContent: '',
+          noticeStartTime: ''
+        },
+        formLabelWidth: '120px',
+        rules: {
+          personId: [{
+            required: true,
+            message: '请输入发布人编号',
+            trigger: 'blur'
+          }],
+          noticeTitle: [{
+            required: true,
+            message: '请输入标题',
+            trigger: 'blur'
+          }],
+          noticeContent: [{
+            required: true,
+            message: '请输入内容',
+            trigger: 'blur'
+          }],
+          noticeStartTime: [{
+            required: true,
+            message: '请输入发布时间',
+            trigger: 'blur'
+          }]
+        },
+        editId: -1
+      }
+    },
+    watch: {
+      fullHeight(val) { //监控浏览器高度变化
+        if (!this.timer) {
+          this.fullHeight = val
+          this.timer = true
+          let that = this
+          setTimeout(function() {
+            that.timer = false
+          }, 400)
+        }
+      }
+    },
+    methods: {
+      testVon() {
+        this.showButton2 = !this.showButton2;
+        //this.dialogVisible = true;
+      },
+      handleSizeChange(val) {
+        this.limit = val;
+        console.log(`每页 ${val} 条`);
+        this.initList();
+      },
+      handleCurrentChange(val) {
+        this.page = val;
+        console.log(`当前页: ${val}`);
+        this.initList();
+      },
+      search() {
+        this.page = 1;
+        this.queryData = this.inputData;
+        this.initList();
+      },
+      initList() {
+        this.loading = true;
+        //获取用户输入/选择的查询条件
+        let data = {
+          size: this.limit,
+          page: this.page,
+          [this.selectData]: this.queryData
+          // categoryId: this.selectData,
+          // docTitle: this.queryData
+        }
+        getPage(data).then((res) => {
+          // console.log(res.datas);
+          this.noticeList = res.datas;
+          this.total = res.total;
+          this.loading = false;
+          //条件筛选遍历
+          /* let filterArr = this.companyList.filter((item, index) => {
+          	return item.docId % 5 == 0;
+          }); */
+        })
+      },
+      get_bodyHeight() { //动态获取浏览器高度
+        const that = this
+        window.onresize = () => {
+          return (() => {
+            window.fullHeight = document.documentElement.clientHeight
+            that.fullHeight = window.fullHeight - 185
+          })()
+        }
+      },
+      handleDelete(index, row) {
+        console.log(row.noticeId);
+        let data = {
+          id: row.noticeId
+        }
+        deleteById(data).then((res) => {
+          const h = this.$createElement;
+          if (res.code=20000) {
+            this.$notify({
+              title: '删除成功！',
+              message: h('i', {
+                style: 'color: teal'
+              }, '标题为' + row.noticeTitle + '的公告已被删除')
+            });
+            this.initList();
+          } else {
+            this.$notify({
+              title: '删除标题为' + row.noticeTitle + '的公告失败！',
+              message: h('i', {
+                style: 'color: teal'
+              }, '')
+            });
+          }
+        })
+      },
+      handleEdit(index, row) {
+        this.editId = row.noticeId;
+        this.form.personId = row.personId;
+        this.form.noticeTitle = row.noticeTitle;
+        this.form.noticeContent = row.noticeContent;
+        this.form.noticeStartTime = row.noticeStartTime;
+      },
+      handleAdd() {
+        this.editId = -1;
+        this.form.personId = '';
+        this.form.noticeTitle = '';
+        this.form.noticeContent = '';
+        this.form.noticeStartTime = '';
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (this.editId == -1) {
+              let data = {
+                personId: this.form.personId,
+                noticeTitle: this.form.noticeTitle,
+                noticeContent: this.form.noticeContent,
+                noticeStartTime: this.form.noticeStartTime,
+              }
+              add(data).then((res) => {
+                const h = this.$createElement;
+                this.$notify({
+                  title: '添加成功！',
+                  message: h('i', {
+                    style: 'color: teal'
+                  }, '新的公告已被添加')
+                });
+                this.dialogFormVisible = false;
+                this.initList();
+              });
+            } else {
+              let data = {
+                personId: this.form.personId,
+                noticeTitle: this.form.noticeTitle,
+                noticeContent: this.form.noticeContent,
+                noticeStartTime: this.form.noticeStartTime,
+                noticeId: this.editId
+              }
+              edit(data).then((res) => {
+                const h = this.$createElement;
+                this.$notify({
+                  title: '编辑完成！',
+                  message: h('i', {
+                    style: 'color: teal'
+                  }, '标题为' + this.form.noticeTitle + '的公告编辑完成')
+                });
+                this.dialogFormVisible = false;
+                this.initList();
+              });
+            }
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      }
+    },
+    mounted() {
+      console.log("mounted被调用");
+      this.get_bodyHeight();
+      this.$nextTick(() => {
+        //页面初始化的时候执行
+        this.initList();
+        //this.testMap();
+        //初始化获取类型数据
+        // this.initCategoryList();
+      })
+    },
+  }
 </script>
 
 <style>
+  .table-style-thead {
+    width: 100%;
+  }
+
+  .table-style-thead-th {
+    width: 250px;
+  }
+
+  .el-select .el-input {
+    width: 130px;
+  }
+
+  .inputDeep .el-input__inner {
+    border: 0 !important;
+    outline: none;
+  }
+
+  .box-card {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 15px;
+    border-radius: 15px;
+    border: none;
+  }
+
+  .block {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .search-box {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .main-box {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
 </style>
