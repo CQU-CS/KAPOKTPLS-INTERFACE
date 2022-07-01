@@ -21,16 +21,17 @@
             element-loading-text="拼命加载中"
             element-loading-background="rgba(255, 255, 255, 0.5)"
             :height="fullHeight"
-            :data="goodsInventoryList"
+            :data="materialList"
             stripe
             style="width: 100%;"
             :row-style="{height:'40px'}"
             :cell-style="{padding:'0px'}"
           >
-            <el-table-column align="center" prop="goodsInventoryId" label="编号" sortable width="100px" />
-            <el-table-column align="center" show-overflow-tooltip prop="goodsName" label="货物名称" />
-            <el-table-column align="center" prop="addressContent" label="地址" />
-            <el-table-column align="center" prop="goodsInventoryNum" label="货物数量" />
+            <el-table-column align="center" prop="materialId" label="编号" sortable width="100px" />
+            <el-table-column align="center" show-overflow-tooltip prop="materialName" label="物资名称" />
+            <el-table-column align="center" prop="materialType" label="物资类型" sortable />
+            <el-table-column align="center" prop="materialPrice" label="物资价格" />
+            <el-table-column align="center" prop="materialSize" label="物资尺寸" />
             <el-table-column width="160px;" align="right">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
@@ -59,14 +60,17 @@
     </div>
     <el-dialog :title="dialogName" :visible.sync="dialogFormVisible" center width="40%">
       <el-form ref="form" :model="form" :rules="rules" style="text-align: center;">
-        <el-form-item label="货物名称" :label-width="formLabelWidth" prop="goodsName">
-          <el-input v-model="form.goodsName" style="width: 90%;" />
+        <el-form-item label="物资名称" :label-width="formLabelWidth" prop="name">
+          <el-input v-model="form.name" style="width: 90%;" />
         </el-form-item>
-        <el-form-item label="地址" :label-width="formLabelWidth" prop="addressContent">
-          <el-input v-model="form.addressContent" style="width: 90%;" />
+        <el-form-item label="物资类型" :label-width="formLabelWidth" prop="tel">
+          <el-input v-model="form.type" style="width: 90%;" />
         </el-form-item>
-        <el-form-item label="货物数量" :label-width="formLabelWidth" prop="goodsInventoryNum">
-          <el-input v-model="form.goodsInventoryNum" style="width: 90%;" />
+        <el-form-item label="物资价格" :label-width="formLabelWidth" prop="ins">
+          <el-input v-model="form.price" style="width: 90%;" />
+        </el-form-item>
+        <el-form-item label="物资尺寸" :label-width="formLabelWidth" prop="ins">
+          <el-input v-model="form.size" style="width: 90%;" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -78,7 +82,7 @@
       <el-pagination
         background
         :current-page="page"
-        :page-sizes="[20, 40, 60, 80]"
+        :page-sizes="[2, 4, 6, 8]"
         :page-size="limit"
         :hide-on-single-page="fasle"
         layout="total, sizes, prev, pager, next, jumper"
@@ -92,62 +96,71 @@
 
 <script>
 import {
-  getGoodsInventory,
-  deleteGoodsInventory,
-  addGoodsInventory,
-  editGoodsInventory
-} from '@/api/goodsInventory.js'
+  getMaterial,
+  deleteMaterial,
+  addMaterial,
+  editMaterial
+} from '../../api/material.js'
 export default {
   data() {
     return {
       showButton: true, // 是否渲染按钮
       showElseIf: 2, // 展示else-if
       dialogVisible: false, // 表示弹出框是否显示
-      goodsInventoryList: [], // 用于存放doc数据
+      materialList: [], // 用于存放doc数据
       showButton2: false,
-      selectData: 'goodsInventoryId', // 被选择的下拉
+      selectData: 'materialId', // 被选择的下拉
       inputData: '',
       queryData: '', // 用于条件查询
       dialogFormVisible: false,
       propertyList: [{
-        value: 'goodsInventoryId',
+        value: 'materialId',
         label: '编号'
       }, {
-        value: 'goodsId',
-        label: '货物编号'
+        value: 'materialName',
+        label: '物资名称'
       }, {
-        value: 'addressId',
-        label: '地址编号'
+        value: 'materialType',
+        label: '物资类型'
       }, {
-        value: 'goodsInventoryNum',
-        label: '货物数量'
+        value: 'materialPrice',
+        label: '物资价格'
+      }, {
+        value: 'materialSize',
+        label: '物资尺寸'
       }], // 用于接收类型数据
       loading: true, // 查询时加载遮罩
       page: 1,
-      limit: 20,
+      limit: 2,
       total: 0,
       fullHeight: document.documentElement.clientHeight - 185,
       dialogName: '',
       form: {
-        goodsName: '',
-        addressContent: '',
-        goodsInventoryNum: ''
+        name: '',
+        type: '',
+        price: '',
+        size: ''
       },
       formLabelWidth: '120px',
       rules: {
-        goodsName: [{
+        name: [{
           required: true,
-          message: '请输入货物名称',
+          message: '请输入物资名称',
           trigger: 'blur'
         }],
-        addressContent: [{
+        type: [{
           required: true,
-          message: '请输入货物地址',
+          message: '请输入物资类型',
           trigger: 'blur'
         }],
-        goodsInventoryNum: [{
+        price: [{
           required: true,
-          message: '请输入货物数量',
+          message: '请输入物资价格',
+          trigger: 'blur'
+        }],
+        size: [{
+          required: true,
+          message: '请输入物资尺寸',
           trigger: 'change'
         }]
       },
@@ -202,10 +215,8 @@ export default {
         page: this.page,
         [this.selectData]: this.queryData
       }
-      console.log(this.selectData)
-      console.log(this.queryData)
-      getGoodsInventory(data).then((res) => {
-        this.goodsInventoryList = res.datas
+      getMaterial(data).then((res) => {
+        this.materialList = res.datas
         this.total = res.total
         this.loading = false
       })
@@ -222,22 +233,22 @@ export default {
     handleDelete(index, row) {
       console.log(11111)
       const data = {
-        id: row.goodsInventoryId
+        id: row.materialId
       }
       console.log(data.id)
-      deleteGoodsInventory(data).then((res) => {
+      deleteMaterial(data).then((res) => {
         const h = this.$createElement
         if (res.code = 20000) {
           this.$notify({
-            title: '删除' + row.goodsInventoryName + '物资信息成功！',
+            title: '删除' + row.materialName + '物资信息成功！',
             message: h('i', {
               style: 'color: teal'
-            }, '编号为' + row.goodsInventoryId + '的物资已被删除')
+            }, '编号为' + row.materialId + '的物资已被删除')
           })
           this.initList()
         } else {
           this.$notify({
-            title: '删除' + row.goodsInventoryName + '物资信息失败！',
+            title: '删除' + row.materialName + '物资信息失败！',
             message: h('i', {
               style: 'color: teal'
             }, '')
@@ -246,55 +257,55 @@ export default {
       })
     },
     handleEdit(index, row) {
-      this.editId = row.goodsInventoryId
-      this.form.goodsName = row.goodsName
-      this.form.addressContent = row.addressContent
-      this.form.goodsInventoryNum = row.goodsInventoryNum
+      this.editId = row.materialId
+      this.form.name = row.materialName
+      this.form.type = row.materialType
+      this.form.price = row.materialPrice
+      this.form.size = row.materialSize
     },
     handleAdd() {
       this.editId = -1
-      this.form.goodsName = ''
-      this.form.addressContent = ''
-      this.form.goodsInventoryNum = ''
+      this.form.name = ''
+      this.form.type = ''
+      this.form.price = ''
+      this.form.size = ''
     },
     submitForm(formName) {
-      console.log(11111)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(33333)
           if (this.editId == -1) {
             const data = {
-              goodsName: this.form.goodsName,
-              addressContent: this.form.addressContent,
-              goodsInventoryNum: this.form.goodsInventoryNum
+              materialName: this.form.name,
+              materialType: this.form.type,
+              materialSize: this.form.size,
+              materialPrice: this.form.price
             }
-            console.log(2222)
-            console.log(data.goodsName)
-            addGoodsInventory(data).then((res) => {
+            addMaterial(data).then((res) => {
               const h = this.$createElement
               this.$notify({
                 title: '添加成功！',
                 message: h('i', {
                   style: 'color: teal'
-                }, '名字为' + this.form.goodsName + '的物资信息已被添加')
+                }, '名字为' + this.form.name + '的物资信息已被添加')
               })
               this.dialogFormVisible = false
               this.initList()
             })
           } else {
             const data = {
-              goodsName: this.form.goodsName,
-              goodsInventoryNum: this.form.goodsInventoryNum,
-              addressContent: this.form.addressContent,
-              goodsInventoryId: this.editId
+              materialName: this.form.name,
+              materialType: this.form.type,
+              materialSize: this.form.size,
+              materialPrice: this.form.price,
+              materialId: this.editId
             }
-            editGoodsInventory(data).then((res) => {
+            editMaterial(data).then((res) => {
               const h = this.$createElement
               this.$notify({
                 title: '编辑完成！',
                 message: h('i', {
                   style: 'color: teal'
-                }, '名字为' + this.form.goodsName + '的物资信息编辑完成')
+                }, '名字为' + this.form.name + '的物资信息编辑完成')
               })
               this.dialogFormVisible = false
               this.initList()

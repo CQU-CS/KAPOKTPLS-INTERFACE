@@ -1,32 +1,31 @@
 import request from '../utils/request.js'
 
-export function getAddress(data) {
+export function getEcd(data) {
   return request({
-    url: '/address/queryByAddressDTO', //请求接口
+    url: '/ecd/queryByEcd', //请求接口
     method: 'post', //请求方式
     data //请求参数
   })
 }
-
-export function deleteAddress(params) {
+export function deleteEcd(params) {
   return request({
-    url: '/address/deleteById', //请求接口
+    url: '/ecd/deleteByEcdId', //请求接口
     method: 'post', //请求方式
     params //请求参数
   })
 }
 
-export function addAddress(data) {
+export function addEcd(data) {
   return request({
-    url: '/address/addByAddress', //请求接口
+    url: '/ecd/addByEcd', //请求接口
     method: 'post', //请求方式
     data //请求参数
   })
 }
 
-export function editAddress(data) {
+export function editEcd(data) {
   return request({
-    url: '/address/editByAddress', //请求接口
+    url: '/ecd/editByEcd', //请求接口
     method: 'post', //请求方式
     data //请求参数
   })
