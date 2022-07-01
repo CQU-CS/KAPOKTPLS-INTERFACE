@@ -69,3 +69,11 @@ export function editCompany(data) {
     data // 请求参数
   })
 }
+
+export function getIndexStatistic(params) {
+  return request({
+    url: '/statistic/getIndexStatistic', // 请求接口
+    method: 'post', // 请求方式
+    params // 请求参数
+  })
+}
