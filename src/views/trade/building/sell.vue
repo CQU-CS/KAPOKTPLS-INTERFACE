@@ -20,27 +20,31 @@
           <el-table v-loading="loading" element-loading-text="拼命加载中"
             element-loading-background="rgba(255, 255, 255, 0.5)" :height="fullHeight" :data="companyList" stripe
             style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
-            <el-table-column width="80px;" align="center" prop="buildingId" label="编号" sortable>
+            <el-table-column width="80px;" align="center" prop="buildingSaleId" label="编号" sortable>
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="addressContent" label="地址">
             </el-table-column>
-            <el-table-column width="200px;" prop="buildingType" label="建筑类型" sortable>
+            <el-table-column width="100px;" prop="buildingType" label="建筑类型" sortable>
             </el-table-column>
-            <el-table-column width="200px;" prop="buildingName" label="建筑名称" sortable>
+            <el-table-column prop="companyName" label="出售公司" sortable>
             </el-table-column>
-            <el-table-column width="200px;" prop="buildingBuyTime" label="购买时间" sortable>
+            <el-table-column width="100px;" prop="buildingSalePrice" label="出售价格" sortable>
+            </el-table-column>
+            <el-table-column width="150px;" prop="buildingSaleDate" label="出售日期" sortable>
+            </el-table-column>
+            <el-table-column width="100px;" prop="payStatus" label="付款状态" align="center" sortable>
             </el-table-column>
             <el-table-column width="160px;" align="right">
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加地址'">
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加建筑出售'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
                 <el-button size="mini"
-                  @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑地址'">编辑
+                  @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑建筑出售'">编辑
                 </el-button>
-                <el-popconfirm title="确定删除该地址吗？" style="margin-left: 8px;"
+                <el-popconfirm title="确定删除该建筑出售吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
                   <el-button size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
@@ -53,25 +57,30 @@
     </div>
     <el-dialog :title="dialogName" :visible.sync="dialogFormVisible" center width="40%">
       <el-form :model="form" :rules="rules" ref="form" style="text-align: center;">
-        <el-form-item label="地址" :label-width="formLabelWidth" prop="addressContent">
-          <el-input v-model="form.addressContent" style="width: 90%;"></el-input>
+
+        <el-form-item label="建筑id" :label-width="formLabelWidth" prop="buildingId">
+          <el-input v-model="form.buildingId" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="建筑类型" :label-width="formLabelWidth" prop="buildingType">
-          <el-select v-model="form.buildingType" placeholder="请选择" style="width: 90%;">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+        <el-form-item label="公司id" :label-width="formLabelWidth" prop="companyId">
+          <el-input v-model="form.companyId" style="width: 90%;"></el-input>
         </el-form-item>
-        <el-form-item label="建筑名称" :label-width="formLabelWidth" prop="buildingName">
-          <el-input v-model="form.buildingName" style="width: 90%;"></el-input>
-        </el-form-item>
-        <el-form-item label="购买时间" :label-width="formLabelWidth" prop="buildingBuyTime">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.buildingBuyTime" style="width: 90%;"
+        <el-form-item label="出售时间" :label-width="formLabelWidth" prop="buildingSaleDate">
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.buildingSaleDate" style="width: 90%;"
             format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="出售价格" :label-width="formLabelWidth" prop="buildingSalePrice">
+          <el-input v-model="form.buildingSalePrice" style="width: 90%;"></el-input>
+        </el-form-item>
+        <el-form-item label="付款状态" :label-width="formLabelWidth" prop="payStatus" align="left">
+          <div>
+            <el-switch style="margin-left: 5%;"
+              v-model="form.payStatus"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              >
+            </el-switch>
+          </div>
+
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -81,7 +90,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="page" :page-sizes="[50, 100, 200, 300, 400]" :page-size="limit" :hide-on-single-page="true"
+        :current-page="page" :page-sizes="[20,50, 100, 200, 300]" :page-size="limit" :hide-on-single-page="true"
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -90,11 +99,11 @@
 
 <script>
   import {
-    getBuilding,
-    deleteBuilding,
-    addBuilding,
-    editBuilding
-  } from '@/api/getDataBuilding.js';
+    getBuildingSale,
+    deleteBuildingSale,
+    addBuildingSale,
+    editBuildingSale
+  } from '@/api/getDataBuildingSale.js';
   export default {
     data() {
       return {
@@ -103,32 +112,34 @@
         dialogVisible: false, //表示弹出框是否显示
         companyList: [], //用于存放doc数据
         showButton2: false,
-        selectData: "buildingId", //被选择的下拉
+        selectData: "buildingSaleId", //被选择的下拉
         inputData: "",
         queryData: "", //用于条件查询
         dialogFormVisible: false,
         propertyList: [{
-          value: 'buildingId',
-          label: '编号'
-        }, {
-          value: 'buildingType',
-          label: '建筑类型'
-        },
-        {
-          value: 'buildName',
-          label: '建筑名称'
-        }], //用于接收类型数据
+            value: 'buildingSaleId',
+            label: '编号'
+          }, {
+            value: 'buildingSaleDate',
+            label: '出售时间'
+          },
+          {
+            value: 'payStatus',
+            label: '付款状态'
+          }
+        ], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,
-        limit: 50,
+        limit: 20,
         total: 0,
         fullHeight: document.documentElement.clientHeight - 185,
         dialogName: '',
         form: {
-          addressContent: '',
-          buildingType: '',
-          buildingName: '',
-          buildingBuyTime: ''
+          buildingId: '',
+          companyId: '',
+          buildingSaleDate: '',
+          buildingSalePrice:'',
+          payStatus:''
         },
         formLabelWidth: '120px',
         rules: {
@@ -159,16 +170,8 @@
           }]
         },
         editId: -1,
-        options: [{
-                  value: '办公楼',
-                  label: '办公楼'
-                }, {
-                  value: '驿站',
-                  label: '驿站'
-                }, {
-                  value: '仓库',
-                  label: '仓库'
-                }]
+        options: [{            value: '办公楼',
+          label: '办公楼'         }, {           value: '驿站',           label: '驿站'         }, {           value: '仓库',           label: '仓库'         }]
       }
     },
     watch: {
@@ -213,7 +216,7 @@
           // categoryId: this.selectData,
           // docTitle: this.queryData
         }
-        getBuilding(data).then((res) => {
+        getBuildingSale(data).then((res) => {
           res.datas.forEach((item, index) => {
             // item.test = "测试属性添加";
             // console.log(item)
@@ -238,23 +241,23 @@
         }
       },
       handleDelete(index, row) {
-        console.log(row.buildingId);
+        console.log(row.buildingSaleId);
         let data = {
-          id: row.buildingId
+          id: row.buildingSaleId
         }
-        deleteBuilding(data).then((res) => {
+        deleteBuildingSale(data).then((res) => {
           const h = this.$createElement;
-          if (res.code=20000) {
+          if (res.code = 20000) {
             this.$notify({
-              title: '删除' + row.buildingName + '成功！',
+              title: '删除' + row.buildingSaleId + '成功！',
               message: h('i', {
                 style: 'color: teal'
-              }, '编号为' + row.buildingId + '的公司已被删除')
+              }, '编号为' + row.buildingSaleId + '的建筑出售已被删除')
             });
             this.initList();
           } else {
             this.$notify({
-              title: '删除' + row.buildingName + '失败！',
+              title: '删除' + row.buildingSaleId + '失败！',
               message: h('i', {
                 style: 'color: teal'
               }, '')
@@ -263,55 +266,59 @@
         })
       },
       handleEdit(index, row) {
-        this.editId = row.buildingId;
-        this.form.addressContent = row.addressContent;
-        this.form.buildingType = row.buildingType;
-        this.form.buildingName = row.buildingName;
-        this.form.buildingBuyTime = row.buildingBuyTime;
+        this.editId = row.buildingSaleId;
+        this.form.buildingId = row.buildingId;
+        this.form.companyId = row.companyId;
+        this.form.buildingSaleDate = row.buildingSaleDate;
+        this.form.buildingSalePrice = row.buildingSalePrice;
+        this.form.payStatus = row.payStatus?true:false;
       },
       handleAdd() {
         this.editId = -1;
-        this.form.addressContent = '';
-        this.form.buildingType = '';
-        this.form.buildingName = '';
-        this.form.buildingBuyTime = '';
+        this.form.buildingId = '';
+        this.form.companyId = '';
+        this.form.buildingSaleDate = '';
+        this.form.buildingSalePrice = '';
+        this.form.payStatus = '';
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             if (this.editId == -1) {
               let data = {
-                addressContent: this.form.addressContent,
-                buildingType: this.form.buildingType,
-                buildingName:this.form.buildingName,
-                buildingBuyTime:this.form.buildingBuyTime
+                buildingId: this.form.buildingId,
+                companyId: this.form.companyId,
+                buildingSaleDate: this.form.buildingSaleDate,
+                buildingSalePrice: this.form.buildingSalePrice,
+                payStatus: this.form.payStatus?1:0
               }
-              addBuilding(data).then((res) => {
+              addBuildingSale(data).then((res) => {
                 const h = this.$createElement;
                 this.$notify({
                   title: '添加成功！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '内容为' + this.form.addressContent + '的地址已被添加')
+                  }, '编号为' + this.form.buildingId + '的建筑出售已被添加')
                 });
                 this.dialogFormVisible = false;
                 this.initList();
               });
             } else {
               let data = {
-                addressContent: this.form.addressContent,
-                buildingType: this.form.buildingType,
-                buildingName:this.form.buildingName,
-                buildingBuyTime:this.form.buildingBuyTime,
-                buildingId: this.editId
+                buildingId: this.form.buildingId,
+                companyId: this.form.companyId,
+                buildingSaleDate: this.form.buildingSaleDate,
+                buildingSalePrice: this.form.buildingSalePrice,
+                payStatus: this.form.payStatus?1:0,
+                buildingSaleId: this.editId
               }
-              editBuilding(data).then((res) => {
+              editBuildingSale(data).then((res) => {
                 const h = this.$createElement;
                 this.$notify({
                   title: '编辑完成！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '名称为' + this.form.name + '的地址信息编辑完成')
+                  }, '名编号为' + this.form.name + '的建筑出售信息编辑完成')
                 });
                 this.dialogFormVisible = false;
                 this.initList();
