@@ -20,17 +20,17 @@
           <el-table v-loading="loading" element-loading-text="拼命加载中"
             element-loading-background="rgba(255, 255, 255, 0.5)" :height="fullHeight" :data="transportationTaskList" stripe
             style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
-            <el-table-column width="60px;" align="center" prop="transportationTaskId" label="编号" sortable>
+            <el-table-column width="80px;" align="center" prop="transportationTaskId" label="编号" sortable>
             </el-table-column>
-            <el-table-column align="center" show-overflow-tooltip prop="companyName" label="公司名称">
+            <el-table-column width="180px;" align="center" show-overflow-tooltip prop="companyName" label="公司名称">
             </el-table-column>
-            <el-table-column width="180px;" align="center" show-overflow-tooltip prop="addressContent" label="地址">
+            <el-table-column width="200px;" align="center" show-overflow-tooltip prop="addressContent" label="地址">
             </el-table-column>
             <el-table-column width="100px;" align="center" prop="truckPlate" label="车牌号">
             </el-table-column>
             <el-table-column width="125px;" align="center" prop="goodsName" label="货物名称" >
             </el-table-column>
-            <el-table-column width="120px;" align="center" prop="transportationTaskGoodsNum" label="运输数量">
+            <el-table-column width="80px;" align="center" prop="transportationTaskGoodsNum" label="运输数量">
             </el-table-column>
             <el-table-column width="220px;" align="center" prop="transportationTaskDestination" label="运输目的地">
             </el-table-column>

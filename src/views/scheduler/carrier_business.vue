@@ -4,7 +4,8 @@
       <div class="search-box">
         <el-card class="box-card" shadow="always" style="width: 180px;" :body-style="{padding: '0px'}">
           <el-select v-model="selectData" placeholder="搜索方式" class="inputDeepMessage" style="width: 100%;">
-            <el-option style="text-align: center;" v-for="(item,index) in propertyList" :key="item.value" :label="item.label" :value="item.value">
+            <el-option style="text-align: center;" v-for="(item,index) in propertyList" :key="item.value"
+              :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-card>
@@ -14,7 +15,7 @@
         <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
           <el-button type="primary" icon="el-icon-search" @click="search" style="width: 100%;">查询</el-button>
         </el-card>
-		<!-- <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
+        <!-- <el-card class="box-card" shadow="always" style="width: 120px;" :body-style="{padding: '0px'}">
 		  <el-button type="primary" icon="el-icon-circle-plus"@click="handleAdd(); dialogFormVisible = true; dialogName='添加承运商'" style="width: 100%;">添加</el-button>
 		</el-card> -->
       </div>
@@ -27,17 +28,18 @@
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="carrierName" label="承运商名称">
             </el-table-column>
-            <el-table-column align="center" prop="companyName" label="公司名称" >
+            <el-table-column align="center" prop="companyName" label="公司名称">
             </el-table-column>
-            <el-table-column align="center" show-overflow-tooltip prop="goodsName" label="货物名称">
-			</el-table-column>
-			<el-table-column align="center" prop="carrierManagePrice" label="价格" sortable>
+            <el-table-column width="150px;" align="center" show-overflow-tooltip prop="goodsName" label="货物名称">
             </el-table-column>
-            <el-table-column align="center" prop="taskTime" label="完成日期" sortable>
+            <el-table-column width="120px;" align="center" prop="carrierManagePrice" label="价格" sortable>
+            </el-table-column>
+            <el-table-column width="160px;" align="center" prop="taskTime" label="完成日期" sortable>
             </el-table-column>
             <el-table-column width="160px;" align="center" v-if="schedulerAs">
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加承运商业务'">
+                <el-button size="mini" type="primary"
+                  @click="handleAdd(); dialogFormVisible = true; dialogName='添加承运商业务'">
                   添加
                 </el-button>
               </template>
@@ -67,9 +69,9 @@
         <el-form-item label="货物名称" :label-width="formLabelWidth" prop="gname">
           <el-input v-model="form.gname" style="width: 90%;"></el-input>
         </el-form-item>
-		<el-form-item label="价格" :label-width="formLabelWidth" prop="price">
-		  <el-input v-model="form.price" style="width: 90%;"></el-input>
-		</el-form-item>
+        <el-form-item label="价格" :label-width="formLabelWidth" prop="price">
+          <el-input v-model="form.price" style="width: 90%;"></el-input>
+        </el-form-item>
         <el-form-item label="完成日期" :label-width="formLabelWidth" prop="date">
           <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 90%;"
             format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
@@ -99,7 +101,7 @@
   export default {
     data() {
       return {
-		schedulerAs: this.$store.getters.schedulerAs,
+        schedulerAs: this.$store.getters.schedulerAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
@@ -128,8 +130,8 @@
         form: {
           name: '',
           cname: '',
-		  gname: '',
-		  price:'',
+          gname: '',
+          price: '',
           date: ''
         },
         formLabelWidth: '120px',
@@ -149,11 +151,11 @@
             message: '请输入货物名称',
             trigger: 'blur'
           }],
-		  price: [{
-		    required: true,
-		    message: '请输入价格',
-		    trigger: 'blur'
-		 }],
+          price: [{
+            required: true,
+            message: '请输入价格',
+            trigger: 'blur'
+          }],
           date: [{
             required: true,
             message: '请选择完成日期',
@@ -230,13 +232,13 @@
         }
       },
       handleDelete(index, row) {
-     
+
         let data = {
           id: row.carrierManageId
         }
         deleteCarrierManage(data).then((res) => {
           const h = this.$createElement;
-          if (res.code=20000) {
+          if (res.code = 20000) {
             this.$notify({
               title: '删除' + row.carrierName + '成功！',
               message: h('i', {
@@ -259,16 +261,16 @@
         this.form.name = row.carrierName;
         this.form.cname = row.companyName;
         this.form.gname = row.goodsName;
-		this.form.price = row.carrierManagePrice;
+        this.form.price = row.carrierManagePrice;
         this.form.date = row.taskTime;
       },
       handleAdd() {
         this.editId = -1;
-       this.form.name = '';
-       this.form.cname = '';
-       this.form.gname = '';
-       this.form.price ='';
-       this.form.date ='';
+        this.form.name = '';
+        this.form.cname = '';
+        this.form.gname = '';
+        this.form.price = '';
+        this.form.date = '';
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -277,9 +279,9 @@
               let data = {
                 carrierName: this.form.name,
                 companyName: this.form.cname,
-                goodsName:this.form.gname,
-				carrierManagePrice:this.form.price,
-				taskTime:this.form.date
+                goodsName: this.form.gname,
+                carrierManagePrice: this.form.price,
+                taskTime: this.form.date
               }
               addCarrierManage(data).then((res) => {
                 const h = this.$createElement;
@@ -294,12 +296,12 @@
               });
             } else {
               let data = {
-               carrierName: this.form.name,
-               companyName: this.form.cname,
-               goodsName:this.form.gname,
-               carrierManagePrice:this.form.price,
-               taskTime:this.form.date,
-               carrierManageId: this.editId
+                carrierName: this.form.name,
+                companyName: this.form.cname,
+                goodsName: this.form.gname,
+                carrierManagePrice: this.form.price,
+                taskTime: this.form.date,
+                carrierManageId: this.editId
               }
               editCarrierManage(data).then((res) => {
                 const h = this.$createElement;
@@ -370,12 +372,14 @@
     display: flex;
     flex-direction: row;
   }
-.inputDeepMessage .el-input__inner {
+
+  .inputDeepMessage .el-input__inner {
     border: 0 !important;
     outline: none;
-	text-align: center;
-	
+    text-align: center;
+
   }
+
   .main-box {
     margin-left: 8px;
     margin-right: 8px;

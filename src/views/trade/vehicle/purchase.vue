@@ -20,19 +20,19 @@
           <el-table v-loading="loading" element-loading-text="拼命加载中"
             element-loading-background="rgba(255, 255, 255, 0.5)" :height="fullHeight" :data="truckPurchaseList" stripe
             style="width: 100%;" :row-style="{height:'40px'}" :cell-style="{padding:'0px'}">
-            <el-table-column width="100px;" align="center" prop="truckPurchaseId" label="编号" sortable>
+            <el-table-column width="80px;" align="center" prop="truckPurchaseId" label="编号" sortable>
             </el-table-column>
-            <el-table-column width="300px;" align="center"  prop="companyName" label="公司名称">
+            <el-table-column align="center"  prop="companyName" label="公司名称">
             </el-table-column>
-            <el-table-column width="200px;"align="center" prop="truckPlate" label="汽车车牌">
+            <el-table-column width="120px;"align="center" prop="truckPlate" label="汽车车牌">
             </el-table-column>
-            <el-table-column width="200px;" align="center"show-overflow-tooltip prop="truckPurchaseNum" label="销售数量" sortable>
+            <el-table-column width="120px;" align="center"show-overflow-tooltip prop="truckPurchaseNum" label="销售数量" sortable>
             </el-table-column>
-            <el-table-column width="200px;" align="center"prop="truckPurchasePrice" label="销售总金额" sortable>
+            <el-table-column width="160px;" align="center"prop="truckPurchasePrice" label="销售总金额" sortable>
             </el-table-column>
-            <el-table-column align="center" prop="truckPurchaseDate" label="销售日期" sortable>
+            <el-table-column width="160px;" align="center" prop="truckPurchaseDate" label="销售日期" sortable>
             </el-table-column>
-            <el-table-column width="150px;" align="center" prop="payStatus" label="付款状态">
+            <el-table-column width="100px;" align="center" prop="payStatus" label="付款状态">
             </el-table-column>
             <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
