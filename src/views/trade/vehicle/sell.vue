@@ -327,7 +327,7 @@
                 truckSalePrice: this.form.price,
                 truckSaleDate: this.form.date,
                 payStatus: this.form.status,
-                truckId: this.editId
+                truckSaleId: this.editId
               }
               editTruckSale(data).then((res) => {
                 const h = this.$createElement;

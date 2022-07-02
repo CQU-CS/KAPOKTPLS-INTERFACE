@@ -313,7 +313,7 @@
         this.form.address = row.addressContent;
         this.form.goods = row.goodsName;
         this.form.destination = row.transportationTaskDestination;
-        this.form.num = row.transportationTaskNum;
+        this.form.num = row.transportationTaskGoodsNum;
         this.form.price = row.transportationTaskPrice;
         this.form.start = row.transportationTaskStartTime;
         this.form.end = row.transportationTaskEndTime;
@@ -367,7 +367,7 @@
                 transportationTaskPrice: this.form.price,
                 transportationTaskStartTime: this.form.start,
                 transportationTaskEndTime: this.form.end,
-                truckId: this.editId
+                transportationTaskId: this.editId
               }
               editTransportationTask(data).then((res) => {
                 const h = this.$createElement;
