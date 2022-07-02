@@ -55,10 +55,12 @@
           <el-input v-model="form.plate" style="width: 90%;"></el-input>
         </el-form-item>
         <el-form-item label="维修开始时间" :label-width="formLabelWidth" prop="start">
-          <el-input v-model="form.start" style="width: 90%;"></el-input>
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.start" style="width: 90%;"
+            format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
         </el-form-item>
         <el-form-item label="维修结束时间" :label-width="formLabelWidth" prop="end">
-          <el-input v-model="form.end" style="width: 90%;"></el-input>
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.end" style="width: 90%;"
+            format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

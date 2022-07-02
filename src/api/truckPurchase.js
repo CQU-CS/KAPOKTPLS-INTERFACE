@@ -10,7 +10,7 @@ export function getTruckPurchase(data){
 
 export function deleteTruckPurchase(params) {
   return request({
-    url: '/truckPurchase/deleteByTruckPurchaseId', // 请求接口
+    url: '/truckPurchase/deleteByTruckPurchase', // 请求接口
     method: 'post', // 请求方式
     params // 请求参数
   })
