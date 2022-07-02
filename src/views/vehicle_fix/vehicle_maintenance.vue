@@ -277,7 +277,7 @@
                 truckPlate: this.form.plate,
                 truckRepairRecordStartTime: this.form.start,
                 truckRepairRecordEndTime: this.form.end,
-                truckId: this.editId
+                truckRepairRecordId: this.editId
               }
               editTruckRepairRecord(data).then((res) => {
                 const h = this.$createElement;

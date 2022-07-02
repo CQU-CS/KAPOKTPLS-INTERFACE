@@ -34,7 +34,7 @@
             <el-table-column align="center" prop="goodsPurchasePrice" label="采购价格" />
             <el-table-column align="center" prop="goodsPurchaseDate" label="采购日期" />
             <el-table-column align="center" prop="payStatus" label="付款状态" />
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加采购信息'">
                   添加
@@ -305,6 +305,7 @@ export default {
           console.log(33333)
           if (this.editId == -1) {
             const data = {
+              tradeAs: this.$store.getters.tradeAs,
               goodsName: this.form.goodsName,
               companyName: this.form.companyName,
               goodsPurchaseNum: this.form.goodsPurchaseNum,

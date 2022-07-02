@@ -31,7 +31,7 @@
             <el-table-column align="center" show-overflow-tooltip prop="goodsName" label="货物名称" />
             <el-table-column align="center" prop="addressContent" label="地址" />
             <el-table-column align="center" prop="goodsInventoryNum" label="货物数量" />
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
                   添加
@@ -100,6 +100,7 @@ import {
 export default {
   data() {
     return {
+      tradeAs: this.$store.getters.tradeAs,
       showButton: true, // 是否渲染按钮
       showElseIf: 2, // 展示else-if
       dialogVisible: false, // 表示弹出框是否显示
