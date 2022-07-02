@@ -142,30 +142,25 @@
         },
         formLabelWidth: '120px',
         rules: {
-          name: [{
+          buildingId: [{
             required: true,
-            message: '请输入公司名称',
+            message: '请输入建筑编号',
             trigger: 'blur'
           }],
-          tel: [{
+          companyId: [{
             required: true,
-            message: '请输入电话号码',
+            message: '请输入公司编号',
             trigger: 'blur'
           }],
-          ins: [{
+          buildingSaleDate: [{
             required: true,
-            message: '请输入行业',
-            trigger: 'blur'
-          }],
-          address: [{
-            required: true,
-            message: '请输入地址',
-            trigger: 'blur'
-          }],
-          date: [{
-            required: true,
-            message: '请选择日期',
+            message: '请选择出售时间',
             trigger: 'change'
+          }],
+          buildingSalePrice: [{
+            required: true,
+            message: '请输入出售价格',
+            trigger: 'blur'
           }]
         },
         editId: -1,
@@ -305,7 +300,7 @@
                   title: '添加成功！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '编号为' + this.form.buildingId + '的建筑出售已被添加')
+                  }, '建筑编号为' + this.form.buildingId + '的建筑出售已被添加')
                 });
                 this.dialogFormVisible = false;
                 this.initList();
@@ -325,7 +320,7 @@
                   title: '编辑完成！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '名编号为' + this.form.name + '的建筑出售信息编辑完成')
+                  }, '建筑编号为' + this.form.buildingId + '的建筑出售信息编辑完成')
                 });
                 this.dialogFormVisible = false;
                 this.initList();

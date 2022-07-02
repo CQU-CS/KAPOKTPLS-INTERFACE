@@ -43,7 +43,7 @@
     </el-row>
     <el-card class="box-card" shadow="always" v-loading="chart2load">
       <div class="Echarts">
-        <div id="main2" style="width: 100%;height:400px;"></div>
+        <div id="main2" style="width: 100%;height:500px"></div>
       </div>
     </el-card>
   </div>
@@ -126,28 +126,13 @@
             left: 'center'
           },
           series: [{
-            name: 'Access From',
+            name: 'Nightingale Chart',
             type: 'pie',
-            radius: ['40%', '70%'],
-            avoidLabelOverlap: false,
+            radius: [50, 250],
+            center: ['50%', '50%'],
+            roseType: 'area',
             itemStyle: {
-              borderRadius: 10,
-              borderColor: '#fff',
-              borderWidth: 2
-            },
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '40',
-                fontWeight: 'bold'
-              }
-            },
-            labelLine: {
-              show: false
+              borderRadius: 8
             },
             data: this.sector
           }]

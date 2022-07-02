@@ -34,11 +34,12 @@
             </el-table-column>
             <el-table-column width="150px;" prop="buildingRentEndTime" label="结束日期" sortable>
             </el-table-column>
-            <el-table-column width="100px;" prop="payStatus" label="付款状态" sortable>
+            <el-table-column align="center" width="100px;" prop="payStatus" label="付款状态" sortable>
             </el-table-column>
             <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加建筑租赁'">
+                <el-button size="mini" type="primary"
+                  @click="handleAdd(); dialogFormVisible = true; dialogName='添加建筑租赁'">
                   添加
                 </el-button>
               </template>
@@ -79,11 +80,8 @@
         </el-form-item>
         <el-form-item label="付款状态" :label-width="formLabelWidth" prop="payStatus" align="left">
           <div>
-            <el-switch style="margin-left: 5%;"
-              v-model="form.payStatus"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              >
+            <el-switch style="margin-left: 5%;" v-model="form.payStatus" active-color="#13ce66"
+              inactive-color="#ff4949">
             </el-switch>
           </div>
 
@@ -150,40 +148,48 @@
           companyId: '',
           buildingRentStartTime: '',
           buildingRentEndTime: '',
-          buildingRentPrice:'',
-          payStatus:''
+          buildingRentPrice: '',
+          payStatus: ''
         },
         formLabelWidth: '120px',
         rules: {
-          name: [{
+          buildingId: [{
             required: true,
-            message: '请输入公司名称',
+            message: '请输入建筑编号',
             trigger: 'blur'
           }],
-          tel: [{
+          companyId: [{
             required: true,
-            message: '请输入电话号码',
+            message: '请输入公司编号',
             trigger: 'blur'
           }],
-          ins: [{
+          buildingRentStartTime: [{
             required: true,
-            message: '请输入行业',
-            trigger: 'blur'
-          }],
-          address: [{
-            required: true,
-            message: '请输入地址',
-            trigger: 'blur'
-          }],
-          date: [{
-            required: true,
-            message: '请选择日期',
+            message: '请选择开始时间',
             trigger: 'change'
+          }],
+          buildingRentEndTime: [{
+            required: true,
+            message: '请选择结束时间',
+            trigger: 'change'
+          }],
+          buildingRentPrice: [{
+            required: true,
+            message: '请输入租赁价格',
+            trigger: 'blur'
           }]
         },
         editId: -1,
-        options: [{            value: '办公楼',
-          label: '办公楼'         }, {           value: '驿站',           label: '驿站'         }, {           value: '仓库',           label: '仓库'         }]
+        options: [{
+          value: '办公楼',
+          label: '办公楼'
+        }, {
+          value: '驿站',
+          label: '驿站'
+        }, {
+          value: '仓库',
+          label: '仓库'
+        }]
       }
     },
     watch: {
@@ -284,7 +290,7 @@
         this.form.buildingRentStartTime = row.buildingRentStartTime;
         this.form.buildingRentEndTime = row.buildingRentEndTime;
         this.form.buildingRentPrice = row.buildingRentPrice;
-        this.form.payStatus = row.payStatus?true:false;
+        this.form.payStatus = row.payStatus ? true : false;
       },
       handleAdd() {
         this.editId = -1;
@@ -305,7 +311,7 @@
                 buildingRentStartTime: this.form.buildingRentStartTime,
                 buildingRentEndTime: this.form.buildingRentEndTime,
                 buildingRentPrice: this.form.buildingRentPrice,
-                payStatus: this.form.payStatus?1:0
+                payStatus: this.form.payStatus ? 1 : 0
               }
               addBuildingRent(data).then((res) => {
                 const h = this.$createElement;
@@ -313,7 +319,7 @@
                   title: '添加成功！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '内容为' + this.form.addressContent + '的建筑租赁已被添加')
+                  }, '建筑编号为' + this.form.buildingId + '的建筑租赁已被添加')
                 });
                 this.dialogFormVisible = false;
                 this.initList();
@@ -325,7 +331,7 @@
                 buildingRentStartTime: this.form.buildingRentStartTime,
                 buildingRentEndTime: this.form.buildingRentEndTime,
                 buildingRentPrice: this.form.buildingRentPrice,
-                payStatus: this.form.payStatus?1:0,
+                payStatus: this.form.payStatus ? 1 : 0,
                 buildingRentId: this.editId
               }
               editBuildingRent(data).then((res) => {
@@ -334,7 +340,7 @@
                   title: '编辑完成！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '名称为' + this.form.name + '的地址信息编辑完成')
+                  }, '建筑编号为' + this.form.buildingId + '的建筑租赁编辑完成')
                 });
                 this.dialogFormVisible = false;
                 this.initList();
