@@ -2,25 +2,25 @@
   <div class="dashboard-container">
     <el-row :gutter="20">
       <el-col :span="6">
-        <el-card class="box-card" shadow="always">
+        <el-card class="box-card" shadow="always" v-loading="basicLoad">
           <div>本月总收入</div>
           <div class="number">￥ {{basicData.totalIncome}}</div>
         </el-card>
       </el-col>
       <el-col :span="6">
-        <el-card class="box-card" shadow="always">
+        <el-card class="box-card" shadow="always" v-loading="basicLoad">
           <div>本月总支出</div>
           <div class="number">￥ {{basicData.totalExpenditures}}</div>
         </el-card>
       </el-col>
       <el-col :span="6">
-        <el-card class="box-card" shadow="always">
+        <el-card class="box-card" shadow="always" v-loading="basicLoad">
           <div>本月运输任务</div>
           <div class="number">{{basicData.trips}} 次</div>
         </el-card>
       </el-col>
       <el-col :span="6">
-        <el-card class="box-card" shadow="always">
+        <el-card class="box-card" shadow="always" v-loading="basicLoad">
           <div>公司员工总数</div>
           <div class="number">{{basicData.personNum}}</div>
         </el-card>
@@ -28,14 +28,14 @@
     </el-row>
     <el-row :gutter="20">
       <el-col :span="16">
-        <el-card class="box-card" shadow="always">
+        <el-card class="box-card" shadow="always" v-loading="chart1load">
           <div class="Echarts">
             <div id="main" style="width: 100%;height:400px;"></div>
           </div>
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card class="box-card" shadow="always">
+        <el-card class="box-card" shadow="always" v-loading="chart2load">
           <div class="Echarts">
             <div id="main2" style="width: 100%;height:400px;"></div>
           </div>
@@ -49,7 +49,8 @@
   import {
     getIndexStatistic,
     getHalfYearIncome,
-    getHalfYearExpenditures
+    getHalfYearExpenditures,
+    getSectorDiagram
   } from '@/api/getData';
   export default {
     data() {
@@ -63,14 +64,17 @@
         chartx: [],
         income: [],
         outcome: [],
-        profit: []
+        profit: [],
+        sector: [],
+        chart1load: true,
+        chart2load: true,
+        basicLoad: true
       }
     },
     methods: {
       myEcharts() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = this.$echarts.init(document.getElementById('main'));
-        var myChart2 = this.$echarts.init(document.getElementById('main2'));
         // 指定图表的配置项和数据
         var option = {
           title: {
@@ -99,12 +103,22 @@
           }]
         };
 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+      },
+      myEcharts2() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart2 = this.$echarts.init(document.getElementById('main2'));
+
         var option2 = {
+          title: {
+            text: '本月收入来源'
+          },
           tooltip: {
             trigger: 'item'
           },
           legend: {
-            top: '5%',
+            bottom: '0%',
             left: 'center'
           },
           series: [{
@@ -131,32 +145,11 @@
             labelLine: {
               show: false
             },
-            data: [{
-                value: 1048,
-                name: 'Search Engine'
-              },
-              {
-                value: 735,
-                name: 'Direct'
-              },
-              {
-                value: 580,
-                name: 'Email'
-              },
-              {
-                value: 484,
-                name: 'Union Ads'
-              },
-              {
-                value: 300,
-                name: 'Video Ads'
-              }
-            ]
+            data: this.sector
           }]
         };
 
         // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
         myChart2.setOption(option2);
       },
       init() {
@@ -168,8 +161,10 @@
         }
         var incomeT = [];
         var outcomeT = [];
+        var sector = [];
         getIndexStatistic(data).then((res) => {
           this.basicData = res.datas;
+          this.basicLoad = false;
         })
         Promise.all([getHalfYearIncome(data).then((res) => {
             incomeT = res.datas.totalIncomes;
@@ -187,6 +182,39 @@
             this.chartx[i] = (m) + '月';
           }
           this.myEcharts();
+          this.chart1load = false;
+        });
+        Promise.all([
+          getSectorDiagram(data).then((res) => {
+            sector = res.datas.chartList;
+          })
+        ]).then(res => {
+          this.sector[0] = {
+            value: sector[0],
+            name: "建筑出售"
+          };
+          this.sector[1] = {
+            value: sector[1],
+            name: "建筑出租"
+          };
+          this.sector[2] = {
+            value: sector[2],
+            name: "商品出售"
+          };
+          this.sector[3] = {
+            value: sector[3],
+            name: "物资出售"
+          };
+          this.sector[4] = {
+            value: sector[4],
+            name: "运输收入"
+          };
+          this.sector[5] = {
+            value: sector[5],
+            name: "汽车出售"
+          };
+          this.myEcharts2();
+          this.chart2load = false;
         });
       }
     },
