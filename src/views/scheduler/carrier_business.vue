@@ -35,7 +35,7 @@
             </el-table-column>
             <el-table-column align="center" prop="taskTime" label="完成日期" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="center" >
+            <el-table-column width="160px;" align="center" v-if="schedulerAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加承运商业务'">
                   添加

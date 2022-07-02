@@ -40,18 +40,17 @@
             </el-table-column>
             <el-table-column width="140px;" align="right" v-if="basicAs">
               <template slot="header" slot-scope="scope">
-                <el-button v-show="basicAs" size="mini" type="primary"
-                  @click="handleAdd(); dialogFormVisible = true; dialogName='添加员工'">
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加员工'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
-                <el-button v-show="basicAs" size="mini"
+                <el-button size="mini"
                   @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑员工'">编辑
                 </el-button>
                 <el-popconfirm title="确定删除该员工信息吗？" style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)">
-                  <el-button v-show="basicAs" size="mini" type="danger" slot="reference">删除</el-button>
+                  <el-button size="mini" type="danger" slot="reference">删除</el-button>
                 </el-popconfirm>
               </template>
             </el-table-column>

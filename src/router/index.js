@@ -421,6 +421,19 @@ export const constantRoutes = [{
   }]
 },
 
+{
+  path: '/map',
+  component: Layout,
+  children: [{
+    path: 'storemap',
+    name: 'storemap',
+    component: () => import('@/views/map/Map'),
+    meta: {
+      title: '仓库定位',
+      icon: 'el-icon-map-location'
+    }
+  }]
+},
 // 404 page must be placed at the end !!!
 {
   path: '*',
