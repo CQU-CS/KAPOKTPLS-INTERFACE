@@ -1,85 +1,64 @@
 <template>
-  <div id="all">
-<!--    <input type="text" id="addressId" name="address_detail" placeholder="地址" v-model="address_detail"-->
-<!--           className="input_style">-->
-    <span style="padding-left: 1%;padding-right: 20px">仓库地址:</span>
-    <el-input id = "addressId" v-model="address_detail" placeholder="请输入地址" style="width: 30%; padding-top: 20px; padding-bottom: 20px; margin-right: 10%"></el-input>
-
-    <span style="padding-left: 1%;padding-right: 20px">运输任务编号:</span>
-    <el-input id = "missionId" v-model="mission_detail" placeholder="请输入任务编号" style="width: 30%; padding-top: 20px; padding-bottom: 20px"></el-input>
-    <div id="allmap"></div>
-  </div>
+  <div id="container" style="width:100%;height:90vh" />
 </template>
+
 <script>
+// 绘制线路需要的坐标
+var lineArr = [[116.478935, 39.997761], [108.983569, 34.285675]]
 export default {
-  data() {
+  data () {
     return {
-      address_detail: null, //详细地址
-      userlocation: {lng: "", lat: ""},
-      mission_detail:''
+      firstArr: [116.478935, 39.997761] // 中心点/初始坐标
     }
   },
-  mounted() {
-    this.$nextTick(function () {
+  created () {},
+  mounted () {
+    setTimeout(() => {
+      this.initMap() // 异步加载（否则报错initMap is not defined）
+      // this.initroad()
+    }, 1000)
+  },
 
-      var th = this
-      // 创建Map实例
-      var map = new BMap.Map("allmap");
-      // 初始化地图,设置中心点坐标，
-      var point = new BMap.Point(106.29879552551228, 29.594395759765654); // 创建点坐标，重庆大学的经纬度坐标
-      map.centerAndZoom(point, 15);
-      map.enableScrollWheelZoom();
-      var ac = new BMap.Autocomplete(    //建立一个自动完成的对象,自动提示
-        {
-          "input": "addressId"
-          , "location": map
-        })
-      var myValue;
-      ac.addEventListener("onconfirm", function (e) {    //鼠标选择下拉列表中某条记录的事件
-        var _value = e.item.value;
-        myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
-        this.address_detail = myValue
-        setPlace();
-      });
-
-      function setPlace() {
-        map.clearOverlays();    //清除地图上所有覆盖物
-        function myFun() {
-          th.userlocation = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
-          map.centerAndZoom(th.userlocation, 18);
-          map.addOverlay(new BMap.Marker(th.userlocation));    //添加标注
-        }
-
-        var local = new BMap.LocalSearch(map, { //智能搜索，搜索完成后执行myFun函数
-          onSearchComplete: myFun
-        });
-        local.search(myValue);
-
-        //测试输出坐标（指的是输入框最后确定地点的经纬度）
-        map.addEventListener("click", function (e) {
-          //经度
-          console.log(th.userlocation.lng);
-          //维度
-          console.log(th.userlocation.lat);
-
-        })
-      }
-
-    })
+  methods: {
+    // 初始化地图
+    initMap () {
+      var that = this
+      this.map = new AMap.Map('container', {
+        resizeEnable: true, // 窗口大小调整
+        center: this.firstArr, // 中心 firstArr: [116.478935, 39.997761],
+        zoom: 5
+      })
+      // 添加maker
+      that.initroad()
+    },
+    // 初始化轨迹
+    initroad () {
+      // 绘制还未经过的路线
+      this.polyline = new AMap.Polyline({
+        map: this.map,
+        path: lineArr,
+        showDir: true,
+        strokeColor: '#77DDFF', // 线颜色--浅蓝色
+        // strokeOpacity: 1,     //线透明度
+        strokeWeight: 4, // 线宽
+        // strokeStyle: "solid"  //线样式
+        lineJoin: 'round' // 折线拐点的绘制样式
+      })
+      // 绘制路过了的轨迹
+      var passedPolyline = new AMap.Polyline({
+        map: this.map,
+        strokeColor: '#00BBFF', // 线颜色-深蓝色
+        path: [[116.478935, 39.997761], [108.983569, 34.285675]],
+        // strokeOpacity: 1,     //线透明度
+        strokeWeight: 6 // 线宽
+        // strokeStyle: "solid"  //线样式
+      })
+      this.map.setFitView() // 合适的视口
+    }
   }
-  // ,
-  //
-  // methods: {
-  //   handleMission()
-  // }
 }
 </script>
-<style scoped>
-#allmap {
-  margin-left: 1%;
-  width: 98%;
-  height: 800px;
-  font-family: "微软雅黑";
-  border: 1px solid green;
-}
+
+<style lang="scss" scoped>
+
 </style>
