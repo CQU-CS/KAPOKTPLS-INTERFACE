@@ -70,3 +70,19 @@ export function getSectorDiagram(params) {
     params // 请求参数
   })
 }
+
+export function getYearIncome(params) {
+  return request({
+    url: '/statistic/getYearIncome', // 请求接口
+    method: 'post', // 请求方式
+    params // 请求参数
+  })
+}
+
+export function getYearExpenditures(params) {
+  return request({
+    url: '/statistic/getYearExpenditures', // 请求接口
+    method: 'post', // 请求方式
+    params // 请求参数
+  })
+}
