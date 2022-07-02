@@ -32,9 +32,9 @@
             </el-table-column>
             <el-table-column align="center" prop="truckPurchaseDate" label="销售日期" sortable>
             </el-table-column>
-            <el-table-column width="150px;" align="center" prop="payStatus" label="交易方式">
+            <el-table-column width="150px;" align="center" prop="payStatus" label="付款状态">
             </el-table-column>
-            <el-table-column width="160px;" align="right" v-if="veheicleAs">
+            <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加购买记录'">
                   添加
@@ -73,7 +73,7 @@
           <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 90%;"
             format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
         </el-form-item>
-        <el-form-item label="交易方式" :label-width="formLabelWidth" prop="status">
+        <el-form-item label="付款状态" :label-width="formLabelWidth" prop="status">
           <el-input v-model="form.status" style="width: 90%;" type="textarea"></el-input>
         </el-form-item>
       </el-form>
@@ -101,7 +101,7 @@
   export default {
     data() {
       return {
-        veheicleAs: this.$store.getters.veheicleAs,
+        tradeAs: this.$store.getters.tradeAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
@@ -133,7 +133,7 @@
           label: '购买日期'
         }, {
           value: 'payStatus',
-          label: '交易方式'
+          label: '付款状态'
         }
         ], //用于接收类型数据
         loading: true, //查询时加载遮罩
@@ -179,7 +179,7 @@
           }],
           status: [{
             required: true,
-            message: '请输入交易方式',
+            message: '请输入付款状态',
             trigger: 'blur'
           }],
         },
