@@ -10,7 +10,7 @@ export function getTransportationTask(data){
 
 export function deleteTransportationTask(params) {
   return request({
-    url: '/transportationTask/deleteByTransportationTaskId', // 请求接口
+    url: '/transportationTask/deleteByTransportationTask', // 请求接口
     method: 'post', // 请求方式
     params // 请求参数
   })

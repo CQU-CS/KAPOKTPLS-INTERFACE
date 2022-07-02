@@ -10,7 +10,7 @@ export function getTruckRepairRecord(data){
 
 export function deleteTruckRepairRecord(params) {
   return request({
-    url: '/truckRepairRecord/deleteByTruckRepairRecordId', // 请求接口
+    url: '/truckRepairRecord/deleteByTruckRepairRecord', // 请求接口
     method: 'post', // 请求方式
     params // 请求参数
   })
