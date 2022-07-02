@@ -35,7 +35,7 @@
             </el-table-column>
 			<el-table-column align="center" prop="goodsUnitPrice" label="单位价格"  sortable>
 			</el-table-column>
-            <el-table-column width="160px;" align="center" >
+            <el-table-column width="160px;" align="center" v-if="basicAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" v-show="basicAs" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加货物'">
                   添加

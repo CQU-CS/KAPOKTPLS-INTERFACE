@@ -35,7 +35,7 @@
             </el-table-column>
             <el-table-column align="center" show-overflow-tooltip prop="addressContent" label="地址">
             </el-table-column>
-            <el-table-column width="160px;" align="center" >
+            <el-table-column width="160px;" align="center" v-if="basicAs">
              <template slot="header" slot-scope="scope">
                 <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加公司'">
                   添加

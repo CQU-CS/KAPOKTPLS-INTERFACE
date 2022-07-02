@@ -30,7 +30,7 @@
             </el-table-column>
             <el-table-column width="200px;" prop="advertisementEndTime" label="结束日期" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="exhibitionAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加广告'">
                   添加
@@ -92,6 +92,7 @@
   export default {
     data() {
       return {
+        exhibitionAs: this.$store.getters.exhibitionAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示

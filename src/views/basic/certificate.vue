@@ -33,7 +33,7 @@
             </el-table-column>
             <el-table-column align="center" prop="certificateHandlingTime" label="办理时间" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="center" >
+            <el-table-column width="160px;" align="center" v-if="basicAs">
 				 <template slot="header" slot-scope="scope">
 				    <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加证件'">
 				      添加

@@ -33,7 +33,7 @@
             </el-table-column>
             <el-table-column align="center" prop="ecdDate" label="购买日期" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="center" >
+            <el-table-column width="160px;" align="center" v-if="basicAs">
 				<template slot="header" slot-scope="scope">
 				   <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加机电设备'">
 				     添加
