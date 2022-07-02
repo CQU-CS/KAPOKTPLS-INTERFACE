@@ -1,5 +1,20 @@
 <template>
   <div class="dashboard-container">
+    <el-card class="box-card" shadow="always" v-loading="chart1load">
+      <div class="choose">
+        <div class="Cleft">历年收支状况</div>
+        <el-form class="Cright" :inline="true" :model="formInline">
+          <el-form-item label="年份：">
+            <el-date-picker v-model="formInline.chooseYear" type="year" placeholder="选择年" @change="updateYear"
+              format="yyyy 年" value-format="yyyy">
+            </el-date-picker>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="Echarts">
+        <div id="main" style="width: 100%;height:400px;"></div>
+      </div>
+    </el-card>
     <el-row :gutter="20">
       <el-col :span="6">
         <el-card class="box-card" shadow="always" v-loading="basicLoad">
@@ -26,30 +41,19 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
-      <el-col :span="16">
-        <el-card class="box-card" shadow="always" v-loading="chart1load">
-          <div class="Echarts">
-            <div id="main" style="width: 100%;height:400px;"></div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card class="box-card" shadow="always" v-loading="chart2load">
-          <div class="Echarts">
-            <div id="main2" style="width: 100%;height:400px;"></div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-card class="box-card" shadow="always" v-loading="chart2load">
+      <div class="Echarts">
+        <div id="main2" style="width: 100%;height:400px;"></div>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script>
   import {
     getIndexStatistic,
-    getHalfYearIncome,
-    getHalfYearExpenditures,
+    getYearIncome,
+    getYearExpenditures,
     getSectorDiagram
   } from '@/api/getData';
   export default {
@@ -68,7 +72,10 @@
         sector: [],
         chart1load: true,
         chart2load: true,
-        basicLoad: true
+        basicLoad: true,
+        formInline: {
+          chooseYear: '2021'
+        }
       }
     },
     methods: {
@@ -77,9 +84,6 @@
         var myChart = this.$echarts.init(document.getElementById('main'));
         // 指定图表的配置项和数据
         var option = {
-          title: {
-            text: '近半年收支概况'
-          },
           tooltip: {},
           legend: {
             data: ['收入', '支出', '利润']
@@ -152,6 +156,27 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart2.setOption(option2);
       },
+      updateYear() {
+        this.chart1load = true;
+        let data = {
+          dateString: this.formInline.chooseYear
+        }
+        Promise.all([
+          getYearIncome(data).then((res) => {
+            this.income = res.datas.totalIncomes;
+          }),
+          getYearExpenditures(data).then((res) => {
+            this.outcome = res.datas.totalExpenditures;
+          })
+        ]).then(res => {
+          for (var i = 0; i < 12; i++) {
+            this.profit[i] = this.income[i] - this.outcome[i];
+            this.chartx[i] = (i + 1) + '月';
+          }
+          this.myEcharts();
+          this.chart1load = false;
+        });
+      },
       init() {
         var now = new Date();
         var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
@@ -159,31 +184,12 @@
         let data = {
           dateString: today
         }
-        var incomeT = [];
-        var outcomeT = [];
         var sector = [];
         getIndexStatistic(data).then((res) => {
           this.basicData = res.datas;
           this.basicLoad = false;
         })
-        Promise.all([getHalfYearIncome(data).then((res) => {
-            incomeT = res.datas.totalIncomes;
-          }),
-          getHalfYearExpenditures(data).then((res) => {
-            outcomeT = res.datas.totalExpenditureses;
-          })
-        ]).then(res => {
-          for (var i = 0; i < 6; i++) {
-            this.income[i] = incomeT[5 - i];
-            this.outcome[i] = outcomeT[5 - i];
-            this.profit[i] = this.income[i] - this.outcome[i];
-            var m = now.getMonth() - 4 + i;
-            m = m > 0 ? m : m + 12;
-            this.chartx[i] = (m) + '月';
-          }
-          this.myEcharts();
-          this.chart1load = false;
-        });
+        this.updateYear();
         Promise.all([
           getSectorDiagram(data).then((res) => {
             sector = res.datas.chartList;
@@ -252,5 +258,38 @@
     font-weight: 800;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+
+  .choose {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .Cright {
+    box-flex: 1;
+    /*灵活度*/
+    -webkit-box-flex: 1;
+    /* Safari and Chrome */
+    -moz-box-flex: 1;
+    /* Firefox */
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .Cleft {
+    box-flex: 1;
+    /*灵活度*/
+    -webkit-box-flex: 1;
+    /* Safari and Chrome */
+    -moz-box-flex: 1;
+    /* Firefox */
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    font-size: 24px;
+    font-weight: bold;
   }
 </style>
