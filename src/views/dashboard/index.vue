@@ -3,41 +3,51 @@
     <el-row :gutter="20">
       <el-col :span="6">
         <el-card class="box-card" shadow="always">
-          <div>卓钊今日奖励自己</div>
-          <div class="number">114514次</div>
+          <div>本月总收入</div>
+          <div class="number">￥ {{basicData.totalIncome}}</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card" shadow="always">
-          <div>卓钊今日奖励自己</div>
-          <div class="number">114514次</div>
+          <div>本月总支出</div>
+          <div class="number">￥ {{basicData.totalExpenditures}}</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card" shadow="always">
-          <div>卓钊今日奖励自己</div>
-          <div class="number">114514次</div>
+          <div>本月运输任务</div>
+          <div class="number">{{basicData.trips}} 次</div>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card" shadow="always">
-          <div>卓钊今日奖励自己</div>
-          <div class="number">114514次</div>
+          <div>公司员工总数</div>
+          <div class="number">{{basicData.personNum}}</div>
         </el-card>
       </el-col>
     </el-row>
     <el-card class="box-card" shadow="always">
       <div class="Echarts">
-        <div id="main" style="width: 600px;height:400px;"></div>
+        <div id="main" style="width: 800px;height:400px;"></div>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
+  import {
+    getIndexStatistic
+  } from '@/api/getData';
   export default {
     data() {
-      return {}
+      return {
+        basicData: {
+          totalIncome: 0,
+          trips: 0,
+          totalExpenditures: 0,
+          personNum: 0
+        }
+      }
     },
     methods: {
       myEcharts() {
@@ -50,7 +60,7 @@
             text: 'ECharts 入门示例'
           },
           tooltip: {},
-         	legend: {
+          legend: {
             data: ['销量']
           },
           xAxis: {
@@ -66,10 +76,21 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+      },
+      init() {
+        var now = new Date();
+        var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+        console.log(today);
+        let data = {
+          dateString: today
+        }
+        getIndexStatistic(data).then((res) => {
+          this.basicData = res.datas;
+        })
       }
-
     },
     mounted() {
+      this.init();
       this.myEcharts();
     }
   }
@@ -93,9 +114,14 @@
     margin-top: 15px;
     border-radius: 15px;
     border: none;
+    padding-top: 10px;
+    padding-left: 5px;
   }
-  .number{
+
+  .number {
     font-size: 36px;
     font-weight: 800;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 </style>

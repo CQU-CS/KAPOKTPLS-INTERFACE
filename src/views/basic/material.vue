@@ -32,7 +32,7 @@
             <el-table-column align="center" prop="materialType" label="物资类型" sortable />
             <el-table-column align="center" prop="materialPrice" label="物资价格" />
             <el-table-column align="center" prop="materialSize" label="物资尺寸" />
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="basicAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleExport();">
                   导出

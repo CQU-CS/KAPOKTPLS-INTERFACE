@@ -34,7 +34,7 @@
             </el-table-column>
             <el-table-column width="100px;" prop="payStatus" label="付款状态" align="center" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加建筑出售'">
                   添加
@@ -107,6 +107,7 @@
   export default {
     data() {
       return {
+        tradeAs: this.$store.getters.tradeAs,
         showButton: true, //是否渲染按钮
         showElseIf: 2, //展示else-if
         dialogVisible: false, //表示弹出框是否显示
