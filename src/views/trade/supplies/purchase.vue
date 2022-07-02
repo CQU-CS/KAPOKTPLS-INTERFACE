@@ -34,7 +34,7 @@
             <el-table-column align="center" prop="materialPurchasePrice" label="采购价格" />
             <el-table-column align="center" prop="materialPurchaseDate" label="采购日期" />
             <el-table-column align="center" prop="payStatus" label="付款状态" />
-            <el-table-column width="160px;" align="right">
+            <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加采购信息'">
                   添加
@@ -120,6 +120,7 @@ import {
 export default {
   data() {
     return {
+      tradeAs: this.$store.getters.tradeAs,
       showButton: true, // 是否渲染按钮
       showElseIf: 2, // 展示else-if
       dialogVisible: false, // 表示弹出框是否显示
