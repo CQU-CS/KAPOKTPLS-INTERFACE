@@ -77,3 +77,19 @@ export function getIndexStatistic(params) {
     params // 请求参数
   })
 }
+
+export function getHalfYearIncome(params) {
+  return request({
+    url: '/statistic/getHalfYearIncome', // 请求接口
+    method: 'post', // 请求方式
+    params // 请求参数
+  })
+}
+
+export function getHalfYearExpenditures(params) {
+  return request({
+    url: '/statistic/getHalfYearExpenditures', // 请求接口
+    method: 'post', // 请求方式
+    params // 请求参数
+  })
+}

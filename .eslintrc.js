@@ -22,7 +22,7 @@ module.exports = {
       }
     }],
     "vue/singleline-html-element-content-newline": "off",
-    "vue/multiline-html-element-content-newline":"off",
+    "vue/multiline-html-element-content-newline": "off",
     "vue/name-property-casing": ["error", "PascalCase"],
     "vue/no-v-html": "off",
     'accessor-pairs': 2,
@@ -47,13 +47,15 @@ module.exports = {
     'curly': [2, 'multi-line'],
     'dot-location': [2, 'property'],
     'eol-last': 2,
-    'eqeqeq': ["error", "always", {"null": "ignore"}],
+    // 'eqeqeq': ["error", "always", {
+    //   "null": "ignore"
+    // }],
     'generator-star-spacing': [2, {
       'before': true,
       'after': true
     }],
     'handle-callback-err': [2, '^(err|error)$'],
-    'indent': 0,
+    // 'indent': 0,
     'jsx-quotes': [2, 'prefer-single'],
     'key-spacing': [2, {
       'beforeColon': false,
@@ -102,7 +104,7 @@ module.exports = {
       'allowSwitch': false
     }],
     'no-lone-blocks': 2,
-    'no-mixed-spaces-and-tabs': 2,
+    // 'no-mixed-spaces-and-tabs': 2,
     'no-multi-spaces': 2,
     'no-multi-str': 2,
     'no-multiple-empty-lines': [2, {
@@ -130,7 +132,7 @@ module.exports = {
     'no-sparse-arrays': 2,
     'no-this-before-super': 2,
     'no-throw-literal': 2,
-    'no-trailing-spaces': 2,
+    // 'no-trailing-spaces': 2,
     'no-undef': 2,
     'no-undef-init': 2,
     'no-unexpected-multiline': 2,
@@ -140,10 +142,10 @@ module.exports = {
     }],
     'no-unreachable': 2,
     'no-unsafe-finally': 2,
-    'no-unused-vars': [2, {
-      'vars': 'all',
-      'args': 'none'
-    }],
+    // 'no-unused-vars': [2, {
+    //   'vars': 'all',
+    //   'args': 'none'
+    // }],
     'no-useless-call': 2,
     'no-useless-computed-key': 2,
     'no-useless-constructor': 2,
@@ -191,6 +193,15 @@ module.exports = {
     'object-curly-spacing': [2, 'always', {
       objectsInObjects: false
     }],
-    'array-bracket-spacing': [2, 'never']
+    'array-bracket-spacing': [2, 'never'],
+    'arrow-parens': 0,
+    // allow async-await          'generator-star-spacing': 0,
+    // allow debugger during development
+    'no-tabs': 0,
+    'no-mixed-spaces-and-tabs': 0,
+    'indent': ["off", "tab"],
+    'no-unused-vars': 0,
+    'no-trailing-spaces': 0,
+    "eqeqeq": 0
   }
 }

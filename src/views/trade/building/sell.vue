@@ -36,7 +36,8 @@
             </el-table-column>
             <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加建筑出售'">
+                <el-button size="mini" type="primary"
+                  @click="handleAdd(); dialogFormVisible = true; dialogName='添加建筑出售'">
                   添加
                 </el-button>
               </template>
@@ -73,11 +74,8 @@
         </el-form-item>
         <el-form-item label="付款状态" :label-width="formLabelWidth" prop="payStatus" align="left">
           <div>
-            <el-switch style="margin-left: 5%;"
-              v-model="form.payStatus"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              >
+            <el-switch style="margin-left: 5%;" v-model="form.payStatus" active-color="#13ce66"
+              inactive-color="#ff4949">
             </el-switch>
           </div>
 
@@ -108,14 +106,14 @@
     data() {
       return {
         tradeAs: this.$store.getters.tradeAs,
-        showButton: true, //是否渲染按钮
-        showElseIf: 2, //展示else-if
-        dialogVisible: false, //表示弹出框是否显示
-        companyList: [], //用于存放doc数据
+        showButton: true, // 是否渲染按钮
+        showElseIf: 2, // 展示else-if
+        dialogVisible: false, // 表示弹出框是否显示
+        companyList: [], // 用于存放doc数据
         showButton2: false,
-        selectData: "buildingSaleId", //被选择的下拉
+        selectData: "buildingSaleId", // 被选择的下拉
         inputData: "",
-        queryData: "", //用于条件查询
+        queryData: "", // 用于条件查询
         dialogFormVisible: false,
         propertyList: [{
             value: 'buildingSaleId',
@@ -128,8 +126,8 @@
             value: 'payStatus',
             label: '付款状态'
           }
-        ], //用于接收类型数据
-        loading: true, //查询时加载遮罩
+        ], // 用于接收类型数据
+        loading: true, // 查询时加载遮罩
         page: 1,
         limit: 20,
         total: 0,
@@ -139,8 +137,8 @@
           buildingId: '',
           companyId: '',
           buildingSaleDate: '',
-          buildingSalePrice:'',
-          payStatus:''
+          buildingSalePrice: '',
+          payStatus: ''
         },
         formLabelWidth: '120px',
         rules: {
@@ -171,12 +169,20 @@
           }]
         },
         editId: -1,
-        options: [{            value: '办公楼',
-          label: '办公楼'         }, {           value: '驿站',           label: '驿站'         }, {           value: '仓库',           label: '仓库'         }]
+        options: [{
+          value: '办公楼',
+          label: '办公楼'
+        }, {
+          value: '驿站',
+          label: '驿站'
+        }, {
+          value: '仓库',
+          label: '仓库'
+        }]
       }
     },
     watch: {
-      fullHeight(val) { //监控浏览器高度变化
+      fullHeight(val) { // 监控浏览器高度变化
         if (!this.timer) {
           this.fullHeight = val
           this.timer = true
@@ -190,7 +196,7 @@
     methods: {
       testVon() {
         this.showButton2 = !this.showButton2;
-        //this.dialogVisible = true;
+        // this.dialogVisible = true;
       },
       handleSizeChange(val) {
         this.limit = val;
@@ -209,30 +215,30 @@
       },
       initList() {
         this.loading = true;
-        //获取用户输入/选择的查询条件
+        // 获取用户输入/选择的查询条件
         let data = {
           limit: this.limit,
           page: this.page,
           [this.selectData]: this.queryData
-          // categoryId: this.selectData,
-          // docTitle: this.queryData
+          //  categoryId: this.selectData,
+          //  docTitle: this.queryData
         }
         getBuildingSale(data).then((res) => {
           res.datas.forEach((item, index) => {
-            // item.test = "测试属性添加";
-            // console.log(item)
+            //  item.test = "测试属性添加";
+            //  console.log(item)
           })
-          // console.log(res.datas);
+          //  console.log(res.datas);
           this.companyList = res.datas;
           this.total = res.total;
           this.loading = false;
-          //条件筛选遍历
+          // 条件筛选遍历
           /* let filterArr = this.companyList.filter((item, index) => {
           	return item.docId % 5 == 0;
           }); */
         })
       },
-      get_bodyHeight() { //动态获取浏览器高度
+      get_bodyHeight() { // 动态获取浏览器高度
         const that = this
         window.onresize = () => {
           return (() => {
@@ -272,7 +278,7 @@
         this.form.companyId = row.companyId;
         this.form.buildingSaleDate = row.buildingSaleDate;
         this.form.buildingSalePrice = row.buildingSalePrice;
-        this.form.payStatus = row.payStatus?true:false;
+        this.form.payStatus = row.payStatus ? true : false;
       },
       handleAdd() {
         this.editId = -1;
@@ -291,7 +297,7 @@
                 companyId: this.form.companyId,
                 buildingSaleDate: this.form.buildingSaleDate,
                 buildingSalePrice: this.form.buildingSalePrice,
-                payStatus: this.form.payStatus?1:0
+                payStatus: this.form.payStatus ? 1 : 0
               }
               addBuildingSale(data).then((res) => {
                 const h = this.$createElement;
@@ -310,7 +316,7 @@
                 companyId: this.form.companyId,
                 buildingSaleDate: this.form.buildingSaleDate,
                 buildingSalePrice: this.form.buildingSalePrice,
-                payStatus: this.form.payStatus?1:0,
+                payStatus: this.form.payStatus ? 1 : 0,
                 buildingSaleId: this.editId
               }
               editBuildingSale(data).then((res) => {
@@ -336,11 +342,11 @@
       console.log("mounted被调用");
       this.get_bodyHeight();
       this.$nextTick(() => {
-        //页面初始化的时候执行
+        // 页面初始化的时候执行
         this.initList();
-        //this.testMap();
-        //初始化获取类型数据
-        // this.initCategoryList();
+        // this.testMap();
+        // 初始化获取类型数据
+        //  this.initCategoryList();
       })
     },
   }
