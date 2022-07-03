@@ -116,7 +116,7 @@
           label: '建筑类型'
         },
         {
-          value: 'buildName',
+          value: 'buildingName',
           label: '建筑名称'
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
