@@ -123,7 +123,6 @@
         form: {
           personId: '',
           noticeTitle: '',
-          noticeContent: '',
           noticeStartTime: ''
         },
         formLabelWidth: '120px',

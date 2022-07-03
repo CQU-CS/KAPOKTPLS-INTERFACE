@@ -118,9 +118,6 @@
           value: 'companyId',
           label: '公司编号'
         }, {
-          value: 'materialSaleDate',
-          label: '日期'
-        }, {
           value: 'materialSaleNum',
           label: '数量'
         }, {

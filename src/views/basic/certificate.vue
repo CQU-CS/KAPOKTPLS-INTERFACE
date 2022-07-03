@@ -113,9 +113,6 @@
         }, {
           value: 'certificateHandlingUnit',
           label: '办理单位'
-        }, {
-          value: 'certificateHandlingTime',
-          label: '办理时间'
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,

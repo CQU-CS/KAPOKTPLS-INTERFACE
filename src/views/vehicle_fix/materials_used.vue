@@ -116,12 +116,6 @@
         }, {
           value: 'materialUseNum',
           label: '数量'
-        }, {
-          value: 'materialUseStartTime',
-          label: '开始时间'
-        }, {
-          value: 'materialUseEndTime',
-          label: '结束时间'
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,

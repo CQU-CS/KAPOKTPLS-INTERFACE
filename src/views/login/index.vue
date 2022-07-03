@@ -76,8 +76,8 @@
       }
       return {
         loginForm: {
-          account_account: 'admin',
-          account_password: '111111',
+          account_account: '',
+          account_password: '',
           validCode: ''
         },
         loginRules: {

@@ -131,12 +131,6 @@
           value: 'personGender',
           label: '性别'
         }, {
-          value: 'personBirth',
-          label: '出生日期'
-        }, {
-          value: 'personNumber',
-          label: '电话'
-        }, {
           value: 'personQq',
           label: 'QQ'
         }, {

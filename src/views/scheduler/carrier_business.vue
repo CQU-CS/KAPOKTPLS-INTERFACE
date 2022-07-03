@@ -117,9 +117,6 @@
         }, {
           value: 'carrierManagePrice',
           label: '价格'
-        }, {
-          value: 'taskTime',
-          label: '完成日期'
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,

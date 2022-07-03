@@ -126,8 +126,8 @@
           value: 'truckPurchasePrice',
           label: '购买金额'
         }, {
-          value: 'companyName',
-          label: '公司名称'
+          value: 'companyId',
+          label: '公司id'
         },{
           value: 'truckPurchaseDate',
           label: '购买日期'

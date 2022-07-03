@@ -137,12 +137,6 @@
         }, {
           value: 'transportationTaskDestination',
           label: '运输目的地'
-        }, {
-          value: 'transportationTaskStartTime',
-          label: '运输开始时间'
-        },{
-          value: 'transportationTaskEndTime',
-          label: '运输结束时间'
         },{
           value: 'transportationTaskPrice',
           label: '运输收入'
