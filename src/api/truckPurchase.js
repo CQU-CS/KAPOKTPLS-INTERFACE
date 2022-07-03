@@ -26,7 +26,7 @@ export function addTruckPurchase(data) {
 
 export function editTruckPurchase(data) {
   return request({
-    url: '/truckPurchase/editByTrucKPurchase', // 请求接口
+    url: '/truckPurchase/editByTruckPurchase', // 请求接口
     method: 'post', // 请求方式
     data // 请求参数
   })
