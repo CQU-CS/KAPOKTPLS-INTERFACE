@@ -58,7 +58,6 @@
         //获取用户输入/选择的查询条件
         let data = {
           [this.selectData]: this.queryData,
-          buildingType: "仓库"
         }
         getBuildings(data).then((res) => {
           this.addressList = res.datas;
