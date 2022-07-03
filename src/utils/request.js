@@ -1,5 +1,5 @@
 import axios from 'axios'
-const URL = 'http://localhost:8080'
+const URL = 'http://1.14.106.156:8848'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 
