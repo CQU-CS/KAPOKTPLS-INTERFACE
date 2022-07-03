@@ -26,11 +26,11 @@
             </el-table-column>
             <el-table-column width="120px;"align="center" prop="truckPlate" label="汽车车牌">
             </el-table-column>
-            <el-table-column width="120px;" align="center"show-overflow-tooltip prop="truckPurchaseNum" label="销售数量" sortable>
+            <el-table-column width="120px;" align="center"show-overflow-tooltip prop="truckPurchaseNum" label="采购数量" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="center"prop="truckPurchasePrice" label="销售总金额" sortable>
+            <el-table-column width="160px;" align="center"prop="truckPurchasePrice" label="采购总金额" sortable>
             </el-table-column>
-            <el-table-column width="160px;" align="center" prop="truckPurchaseDate" label="销售日期" sortable>
+            <el-table-column width="160px;" align="center" prop="truckPurchaseDate" label="采购日期" sortable>
             </el-table-column>
             <el-table-column width="100px;" align="center" prop="payStatus" label="付款状态">
             </el-table-column>
@@ -278,9 +278,9 @@
         })
       },
       handleEdit(index, row) {
-        this.editId = row.truckPurcahseId;
+        this.editId = row.truckPurchaseId;
         this.form.plate = row.truckPlate;
-        this.form.num = row.truckPurcahseNum;
+        this.form.num = row.truckPurchaseNum;
         this.form.price = row.truckPurchasePrice;
         this.form.name = row.companyName;
         this.form.date = row.truckPurchaseDate;
@@ -320,13 +320,13 @@
               });
             } else {
               let data = {
+                truckPurchaseId: this.editId,
                 truckPlate: this.form.plate,
                 truckPurchaseNum: this.form.num,
                 truckPurchasePrice: this.form.price,
                 companyName: this.form.name,
                 truckPurchaseDate: this.form.date,
-                payStatus: this.form.status,
-                truckPurchaseId: this.editId
+                payStatus: this.form.status
               }
               editTruckPurchase(data).then((res) => {
                 const h = this.$createElement;
