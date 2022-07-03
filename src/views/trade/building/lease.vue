@@ -299,7 +299,7 @@
         this.form.buildingRentStartTime = '';
         this.form.buildingRentEndTime = '';
         this.form.buildingRentPrice = '';
-        this.form.payStatus = '';
+        this.form.payStatus = true;
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -313,6 +313,8 @@
                 buildingRentPrice: this.form.buildingRentPrice,
                 payStatus: this.form.payStatus ? 1 : 0
               }
+              console.log(this.form.payStatus);
+              console.log(data.payStatus);
               addBuildingRent(data).then((res) => {
                 const h = this.$createElement;
                 this.$notify({

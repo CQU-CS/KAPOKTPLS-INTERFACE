@@ -281,7 +281,7 @@
         this.form.companyId = '';
         this.form.buildingSaleDate = '';
         this.form.buildingSalePrice = '';
-        this.form.payStatus = '';
+        this.form.payStatus = true;
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
