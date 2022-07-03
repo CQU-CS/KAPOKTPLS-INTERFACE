@@ -33,6 +33,9 @@
             <el-table-column align="center" prop="goodsInventoryNum" label="货物数量" />
             <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
+                <el-button size="mini" type="primary" @click="handleExport();">
+                  导出
+                </el-button>
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
                   添加
                 </el-button>
@@ -95,7 +98,8 @@ import {
   getGoodsInventory,
   deleteGoodsInventory,
   addGoodsInventory,
-  editGoodsInventory
+  editGoodsInventory,
+  exportGoodsInventory
 } from '@/api/goodsInventory.js'
 export default {
   data() {
@@ -251,6 +255,9 @@ export default {
       this.form.goodsName = row.goodsName
       this.form.addressContent = row.addressContent
       this.form.goodsInventoryNum = row.goodsInventoryNum
+    },
+    handleExport() {
+      location.href = "http://localhost:8080/goodsInventory/exportGoodsInventory";
     },
     handleAdd() {
       this.editId = -1

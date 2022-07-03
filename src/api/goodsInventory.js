@@ -32,3 +32,10 @@ export function editGoodsInventory(data) {
     data //请求参数
   })
 }
+
+export function exportGoodsInventory(d) {
+  return request({
+    url: '/goodsInventory/exportGoodsInventory', //请求接口
+    method: 'get' //请求方式
+  })
+}
