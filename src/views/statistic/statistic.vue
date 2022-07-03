@@ -40,14 +40,14 @@
             <div class="Cleft">收支各成分占比</div>
             <el-form class="Cright" :inline="true" :model="formInline2">
               <el-form-item label="年月：">
-                <el-date-picker v-model="formInline2.chooseMonth" type="month" placeholder="选择年" @change="updateMonth"
+                <el-date-picker v-model="formInline2.chooseMonth" type="month" placeholder="选择年月" @change="updateMonth"
                   format="yyyy 年 MM月" value-format="yyyy-MM">
                 </el-date-picker>
               </el-form-item>
             </el-form>
           </div>
           <div class="Echarts">
-            <div id="main2" style="width: 100%;height:400px"></div>
+            <div id="main2" style="width: 100%;height:467px"></div>
           </div>
         </el-card>
       </el-col>
