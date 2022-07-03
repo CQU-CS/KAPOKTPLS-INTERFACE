@@ -25,8 +25,6 @@
           <div>本月总支出</div>
           <div class="number">￥ {{basicData.totalExpenditures}}</div>
         </el-card>
-      </el-col>
-      <el-col :span="6">
         <el-card class="box-card" shadow="always" v-loading="basicLoad">
           <div>本月运输任务</div>
           <div class="number">{{basicData.trips}} 次</div>
@@ -36,12 +34,22 @@
           <div class="number">{{basicData.personNum}}</div>
         </el-card>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="18">
         <el-card class="box-card" shadow="always" v-loading="chart2load">
-      <div class="Echarts">
-        <div id="main2" style="width: 100%;height:400px"></div>
-      </div>
-    </el-card>
+          <div class="choose">
+            <div class="Cleft">收支各成分占比</div>
+            <el-form class="Cright" :inline="true" :model="formInline2">
+              <el-form-item label="年月：">
+                <el-date-picker v-model="formInline2.chooseMonth" type="month" placeholder="选择年" @change="updateMonth"
+                  format="yyyy 年 MM月" value-format="yyyy-MM">
+                </el-date-picker>
+              </el-form-item>
+            </el-form>
+          </div>
+          <div class="Echarts">
+            <div id="main2" style="width: 100%;height:400px"></div>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -52,7 +60,8 @@
     getIndexStatistic,
     getYearIncome,
     getYearExpenditures,
-    getSectorDiagram
+    getSectorDiagram,
+    getExpendituresSectorDiagram
   } from '@/api/getData';
   export default {
     data() {
@@ -68,11 +77,15 @@
         outcome: [],
         profit: [],
         sector: [],
+        sector2: [],
         chart1load: true,
         chart2load: true,
         basicLoad: true,
         formInline: {
           chooseYear: '2021'
+        },
+        formInline2: {
+          chooseMonth: '2022-07'
         }
       }
     },
@@ -113,9 +126,6 @@
         var myChart2 = this.$echarts.init(document.getElementById('main2'));
 
         var option2 = {
-          title: {
-            text: '本月收入来源'
-          },
           tooltip: {
             trigger: 'item'
           },
@@ -124,16 +134,28 @@
             left: 'center'
           },
           series: [{
-            name: 'Nightingale Chart',
-            type: 'pie',
-            radius: [50, 250],
-            center: ['50%', '50%'],
-            roseType: 'area',
-            itemStyle: {
-              borderRadius: 8
+              name: 'Nightingale Chart',
+              type: 'pie',
+              radius: [20, 140],
+              center: ['25%', '50%'],
+              roseType: 'area',
+              itemStyle: {
+                borderRadius: 8
+              },
+              data: this.sector
             },
-            data: this.sector
-          }]
+            {
+              name: 'Nightingale Chart',
+              type: 'pie',
+              radius: [20, 140],
+              center: ['75%', '50%'],
+              roseType: 'area',
+              itemStyle: {
+                borderRadius: 8
+              },
+              data: this.sector2
+            }
+          ]
         };
 
         // 使用刚指定的配置项和数据显示图表。
@@ -160,24 +182,20 @@
           this.chart1load = false;
         });
       },
-      init() {
-        var now = new Date();
-        this.chooseYear = now.getFullYear();
-        console.log(now.get);
-        var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
-        console.log(today);
+      updateMonth() {
+        this.chart2load = true;
+        var datastr = this.formInline2.chooseMonth + "-3";
         let data = {
-          dateString: today
+          dateString: datastr
         }
         var sector = [];
-        getIndexStatistic(data).then((res) => {
-          this.basicData = res.datas;
-          this.basicLoad = false;
-        })
-        this.updateYear();
+        var sector2 = [];
         Promise.all([
           getSectorDiagram(data).then((res) => {
             sector = res.datas.chartList;
+          }),
+          getExpendituresSectorDiagram(data).then((res) => {
+            sector2 = res.datas.chartList;
           })
         ]).then(res => {
           this.sector[0] = {
@@ -204,9 +222,37 @@
             value: sector[5],
             name: "汽车出售"
           };
+          this.sector2[0] = {
+            value: sector2[0],
+            name: "商品购买"
+          };
+          this.sector2[1] = {
+            value: sector2[1],
+            name: "物资购买"
+          };
+          this.sector2[2] = {
+            value: sector2[2],
+            name: "汽车购买"
+          };
           this.myEcharts2();
           this.chart2load = false;
         });
+      },
+      init() {
+        var now = new Date();
+        this.chooseYear = now.getFullYear();
+        console.log(now.get);
+        var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+        console.log(today);
+        let data = {
+          dateString: today
+        }
+        getIndexStatistic(data).then((res) => {
+          this.basicData = res.datas;
+          this.basicLoad = false;
+        })
+        this.updateYear();
+        this.updateMonth();
       }
     },
     mounted() {
