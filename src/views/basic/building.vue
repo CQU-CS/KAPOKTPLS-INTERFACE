@@ -250,7 +250,7 @@
               title: '删除' + row.buildingName + '成功！',
               message: h('i', {
                 style: 'color: teal'
-              }, '编号为' + row.buildingId + '的公司已被删除')
+              }, '编号为' + row.buildingId + '的建筑已被删除')
             });
             this.initList();
           } else {
@@ -293,7 +293,7 @@
                   title: '添加成功！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '内容为' + this.form.addressContent + '的地址已被添加')
+                  }, '名称为' + this.form.buildingName + '的建筑已被添加')
                 });
                 this.dialogFormVisible = false;
                 this.initList();
@@ -312,7 +312,7 @@
                   title: '编辑完成！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '名称为' + this.form.name + '的地址信息编辑完成')
+                  }, '名称为' + this.form.buildingName + '的建筑信息编辑完成')
                 });
                 this.dialogFormVisible = false;
                 this.initList();

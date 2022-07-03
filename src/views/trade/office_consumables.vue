@@ -116,9 +116,6 @@
           value: 'officeMaterialPurchasePrice',
           label: '价格'
         }, {
-          value: 'officeMaterialPurchaseDate',
-          label: '时间'
-        }, {
           value: 'payState',
           label: '交易状态'
         }], //用于接收类型数据

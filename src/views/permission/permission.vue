@@ -262,9 +262,9 @@
         }
       },
       handleDelete(index, row) {
-        console.log(row.buildingId);
+        console.log(row.accountId);
         let data = {
-          id: row.buildingId
+          id: row.accountId
         }
         deleteAccount(data).then((res) => {
           const h = this.$createElement;

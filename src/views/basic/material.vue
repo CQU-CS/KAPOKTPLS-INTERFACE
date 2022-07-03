@@ -34,9 +34,9 @@
             <el-table-column align="center" prop="materialSize" label="物资尺寸" />
             <el-table-column width="160px;" align="right" v-if="basicAs">
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleExport();">
+<!--                <el-button size="mini" type="primary" @click="handleExport();">
                   导出
-                </el-button>
+                </el-button> -->
                 <el-button v-show="basicAs" size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
                   添加
                 </el-button>

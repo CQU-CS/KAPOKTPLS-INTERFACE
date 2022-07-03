@@ -124,9 +124,6 @@
         propertyList: [{
             value: 'buildingRentId',
             label: '编号'
-          }, {
-            value: 'buildingRentStartTime',
-            label: '开始时间'
           },
           {
             value: 'buildingRentEndTime',

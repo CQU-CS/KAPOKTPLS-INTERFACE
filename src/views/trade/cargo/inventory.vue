@@ -33,21 +33,21 @@
             <el-table-column align="center" prop="goodsInventoryNum" label="货物数量" />
             <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
-                <el-button size="mini" type="primary" @click="handleExport();">
+<!--                <el-button size="mini" type="primary" @click="handleExport();">
                   导出
-                </el-button>
-                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加物资信息'">
+                </el-button> -->
+                <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加货物信息'">
                   添加
                 </el-button>
               </template>
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                  @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑物资信息'"
+                  @click="handleEdit(scope.$index, scope.row); dialogFormVisible = true; dialogName='编辑货物信息'"
                 >编辑
                 </el-button>
                 <el-popconfirm
-                  title="确定删除该物资信息吗？"
+                  title="确定删除该货物信息吗？"
                   style="margin-left: 8px;"
                   @onConfirm="handleDelete(scope.$index, scope.row)"
                 >
@@ -234,15 +234,15 @@ export default {
         const h = this.$createElement
         if (res.code = 20000) {
           this.$notify({
-            title: '删除' + row.goodsInventoryName + '物资信息成功！',
+            title: '删除' + row.goodsInventoryName + '货物信息成功！',
             message: h('i', {
               style: 'color: teal'
-            }, '编号为' + row.goodsInventoryId + '的物资已被删除')
+            }, '编号为' + row.goodsInventoryId + '的货物已被删除')
           })
           this.initList()
         } else {
           this.$notify({
-            title: '删除' + row.goodsInventoryName + '物资信息失败！',
+            title: '删除' + row.goodsInventoryName + '货物信息失败！',
             message: h('i', {
               style: 'color: teal'
             }, '')
@@ -302,7 +302,7 @@ export default {
                 title: '编辑完成！',
                 message: h('i', {
                   style: 'color: teal'
-                }, '名字为' + this.form.goodsName + '的物资信息编辑完成')
+                }, '名字为' + this.form.goodsName + '的货物信息编辑完成')
               })
               this.dialogFormVisible = false
               this.initList()

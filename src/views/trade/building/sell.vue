@@ -118,9 +118,6 @@
         propertyList: [{
             value: 'buildingSaleId',
             label: '编号'
-          }, {
-            value: 'buildingSaleDate',
-            label: '出售时间'
           },
           {
             value: 'payStatus',

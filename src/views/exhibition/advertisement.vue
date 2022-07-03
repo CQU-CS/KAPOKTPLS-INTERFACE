@@ -111,12 +111,6 @@
         }, {
           value: 'advertisementPicture',
           label: '广告图片地址'
-        }, {
-          value: 'advertisementStartTime',
-          label: '开始日期'
-        }, {
-          value: 'advertisementEndTime',
-          label: '结束日期'
         }], //用于接收类型数据
         loading: true, //查询时加载遮罩
         page: 1,

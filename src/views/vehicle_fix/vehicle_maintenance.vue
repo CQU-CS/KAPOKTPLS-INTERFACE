@@ -218,7 +218,7 @@
       handleDelete(index, row) {
         console.log(row.truckId);
         let data = {
-          id: row.truckId
+          id: row.truckRepairRecordId
         }
         deleteTruckRepairRecord(data).then((res) => {
           const h = this.$createElement;

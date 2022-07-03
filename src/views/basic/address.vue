@@ -234,7 +234,7 @@
               title: '删除' + row.addressContent + '成功！',
               message: h('i', {
                 style: 'color: teal'
-              }, '编号为' + row.addressId + '的公司已被删除')
+              }, '编号为' + row.addressId + '的地址已被删除')
             });
             this.initList();
           } else {
@@ -288,7 +288,7 @@
                   title: '编辑完成！',
                   message: h('i', {
                     style: 'color: teal'
-                  }, '名称为' + this.form.name + '的地址信息编辑完成')
+                  }, '地址为' + this.form.addressContent + '的地址信息编辑完成')
                 });
                 this.dialogFormVisible = false;
                 this.initList();
