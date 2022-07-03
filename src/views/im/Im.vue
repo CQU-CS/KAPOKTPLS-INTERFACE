@@ -151,7 +151,7 @@
           console.log('您的浏览器不支持WebSocket')
         } else {
           console.log('您的浏览器支持WebSocket')
-          const socketUrl = 'ws://localhost:8080/imserver/' + nickname
+          const socketUrl = 'ws://1.14.106.156:8848/imserver/' + nickname
           if (socket != null) {
             socket.close()
             socket = null
