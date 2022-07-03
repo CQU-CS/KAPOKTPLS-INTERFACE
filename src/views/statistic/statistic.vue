@@ -21,8 +21,6 @@
           <div>本月总收入</div>
           <div class="number">￥ {{basicData.totalIncome}}</div>
         </el-card>
-      </el-col>
-      <el-col :span="6">
         <el-card class="box-card" shadow="always" v-loading="basicLoad">
           <div>本月总支出</div>
           <div class="number">￥ {{basicData.totalExpenditures}}</div>
@@ -33,19 +31,19 @@
           <div>本月运输任务</div>
           <div class="number">{{basicData.trips}} 次</div>
         </el-card>
-      </el-col>
-      <el-col :span="6">
         <el-card class="box-card" shadow="always" v-loading="basicLoad">
           <div>公司员工总数</div>
           <div class="number">{{basicData.personNum}}</div>
         </el-card>
       </el-col>
-    </el-row>
-    <el-card class="box-card" shadow="always" v-loading="chart2load">
+      <el-col :span="12">
+        <el-card class="box-card" shadow="always" v-loading="chart2load">
       <div class="Echarts">
-        <div id="main2" style="width: 100%;height:500px"></div>
+        <div id="main2" style="width: 100%;height:400px"></div>
       </div>
     </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -164,6 +162,8 @@
       },
       init() {
         var now = new Date();
+        this.chooseYear = now.getFullYear();
+        console.log(now.get);
         var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
         console.log(today);
         let data = {

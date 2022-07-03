@@ -120,6 +120,7 @@ import {
 export default {
   data() {
     return {
+      tradeAs: this.$store.getters.tradeAs,
       showButton: true, // 是否渲染按钮
       showElseIf: 2, // 展示else-if
       dialogVisible: false, // 表示弹出框是否显示
