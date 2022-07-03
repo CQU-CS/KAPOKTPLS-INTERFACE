@@ -86,3 +86,11 @@ export function getYearExpenditures(params) {
     params // 请求参数
   })
 }
+
+export function getExpendituresSectorDiagram(params) {
+  return request({
+    url: '/statistic/getExpendituresSectorDiagram', // 请求接口
+    method: 'post', // 请求方式
+    params // 请求参数
+  })
+}

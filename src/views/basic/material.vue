@@ -85,7 +85,7 @@
       <el-pagination
         background
         :current-page="page"
-        :page-sizes="[2, 4, 6, 8]"
+        :page-sizes="[20, 40, 60, 80]"
         :page-size="limit"
         :hide-on-single-page="fasle"
         layout="total, sizes, prev, pager, next, jumper"
@@ -136,7 +136,7 @@ export default {
       }], // 用于接收类型数据
       loading: true, // 查询时加载遮罩
       page: 1,
-      limit: 2,
+      limit: 20,
       total: 0,
       fullHeight: document.documentElement.clientHeight - 185,
       dialogName: '',
