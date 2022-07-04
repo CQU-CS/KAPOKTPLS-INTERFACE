@@ -33,9 +33,9 @@
             <el-table-column align="center" prop="goodsInventoryNum" label="货物数量" />
             <el-table-column width="160px;" align="right" v-if="tradeAs">
               <template slot="header" slot-scope="scope">
-<!--                <el-button size="mini" type="primary" @click="handleExport();">
+                <el-button size="mini" type="primary" @click="handleExport();">
                   导出
-                </el-button> -->
+                </el-button>
                 <el-button size="mini" type="primary" @click="handleAdd(); dialogFormVisible = true; dialogName='添加货物信息'">
                   添加
                 </el-button>
