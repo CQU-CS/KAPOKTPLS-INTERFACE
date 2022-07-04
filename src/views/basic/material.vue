@@ -277,7 +277,7 @@ export default {
       this.form.size = ''
     },
     handleExport() {
-      location.href = "http://localhost:8080/material/exportMaterial";
+      location.href = "http://1.14.106.156:8848/material/exportMaterial";
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {

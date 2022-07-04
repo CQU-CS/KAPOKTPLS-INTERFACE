@@ -257,7 +257,7 @@ export default {
       this.form.goodsInventoryNum = row.goodsInventoryNum
     },
     handleExport() {
-      location.href = "http://localhost:8080/goodsInventory/exportGoodsInventory";
+      location.href = "http://1.14.106.156:8848/goodsInventory/exportGoodsInventory";
     },
     handleAdd() {
       this.editId = -1
